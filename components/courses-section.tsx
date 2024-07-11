@@ -15,6 +15,7 @@ export function CoursesSection() {
                               ))
                          }
                     </div>
+                    <button className="bg-primary border border-primary text-primary-foreground px-3 py-4 rounded-[4px] w-[150px] mx-auto leading-4">Barchasi</button>
                </div>
           </>
      )
