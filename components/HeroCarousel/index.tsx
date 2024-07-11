@@ -22,7 +22,7 @@ export default function Index() {
                     className="h-[428px]"
                     loop={true}
                     autoplay={{
-                         delay: 2500,
+                         delay: 5000,
                          disableOnInteraction: false,
                     }}
                     pagination={{
