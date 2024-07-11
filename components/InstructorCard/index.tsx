@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export function InstructorCard({ instructor, ...props }: { instructor: any } & React.ComponentPropsWithoutRef<"div">) {
+export default function Index({ instructor, ...props }: { instructor: any } & React.ComponentPropsWithoutRef<"div">) {
      return (
           <>
                <div className="flex flex-col-reverse rounded-lg relative">
