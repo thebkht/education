@@ -23,8 +23,8 @@ export function Hero() {
                          </div>
                     </div>
                     <div className="flex-1 relative">
-                         <div className="h-full w-full bg-primary absolute rounded-r-lg"></div>
-                         <Image src="/hero-img.png" alt="Hero" fill className="rounded-r-lg !relative opacity-50" />
+                         <div className="h-full w-full bg-primary absolute rounded-r-lg z-10 opacity-50"></div>
+                         <Image src="/hero-img.png" alt="Hero" fill className="rounded-r-lg !relative" />
                     </div>
                </div>
           </>
