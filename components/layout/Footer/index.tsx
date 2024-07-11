@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Icons } from "./icons";
+import { Icons } from "@/components/icons";
 
-export function SiteFooter() {
+export default function Index() {
      return (<>
           <footer className="bg-secondary">
                <div className="container mx-auto flex justify-between h-16">

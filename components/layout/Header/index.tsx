@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export function SiteHeader() {
+export default function SiteHeader() {
      return (
-          <nav className="container flex items-center justify-between w-full mx-auto">
+          <nav className="container flex items-center justify-between w-full mx-auto max-w-[1440px]">
                <Link href="/">
                     <Image src="/logo.png" alt="Logo" width={209} height={59} />
                </Link>
