@@ -6,6 +6,7 @@ import { Facts } from "@/components/facts";
 import { CoursesSection } from "@/components/courses-section";
 import { InstructorSection } from "@/components/instructors-section";
 import { TestimonialSection } from "@/components/testimonials-section";
+import { SiteFooter } from "@/components/site-footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function Home() {
           <CoursesSection />
           <InstructorSection />
           <TestimonialSection />
+          <SiteFooter />
         </div>
       </div>
     </>
