@@ -4,20 +4,20 @@ export const testimonials = [
     rate: 5,
     review:
       "Very understanding, patient and will help you improve your English. I highly recommend this teacher.",
-    image: "/instruction-1.jpg",
+    image: "/instructor-2.png",
   },
   {
     name: "Xojimirzayev Boburjon",
     rate: 5,
     review:
       "Very understanding, patient and will help you improve your English. I highly recommend this teacher.",
-    image: "/instruction-1.jpg",
+    image: "/instructor-2.png",
   },
   {
     name: "Xojimirzayev Boburjon",
     rate: 5,
     review:
       "Very understanding, patient and will help you improve your English. I highly recommend this teacher.",
-    image: "/instruction-1.jpg",
+    image: "/instructor-2.png",
   },
 ];
