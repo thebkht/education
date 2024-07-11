@@ -6,7 +6,7 @@ import Button from "@/components/UI/Button";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Navigation, Pagination, A11y } from "swiper/modules";
+import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -16,13 +16,13 @@ export default function Index() {
           <>
                {" "}
                <Swiper
-                    modules={[Navigation, Pagination, A11y]}
+                    modules={[Navigation, Pagination, A11y, Autoplay]}
                     slidesPerView={1}
                     navigation
                     className="h-[428px]"
                     loop={true}
                     autoplay={{
-                         delay: 250,
+                         delay: 2500,
                          disableOnInteraction: false,
                     }}
                     pagination={{
