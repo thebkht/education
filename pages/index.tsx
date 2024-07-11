@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import Header from "@/components/layout/Header";
-import { Hero } from "@/components/hero";
-import { Facts } from "@/components/facts";
+import { Hero } from "@/components/home/hero";
+import { Facts } from "@/components/home/facts";
 import { CoursesSection } from "@/components/home/courses-section";
-import { InstructorSection } from "@/components/instructors-section";
-import { TestimonialSection } from "@/components/testimonials-section";
+import { InstructorSection } from "@/components/home/instructors-section";
+import { TestimonialSection } from "@/components/home/testimonials-section";
 import Footer from "@/components/layout/Footer";
 import { Metadata } from "next";
 
