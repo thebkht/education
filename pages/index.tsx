@@ -5,6 +5,7 @@ import { Hero } from "@/components/hero";
 import { Facts } from "@/components/facts";
 import { CoursesSection } from "@/components/courses-section";
 import { InstructorSection } from "@/components/instructors-section";
+import { TestimonialSection } from "@/components/testimonials-section";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,7 @@ export default function Home() {
         <div className="flex flex-col max-w-[1440px] gap-[120px] justify-center">
           <CoursesSection />
           <InstructorSection />
+          <TestimonialSection />
         </div>
       </div>
     </>
