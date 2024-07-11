@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { Icons } from "./icons"
+import { Icons } from "@/components/icons"
 
-export function TestimonialForm() {
+export default function Index() {
      const [rate, setRate] = useState<number>(0)
      return (
           <>
