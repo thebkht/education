@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Icons } from "./icons";
+import { Icons } from "@/components/icons";
 import Balancer from "react-wrap-balancer";
 
-export function TestimonialCard({ testimonial, ...props }: { testimonial: any } & React.ComponentPropsWithoutRef<"div">) {
+export default function Index({ testimonial, ...props }: { testimonial: any } & React.ComponentPropsWithoutRef<"div">) {
      return (
           <>
                <div className="flex flex-1 p-6 bg-background border border-border gap-6 rounded-[20px] self-stretch">
