@@ -33,11 +33,11 @@ export default function Index() {
                     }}
                >
                     {" "}
-                    <SwiperSlide className="!flex items-stretch rounded-lg bg-primary">
+                    <SwiperSlide className="!flex md:flex-row flex-col items-stretch rounded-lg bg-primary">
                          {" "}
                          <div className="flex-1 relative flex flex-col justify-center">
                               {" "}
-                              <div className="flex flex-col gap-4 lg:w-[446px] px-6 lg:p-0 text-primary-foreground mx-auto">
+                              <div className="flex flex-col gap-4 lg:w-[446px] p-6 lg:p-0 text-primary-foreground mx-auto">
                                    {" "}
                                    <h1 className="lg:text-4xl text-3xl font-bold">
                                         {" "}

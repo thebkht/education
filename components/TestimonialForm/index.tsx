@@ -40,7 +40,7 @@ export default function Index() {
                               <label htmlFor="review" className="text-sm text-muted-foreground pl-3.5">
                                    Qo&apos;shimcha fikr-mulohaza
                               </label>
-                              <textarea id="review" className="w-96 min-h-28 py-3 px-3.5 border border-input rounded-lg text-sm text-second" name="review" placeholder="Mening fikrim!!" />
+                              <textarea id="review" className="md:w-96 w-64 min-h-28 py-3 px-3.5 border border-input rounded-lg text-sm text-second" name="review" placeholder="Mening fikrim!!" />
                          </div>
                     </div>
                     <Button size={'lg'} className="w-full shadow-sm">Fikr-mulohaza yuboring</Button>
