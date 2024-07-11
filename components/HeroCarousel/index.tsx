@@ -22,7 +22,7 @@ export default function Index() {
                     className="h-[428px]"
                     loop={true}
                     autoplay={{
-                         delay: 2500,
+                         delay: 250,
                          disableOnInteraction: false,
                     }}
                     pagination={{
@@ -37,17 +37,17 @@ export default function Index() {
                          {" "}
                          <div className="flex-1 relative flex flex-col justify-center">
                               {" "}
-                              <div className="flex flex-col gap-4 w-[446px] text-primary-foreground mx-auto">
+                              <div className="flex flex-col gap-4 lg:w-[446px] px-6 lg:p-0 text-primary-foreground mx-auto">
                                    {" "}
-                                   <h1 className="text-4xl font-bold">
+                                   <h1 className="lg:text-4xl text-3xl font-bold">
                                         {" "}
                                         <Balancer>
                                              {" "}
-                                             O&apos; zbekistonga jadal islohotlarga mos malakali kadrlar
+                                             O&apos;zbekistonga jadal islohotlarga mos malakali kadrlar
                                              kerak{" "}
                                         </Balancer>{" "}
                                    </h1>{" "}
-                                   <p className="text-2xl font-medium text-right">
+                                   <p className="lg:text-2xl text-xl font-medium text-right">
                                         Sh.M Mirziyoyev
                                    </p>{" "}
                                    <Button variant={"secondary"} size={"lg"} className="w-fit">
@@ -75,17 +75,17 @@ export default function Index() {
                          {" "}
                          <div className="flex-1 relative flex flex-col justify-center">
                               {" "}
-                              <div className="flex flex-col gap-4 w-[446px] text-primary-foreground mx-auto">
+                              <div className="flex flex-col gap-4 lg:w-[446px] px-6 lg:p-0 text-primary-foreground mx-auto">
                                    {" "}
-                                   <h1 className="text-4xl font-bold">
+                                   <h1 className="lg:text-4xl text-3xl font-bold">
                                         {" "}
                                         <Balancer>
                                              {" "}
-                                             O&apos; zbekistonga jadal islohotlarga mos malakali kadrlar
+                                             O&apos;zbekistonga jadal islohotlarga mos malakali kadrlar
                                              kerak{" "}
                                         </Balancer>{" "}
                                    </h1>{" "}
-                                   <p className="text-2xl font-medium text-right">
+                                   <p className="lg:text-2xl text-xl font-medium text-right">
                                         Sh.M Mirziyoyev
                                    </p>{" "}
                                    <Button variant={"secondary"} size={"lg"} className="w-fit">
@@ -107,23 +107,22 @@ export default function Index() {
                                    fill
                                    className="rounded-r-lg !relative"
                               />{" "}
-                         </div>{" "}
+                         </div>
                     </SwiperSlide>{" "}
                     <SwiperSlide className="!flex items-stretch rounded-lg bg-primary">
-                         {" "}
                          <div className="flex-1 relative flex flex-col justify-center">
                               {" "}
-                              <div className="flex flex-col gap-4 w-[446px] text-primary-foreground mx-auto">
+                              <div className="flex flex-col gap-4 lg:w-[446px] px-6 lg:p-0 text-primary-foreground mx-auto">
                                    {" "}
-                                   <h1 className="text-4xl font-bold">
+                                   <h1 className="lg:text-4xl text-3xl font-bold">
                                         {" "}
                                         <Balancer>
                                              {" "}
-                                             O&apos; zbekistonga jadal islohotlarga mos malakali kadrlar
+                                             O&apos;zbekistonga jadal islohotlarga mos malakali kadrlar
                                              kerak{" "}
                                         </Balancer>{" "}
                                    </h1>{" "}
-                                   <p className="text-2xl font-medium text-right">
+                                   <p className="lg:text-2xl text-xl font-medium text-right">
                                         Sh.M Mirziyoyev
                                    </p>{" "}
                                    <Button variant={"secondary"} size={"lg"} className="w-fit">
@@ -145,23 +144,22 @@ export default function Index() {
                                    fill
                                    className="rounded-r-lg !relative"
                               />{" "}
-                         </div>{" "}
+                         </div>
                     </SwiperSlide>{" "}
                     <SwiperSlide className="!flex items-stretch rounded-lg bg-primary">
-                         {" "}
                          <div className="flex-1 relative flex flex-col justify-center">
                               {" "}
-                              <div className="flex flex-col gap-4 w-[446px] text-primary-foreground mx-auto">
+                              <div className="flex flex-col gap-4 lg:w-[446px] px-6 lg:p-0 text-primary-foreground mx-auto">
                                    {" "}
-                                   <h1 className="text-4xl font-bold">
+                                   <h1 className="lg:text-4xl text-3xl font-bold">
                                         {" "}
                                         <Balancer>
                                              {" "}
-                                             O&apos; zbekistonga jadal islohotlarga mos malakali kadrlar
+                                             O&apos;zbekistonga jadal islohotlarga mos malakali kadrlar
                                              kerak{" "}
                                         </Balancer>{" "}
                                    </h1>{" "}
-                                   <p className="text-2xl font-medium text-right">
+                                   <p className="lg:text-2xl text-xl font-medium text-right">
                                         Sh.M Mirziyoyev
                                    </p>{" "}
                                    <Button variant={"secondary"} size={"lg"} className="w-fit">
@@ -183,7 +181,7 @@ export default function Index() {
                                    fill
                                    className="rounded-r-lg !relative"
                               />{" "}
-                         </div>{" "}
+                         </div>
                     </SwiperSlide>{" "}
                </Swiper>{" "}
           </>
