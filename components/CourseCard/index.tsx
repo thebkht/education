@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export function CourseCard({ course, ...props }: { course: any } & React.ComponentPropsWithoutRef<"div">) {
+export default function Index({ course, ...props }: { course: any } & React.ComponentPropsWithoutRef<"div">) {
      return (
           <>
                <div className="flex flex-col gap-2 rounded-3xl">
