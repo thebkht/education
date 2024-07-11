@@ -1,4 +1,4 @@
-import { InstructorCard } from "./instructor-card";
+import InstructorCard from "@/components/InstructorCard";
 import { instructors } from "@/data/instructors";
 
 export function InstructorSection() {
