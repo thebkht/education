@@ -13,7 +13,8 @@
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
-    "react-wrap-balancer": "^1.1.1"
+    "react-wrap-balancer": "^1.1.1",
+    "tailwind-merge": "^2.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",
