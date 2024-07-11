@@ -1,5 +1,5 @@
 import CourseCard from "@/components/CourseCard";
-import { courses } from "../../data/courses";
+import { courses } from "@/data/courses";
 
 export function CoursesSection() {
      return (

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Balancer from "react-wrap-balancer";
-import { Icons } from "./icons";
+import { Icons } from "@/components/icons";
 
 export function Hero() {
      return (
