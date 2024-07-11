@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Button from "@/components/UI/Button";
 
 export default function SiteHeader() {
      return (
@@ -11,8 +12,8 @@ export default function SiteHeader() {
                     <Link href="tel:+998711234567" className="text-primary font-medium">
                          +998 71 123 45 67
                     </Link>
-                    <button className="border border-secondary bg-background hover:bg-secondary hover:text-primary-foreground px-4 py-2 text-xs font-bold rounded-[4px]">Ro&apos;yxatdan o&apos;tish</button>
-                    <button className="bg-primary border border-primary text-primary-foreground px-4 py-2 text-xs font-bold rounded-[4px]">Kirish</button>
+                    <Button variant={'outline'} size={'sm'}>Ro&apos;yxatdan o&apos;tish</Button>
+                    <Button size={'sm'}>Kirish</Button>
                </div>
           </nav>
      );

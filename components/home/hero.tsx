@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Balancer from "react-wrap-balancer";
 import { Icons } from "@/components/icons";
+import Button from "@/components/UI/Button";
 
 export function Hero() {
      return (
@@ -14,11 +15,11 @@ export function Hero() {
                                    </Balancer>
                               </h1>
                               <p className="text-2xl font-medium text-right">Sh.M Mirziyoyev</p>
-                              <button className="bg-primary-foreground text-primary py-3 px-6 rounded-lg w-max">
+                              <Button variant={'secondary'} size={'lg'} className="w-fit">
                                    Kursni boshlash
-                              </button>
+                              </Button>
                          </div>
-                         <div className="">
+                         <div>
                               <Icons.pattern className="w-full object-cover absolute top-0 left-0" />
                          </div>
                     </div>

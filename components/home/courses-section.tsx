@@ -1,5 +1,6 @@
 import CourseCard from "@/components/CourseCard";
 import { courses } from "@/data/courses";
+import Button from "@/components/UI/Button";
 
 export function CoursesSection() {
      return (
@@ -15,7 +16,7 @@ export function CoursesSection() {
                               ))
                          }
                     </div>
-                    <button className="bg-primary border border-primary text-primary-foreground px-3 py-4 rounded-[4px] w-[150px] mx-auto leading-4">Barchasi</button>
+                    <Button className="w-[150px] mx-auto">Barchasi</Button>
                </div>
           </>
      )

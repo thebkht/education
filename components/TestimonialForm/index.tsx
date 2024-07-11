@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Icons } from "@/components/icons"
+import Button from "@/components/UI/Button"
 
 export default function Index() {
      const [rate, setRate] = useState<number>(0)
@@ -42,7 +43,7 @@ export default function Index() {
                               <textarea id="review" className="w-96 min-h-28 py-3 px-3.5 border border-input rounded-lg text-sm text-second" name="review" placeholder="Mening fikrim!!" />
                          </div>
                     </div>
-                    <button className="bg-primary w-full border shadow-sm border-primary text-primary-foreground px-4 py-2.5  font-semibold rounded-lg leading-6">Fikr-mulohaza yuboring</button>
+                    <Button size={'lg'} className="w-full shadow-sm">Fikr-mulohaza yuboring</Button>
                </div>
           </>
      )
