@@ -4,8 +4,8 @@ export function InstructorCard({ instructor, ...props }: { instructor: any } & R
      return (
           <>
                <div className="flex flex-col-reverse rounded-lg relative">
-                    <div className="bg-gradient-to-b to-black/5 from-slate-50/0 h-full w-full absolute z-20"></div>
-                    <div className="bg-gradient-to-b to-black/25 from-neutral-50/0 h-full w-full absolute z-10"></div>
+                    <div className="bg-gradient-to-b to-black/5 from-slate-50/0 h-full w-full absolute z-20 rounded-lg"></div>
+                    <div className="bg-gradient-to-b to-black/25 from-neutral-50/0 h-full w-full absolute z-10 rounded-lg"></div>
                     <div className="flex-1 relative">
                          <div className="flex flex-col gap-1 items-center justify-end w-full h-full absolute bottom-3 z-30">
                               <p className="text-2xl font-bold text-primary-foreground">
