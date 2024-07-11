@@ -1,6 +1,6 @@
 import { TestimonialCard } from "./testimonial-card";
 import { TestimonialForm } from "./testimonial-form";
-import { testimonials } from "./testimonials";
+import { testimonials } from "../data/testimonials";
 
 export function TestimonialSection() {
      return (

@@ -1,5 +1,5 @@
 import { InstructorCard } from "./instructor-card";
-import { instructors } from "./instructors";
+import { instructors } from "@/data/instructors";
 
 export function InstructorSection() {
      return (<>

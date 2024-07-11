@@ -3,7 +3,7 @@ import { Icons } from "@/components/icons";
 
 export default function Index() {
      return (<>
-          <footer className="bg-secondary">
+          <footer className="bg-secondary mt-28">
                <div className="container mx-auto flex justify-between h-16">
                     <p className="text-muted-foreground inline-flex my-auto">Mualliflik huquqi © AYITI.UZ 2024. Barcha huquqlar himoyalangant</p>
                     <div className="flex gap-3 items-center">

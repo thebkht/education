@@ -3,7 +3,7 @@ import Balancer from "react-wrap-balancer";
 export function Facts() {
      return (
           <>
-               <div className="flex justify-between container mx-auto">
+               <div className="container flex justify-between mx-auto">
                     <h1 className="text-2xl font-semibold text-second w-[296px]">
                          <Balancer>
                               Istalgan joyda, o&apos;zingizga qulay vaqtda o&apos;qish imkoniyati
