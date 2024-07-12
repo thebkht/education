@@ -15,18 +15,18 @@ const config: Config = {
       },
 
       colors: {
-        background: "hsl(var(--background))",
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        foreground: "hsl(var(--foreground))",
-        secondary: "hsl(var(--secondary))",
-        second: "hsl(var(--foreground-second))",
+        background: "hsla(var(--background))",
+        border: "hsla(var(--border))",
+        input: "hsla(var(--input))",
+        foreground: "hsla(var(--foreground))",
+        secondary: "hsla(var(--secondary))",
+        second: "hsla(var(--foreground-second))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "hsla(var(--primary))",
+          foreground: "hsla(var(--primary-foreground))",
         },
         muted: {
-          foreground: "hsl(var(--muted-foreground))",
+          foreground: "hsla(var(--muted-foreground))",
         },
       },
     },
