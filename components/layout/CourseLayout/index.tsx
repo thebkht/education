@@ -16,7 +16,7 @@ export default function Index({ children }: { children: React.ReactNode }) {
                     </div>
                     <Header />
                     <Sidebar />
-                    <main className="flex relative justify-center z-0 min-h-0 min-w-0 flex-[1_0_auto] md:flex-none mb-16">
+                    <main className="flex relative justify-center z-0 min-h-0 min-w-0 flex-[1_0_auto] md:flex-none mb-16 bg-accent">
                          <div className="flex w-full flex-[1_0_auto]">
                               <div className="flex flex-1 min-w-0">
                                    <div className="flex justify-center flex-[1_0_1px] min-w-0 [overflow-anchor:none] overflow-x-auto">
