@@ -1,6 +1,5 @@
 import Sidebar from '@/components/layout/SideMenu';
 import Header from '@/components/layout/Header';
-import './styles.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 
