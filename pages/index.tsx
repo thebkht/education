@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import Header from "@/components/layout/Header";
+import Navbar from "@/components/layout/Navbar";
 import { Hero } from "@/components/home/hero";
 import { Facts } from "@/components/home/facts";
 import { CoursesSection } from "@/components/home/courses-section";
@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <>
       <div className={`${inter.className} flex flex-col gap-5`}>
-        <Header />
+        <Navbar />
         <Hero />
         <Facts />
         <div className="flex flex-col gap-[120px] justify-center mx-auto">
