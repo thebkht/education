@@ -16,15 +16,11 @@ export default function Index() {
           <>
                {" "}
                <Swiper
-                    modules={[Navigation, Pagination, A11y, Autoplay]}
-                    slidesPerView={1}
+                    modules={[Navigation, Pagination, A11y]}
                     navigation
                     className="h-[428px]"
                     loop={true}
-                    autoplay={{
-                         delay: 5000,
-                         disableOnInteraction: false,
-                    }}
+
                     pagination={{
                          clickable: true,
                     }}
@@ -93,7 +89,7 @@ export default function Index() {
                               </div>{" "}
                               <div>
                                    {" "}
-                                   <Icons.pattern className="w-full object-cover absolute top-0 left-0" />{" "}
+                                   <Icons.pattern className="w-full object-cover absolute top-0 left-0 z-0" />{" "}
                               </div>{" "}
                          </div>{" "}
                          <div className="flex-1 relative md:block hidden">

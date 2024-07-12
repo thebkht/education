@@ -68,3 +68,12 @@ body {
 .swiper-pagination-bullet-active {
   @apply  !bg-primary !h-2 !w-2 !opacity-100
 }
+
+.container {
+  max-width: 1200px !important;
+}
+
+.swiper-slide {
+  max-width: 1200px !important;
+  width: 100% !important;
+}

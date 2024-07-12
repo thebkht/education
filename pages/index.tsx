@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <div className={`${inter.className} flex flex-col gap-8`}>
+      <div className={`${inter.className} flex flex-col gap-5`}>
         <Header />
         <Hero />
         <Facts />
