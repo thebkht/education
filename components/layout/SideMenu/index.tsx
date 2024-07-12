@@ -6,15 +6,12 @@ export default function Index() {
      return (
           <>
                <div className="flex flex-col gap-6 w-[250px] border-r border-border p-4">
-                    <Link href="/">
-                         <Image src="/logo.png" alt="Logo" width={141} height={45} />
-                    </Link>
-                    <div className="flex flex-col gap-4 flex-1">
-                         <div className="flex gap-3 items-center">
-                              <div className="h-10 w-10 rounded-[4px] p-2 bg-primary">
-                                   <Icons.home className="h-6 w-6 text-primary-foreground" />
+                    <div className="flex flex-col gap-4">
+                         <div className="flex gap-3 items-center flex-1">
+                              <div className="h-10 w-10 rounded-[4px] p-2 bg-primary flex justify-center items-center">
+                                   <Icons.home className="h-[18] w-[18px] text-primary-foreground" />
                               </div>
-                              <span className="font-medium text-sm">
+                              <span className="font-medium text-sm text-primary">
                                    Мои курсы
                               </span>
                          </div>
