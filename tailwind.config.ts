@@ -16,6 +16,7 @@ const config: Config = {
 
       colors: {
         background: "hsla(var(--background))",
+        accent: "hsla(var(--accent))",
         border: "hsla(var(--border))",
         input: "hsla(var(--input))",
         foreground: "hsla(var(--foreground))",
