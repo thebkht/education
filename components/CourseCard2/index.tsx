@@ -5,7 +5,7 @@ import { Icons } from "../icons";
 export default function Index({ course }: { course: any }) {
      return (<>
           <div className="flex flex-col gap-2 rounded-lg border border-border bg-background p-4">
-               <div className="flex justify-end items-end flex-1 h-[198px] relative">
+               <div className="flex justify-end items-end flex-1 aspect-video relative">
                     {
                          course.new ?? (
                               <div className="flex gap-2 py-2 px-3 border-t border-l border-border rounded-tl-[4px] bg-background text-second text-sm">
@@ -16,17 +16,17 @@ export default function Index({ course }: { course: any }) {
                     }
                     {
                          course.locked ? (
-                              <div className="h-full w-full bg-foreground/40 flex justify-center items-center rounded-[4px] absolute z-10 backdrop:blur-lg">
+                              <div className="h-full w-full bg-foreground/40 flex justify-center items-center rounded-[4px] absolute z-10 backdrop-blur-lg">
                                    <Icons.lock className="text-background h-12 w-12" />
                               </div>
                          ) : (
                               <div className="h-full w-full bg-foreground/40 rounded-[4px] absolute z-10"></div>
                          )
                     }
-                    <Image src={course.image} alt={course.title} layout="fill" className="rounded-[4px] object-cover !relative border border-border" />
+                    <Image src={course.image} alt={course.title} layout="fill" className="rounded-[4px] object-cover !relative border border-border aspect-video" />
                </div>
 
-               <div className="flex flex-col gap-2 flex-1">
+               <div className="flex flex-col gap-2">
                     <div className="flex flex-col gap-1">
                          <div className="flex flex-1 justify-between items-center">
                               {course.topic ?? <span className="text-xs text-muted-foreground">{course.topic}</span>}
@@ -39,7 +39,7 @@ export default function Index({ course }: { course: any }) {
                               {course.title}
                          </h1>
                     </div>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground line-clamp-3">
                          {course.description}
                     </p>
                     <Button>Заключить договор на курс</Button>
