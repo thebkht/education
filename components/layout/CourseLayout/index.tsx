@@ -20,9 +20,9 @@ export default function Index({ children }: { children: React.ReactNode }) {
                          <div className="flex w-full flex-[1_0_auto]">
                               <div className="flex flex-1 min-w-0">
                                    <div className="flex justify-center flex-[1_0_1px] min-w-0 [overflow-anchor:none] overflow-x-auto">
-                                        <div className="flex md:px-5 px-4 flex-1 min-w-0">
+                                        <div className="flex px-4 flex-1 min-w-0">
                                              <div className="flex flex-1 justify-center min-w-0">
-                                                  <div className="contents md:min-w-[520px] min-w-0 w-screen md:w-full">
+                                                  <div className="flex flex-col py-4">
                                                        {children}
                                                   </div>
                                              </div>

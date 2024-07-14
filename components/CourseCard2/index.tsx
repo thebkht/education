@@ -7,9 +7,9 @@ export default function Index({ course }: { course: any }) {
           <div className="flex flex-col gap-2 rounded-lg border border-border bg-background p-4">
                <div className="flex justify-end items-end flex-1 aspect-video relative">
                     {
-                         course.new ?? (
-                              <div className="flex gap-2 py-2 px-3 border-t border-l border-border rounded-tl-[4px] bg-background text-second text-sm">
-                                   <div className="h-3 w-3 bg-blue-600"></div>
+                         course.new && (
+                              <div className="flex gap-2 py-2 px-3 border-t border-l border-border rounded-tl-[4px] bg-background text-second text-sm absolute right-0 bottom-0 z-20 items-center justify-center">
+                                   <div className="h-3 w-3 bg-blue-600 rounded-full"></div>
                                    <span>Новый</span>
                               </div>
                          )
