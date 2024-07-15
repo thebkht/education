@@ -11,7 +11,7 @@ const Index = AccordionPrimitive.Root
 const AccordionItem = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>) => {
      return (
           <AccordionPrimitive.Item
-               className={cn("border-b", className)}
+               className={cn("", className)}
                {...props}
           />
      )
@@ -22,7 +22,7 @@ const AccordionTrigger = ({ className, children, ...props }: React.ComponentProp
           <AccordionPrimitive.Header className="flex">
                <AccordionPrimitive.Trigger
                     className={cn(
-                         "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
+                         "flex flex-1 items-center justify-between font-medium transition-all [&[data-state=open]>svg]:rotate-180 gap-4 p-4 hover:bg-input/10",
                          className
                     )}
                     {...props}
@@ -37,7 +37,7 @@ const AccordionTrigger = ({ className, children, ...props }: React.ComponentProp
 const AccordionContent = ({ className, children, ...props }: React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>) => {
      return (
           <AccordionPrimitive.Content
-               className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+               className="overflow-hidden transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down p-4 pl-6 border-b"
                {...props}
           >
                <div className={cn("pb-4 pt-0", className)}>{children}</div>
