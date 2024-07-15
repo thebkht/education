@@ -4,9 +4,11 @@ import Button from "@/components/UI/Button";
 import { formatDeadline } from "@/lib/formatter";
 import React from "react";
 
+type DeadlineProps = {     days: number;     hours: number;     minutes: number; }
+
 export default function Index() {
      const [nextWeek, setNextWeek] = React.useState<Date>(new Date(Date.now() + 7 * 24 * 60 * 60 * 1000));
-     const [deadline, setDeadline] = React.useState(formatDeadline(nextWeek.toISOString()));
+     const [deadline, setDeadline] = React.useState<DeadlineProps | null>(null);
 
      // Corrected code to update deadline every minute
      React.useEffect(() => {
@@ -33,19 +35,19 @@ export default function Index() {
                          <div className="flex items-center gap-3">
                               <div className="flex items-center gap-1 text-sm font-medium">
                                    <div className="bg-primary rounded-[2px] p-1 w-7 text-primary-foreground text-sm text-center">
-                                        {deadline.days}
+                                        {deadline?.days || 0}
                                    </div>
                                    Kun
                               </div>
                               <div className="flex items-center gap-1 text-sm font-medium">
                                    <div className="bg-primary rounded-[2px] p-1 w-7 text-primary-foreground text-sm text-center">
-                                        {deadline.hours}
+                                        {deadline?.hours || 0}
                                    </div>
                                    Soat
                               </div>
                               <div className="flex items-center gap-1 text-sm font-medium">
                                    <div className="bg-primary rounded-[2px] p-1 w-7 text-primary-foreground text-sm text-center">
-                                        {deadline.minutes}
+                                        {deadline?.minutes || 0}
                                    </div>
                                    Daqiqa
                               </div>
