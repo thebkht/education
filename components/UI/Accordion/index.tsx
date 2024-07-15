@@ -40,7 +40,7 @@ const AccordionContent = ({ className, children, ...props }: React.ComponentProp
                className="overflow-hidden transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down p-4 pl-6 border-b"
                {...props}
           >
-               <div className={cn("pb-4 pt-0", className)}>{children}</div>
+               <div className={cn("pb-0 pt-0", className)}>{children}</div>
           </AccordionPrimitive.Content>
      )
 }

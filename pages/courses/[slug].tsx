@@ -4,9 +4,8 @@ import { notFound } from "next/navigation";
 import CourseLayout from "@/components/layout/CourseLayout";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/UI/Tabs";
-import { Accordion } from "@radix-ui/react-accordion";
 import { chapters } from "@/data/course-chapters";
-import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/UI/Accordion";
+import { Index as Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/UI/Accordion";
 import { Icons } from "@/components/icons";
 import Button from "@/components/UI/Button"
 
@@ -37,10 +36,10 @@ export default function Page() {
                                 <TabsTrigger value={"review"}>Обзор</TabsTrigger>
                             </TabsList>
                             <TabsContent value={"content"} className="flex flex-col mt-4">
-                                <Accordion type={"multiple"}>
+                                <Accordion type={"single"} defaultValue="chapter-1" collapsible>
                                     {
                                         chapters.map((chapter, index) => (
-                                            <AccordionItem value={`chapter ${index + 1}`} key={index}>
+                                            <AccordionItem value={`chapter-${index + 1}`} key={index} >
                                                 <AccordionTrigger>
                                                     <div className="flex justify-between items-center w-full">
                                                         <div className="flex gap-1 flex-col">
@@ -92,7 +91,7 @@ export default function Page() {
                                                                             <Icons.checked className={'h-8 w-8 text-muted-foreground'} />
                                                                         ) : (
                                                                             <Icons.unchecked className={'h-8 w-8 text-muted-foreground'} />
-                                                                        )): (
+                                                                        )) : (
                                                                             <Icons.lock className={'h-8 w-8 text-muted-foreground'} />
                                                                         )
                                                                     }
