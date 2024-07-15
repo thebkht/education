@@ -24,7 +24,9 @@ export default  function Page() {
                         <Image src={course.image} alt={course.title} width={520} height={294}
                                className="rounded border border-border"/>
                     </div>
-                    <div className="flex flex-col gap-4"></div>
+                    <div className="flex flex-col gap-4">
+                        <div className="flex flex-col rounded border border-border bg-background py-2"></div>
+                    </div>
                 </div>
             </CourseLayout>
         </>
