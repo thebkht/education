@@ -85,7 +85,7 @@ export default function Page() {
                                                     chapter.sections.map((section, index) => (
                                                         <AccordionContent key={index}>
                                                             <div className="flex items-center justify-between">
-                                                                <div className="flex gap-2 items-center max-w-[850px]">
+                                                                <div className="flex gap-2 items-center">
                                                                     {
                                                                         !section.locked ? (section.completed ? (
                                                                             <Icons.checked className={'h-8 w-8 text-muted-foreground'} />
@@ -95,7 +95,7 @@ export default function Page() {
                                                                             <Icons.lock className={'h-8 w-8 text-muted-foreground'} />
                                                                         )
                                                                     }
-                                                                    <p className={'text-second-foreground'}>
+                                                                    <p className={'text-second-foreground max-w-[800px]'}>
                                                                         {section.title}
                                                                     </p>
                                                                 </div>
