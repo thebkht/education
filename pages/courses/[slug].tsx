@@ -115,7 +115,7 @@ export default function Page() {
                                     }
                                 </Accordion>
                             </TabsContent>
-                            <TabsContent value={"overview"} className={"flex flex-col gap-4 text-second p-4"}>
+                            <TabsContent value={"overview"} className={"space-y-4 text-second p-4"}>
                                 <h4 className={"font-semibold text-lg"}>
                                     Описание курса
                                 </h4>
