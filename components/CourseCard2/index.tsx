@@ -9,6 +9,7 @@ import {
      AlertDialogTrigger
 } from "@/components/UI/AlertDialog";
 import Balancer from "react-wrap-balancer";
+import {Dialog, DialogContent, DialogTrigger} from "@/components/UI/DIalog";
 
 export default function Index({ course }: { course: any }) {
      return (<>
@@ -52,24 +53,32 @@ export default function Index({ course }: { course: any }) {
                     </p>
                     {
                          course.locked ? (
-                             <AlertDialog>
-                                  <AlertDialogTrigger asChild>
+                             // <AlertDialog>
+                             //      <AlertDialogTrigger asChild>
+                             //           <Button>Заключить договор на курс</Button>
+                             //      </AlertDialogTrigger>
+                             //      <AlertDialogContent>
+                             //           <AlertDialogDescription className={'text-center'}>
+                             //                <Balancer>
+                             //                     Если вы произвели оплату, но курсы не открылись, обратитесь к администратору системы.
+                             //                     тел: +998 (71) 123-45-67
+                             //                </Balancer>
+                             //           </AlertDialogDescription>
+                             //           <AlertDialogAction className={'w-fit mx-auto'}>
+                             //                Понятно
+                             //           </AlertDialogAction>
+                             //      </AlertDialogContent>
+                             // </AlertDialog>
+                             <Dialog>
+                                  <DialogTrigger asChild>
                                        <Button>Заключить договор на курс</Button>
-                                  </AlertDialogTrigger>
-                                  <AlertDialogContent>
-                                       <AlertDialogDescription className={'text-center'}>
-                                            <Balancer>
-                                                 Если вы произвели оплату, но курсы не открылись, обратитесь к администратору системы.
-                                                 тел: +998 (71) 123-45-67
-                                            </Balancer>
-                                       </AlertDialogDescription>
-                                       <AlertDialogAction className={'w-fit mx-auto'}>
-                                            Понятно
-                                       </AlertDialogAction>
-                                  </AlertDialogContent>
-                             </AlertDialog>
+                                  </DialogTrigger>
+                                  <DialogContent className={"p-0 max-w-[984px] max-h-[948px] h-full border-none mb-3"} noClose>
+                                       <object data="" type="application/pdf" className={"h-full w-full"}></object>
+                                  </DialogContent>
+                             </Dialog>
                          ): (
-                             <Button>Заключить договор на курс</Button>
+                             <Button disabled>Заключить договор на курс</Button>
                          )
                     }
                </div>
