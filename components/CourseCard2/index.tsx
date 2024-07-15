@@ -18,11 +18,11 @@ export default function Index({ course }: { course: any }) {
                <div className="flex justify-end items-end flex-1 aspect-video relative">
                     {
                          course.locked ? (
-                              <div className="h-full w-full bg-black/40 flex justify-center items-center rounded absolute z-10 backdrop-blur-lg">
+                              <div className="h-full w-full bg-black/40 flex justify-center items-center rounded absolute z-10 backdrop-blur-lg pointer-events-none">
                                    <Icons.lock className="text-background h-12 w-12" />
                               </div>
                          ) : (
-                              <div className="h-full w-full bg-black/40 rounded absolute z-10"></div>
+                              <div className="h-full w-full bg-black/40 rounded absolute z-10 pointer-events-none"></div>
                          )
                     }
                     {
@@ -33,7 +33,7 @@ export default function Index({ course }: { course: any }) {
                             </div>
                         )
                     }
-                    <Link href={`/courses/${course.slug}`}>
+                    <Link href={course.locked ? "#" : `/courses/${course.slug}`} className={course.locked && "pointer-events-none"}>
                          <Image src={course.image} alt={course.title} layout="fill" className="rounded-[4px] object-cover !relative border border-border aspect-video" />
                     </Link>
                </div>
@@ -47,13 +47,13 @@ export default function Index({ course }: { course: any }) {
                                    <span className="text-xs text-muted-foreground">{course.students || 0}</span>
                               </div>
                          </div>
-                         <Link href={`/courses/${course.slug}`}>
+                         <Link href={course.locked ? "#" : `/courses/${course.slug}`} className={course.locked && "pointer-events-none"}>
                               <h1 className="font-semibold text-second text-sm line-clamp-2">
                                    {course.title}
                               </h1>
                          </Link>
                     </div>
-                    <Link href={`/courses/${course.slug}`}>
+                    <Link href={course.locked ? "#" : `/courses/${course.slug}`} className={course.locked && "pointer-events-none"}>
                          <p className="text-xs text-muted-foreground line-clamp-3">
                               {course.description}
                          </p>
@@ -78,14 +78,14 @@ export default function Index({ course }: { course: any }) {
                              // </AlertDialog>
                              <Dialog>
                                   <DialogTrigger asChild>
-                                       <Button>Заключить договор на курс</Button>
+                                       <Button className={"w-fit rounded"}>Заключить договор на курс</Button>
                                   </DialogTrigger>
                                   <DialogContent className={"p-0 max-w-[984px] max-h-[948px] h-full border-none mb-3"} noClose>
                                        <object data="" type="application/pdf" className={"h-full w-full"}></object>
                                   </DialogContent>
                              </Dialog>
                          ): (
-                             <Button disabled>Заключить договор на курс</Button>
+                             <Button className={"w-fit rounded"} disabled>Заключить договор на курс</Button>
                          )
                     }
                </div>
