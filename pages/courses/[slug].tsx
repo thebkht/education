@@ -58,7 +58,7 @@ export default function Page() {
                                                         </span>
                                                     </div>
                                                 </AccordionTrigger>
-                                                <AccordionContent className={'flex flex-col gap-4 pb-0'}>
+                                                <AccordionContent className={'flex flex-col gap-4 border-b'}>
                                                     <div className="flex items-center gap-6">
                                                         <div className="flex items-center gap-2">
                                                             <Icons.play
@@ -83,7 +83,7 @@ export default function Page() {
                                                 </AccordionContent>
                                                 {
                                                     chapter.sections.map((section, index) => (
-                                                        <AccordionContent key={index} className={'pb-0'}>
+                                                        <AccordionContent key={index}>
                                                             <div className="flex items-center justify-between">
                                                                 <div className="flex gap-2 items-center max-w-[850px]">
                                                                     {

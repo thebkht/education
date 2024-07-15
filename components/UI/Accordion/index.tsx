@@ -37,10 +37,10 @@ const AccordionTrigger = ({ className, children, ...props }: React.ComponentProp
 const AccordionContent = ({ className, children, ...props }: React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>) => {
      return (
           <AccordionPrimitive.Content
-               className="overflow-hidden transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down p-4 pl-6 border-b"
+               className="overflow-hidden transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
                {...props}
           >
-               <div className={cn("pb-0 pt-0", className)}>{children}</div>
+               <div className={cn("p-4 pl-6", className)}>{children}</div>
           </AccordionPrimitive.Content>
      )
 }
