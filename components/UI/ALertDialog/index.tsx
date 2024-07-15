@@ -77,7 +77,7 @@ const AlertDialogTitle = ({ className, ...props }: React.ComponentPropsWithoutRe
 const AlertDialogDescription = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>) => {
      return (
           <AlertDialogPrimitive.Description
-               className={cn("text-sm font-medium text-muted-foreground", className)}
+               className={cn("font-medium text-muted-foreground", className)}
                {...props}
           />
      )

@@ -1,6 +1,14 @@
 import Image from "next/image";
 import Button from "@/components/UI/Button";
 import { Icons } from "../icons";
+import {
+     AlertDialog,
+     AlertDialogAction,
+     AlertDialogContent,
+     AlertDialogDescription,
+     AlertDialogTrigger
+} from "@/components/UI/AlertDialog";
+import Balancer from "react-wrap-balancer";
 
 export default function Index({ course }: { course: any }) {
      return (<>
@@ -26,7 +34,7 @@ export default function Index({ course }: { course: any }) {
                     <Image src={course.image} alt={course.title} layout="fill" className="rounded-[4px] object-cover !relative border border-border aspect-video" />
                </div>
 
-               <div className="flex flex-col gap-2">
+               <div className="flex flex-col gap-2 relative">
                     <div className="flex flex-col gap-1">
                          <div className="flex flex-1 justify-between items-center">
                               {course.topic ?? <span className="text-xs text-muted-foreground">{course.topic}</span>}
@@ -42,7 +50,28 @@ export default function Index({ course }: { course: any }) {
                     <p className="text-xs text-muted-foreground line-clamp-3">
                          {course.description}
                     </p>
-                    <Button>Заключить договор на курс</Button>
+                    {
+                         course.locked ? (
+                             <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                       <Button>Заключить договор на курс</Button>
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent>
+                                       <AlertDialogDescription className={'text-center'}>
+                                            <Balancer>
+                                                 Если вы произвели оплату, но курсы не открылись, обратитесь к администратору системы.
+                                                 тел: +998 (71) 123-45-67
+                                            </Balancer>
+                                       </AlertDialogDescription>
+                                       <AlertDialogAction className={'w-fit mx-auto'}>
+                                            Понятно
+                                       </AlertDialogAction>
+                                  </AlertDialogContent>
+                             </AlertDialog>
+                         ): (
+                             <Button>Заключить договор на курс</Button>
+                         )
+                    }
                </div>
           </div>
      </>)
