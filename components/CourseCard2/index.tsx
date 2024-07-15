@@ -10,6 +10,7 @@ import {
 } from "@/components/UI/AlertDialog";
 import Balancer from "react-wrap-balancer";
 import {Dialog, DialogContent, DialogTrigger} from "@/components/UI/DIalog";
+import Link from "next/link";
 
 export default function Index({ course }: { course: any }) {
      return (<>
@@ -32,7 +33,9 @@ export default function Index({ course }: { course: any }) {
                             </div>
                         )
                     }
-                    <Image src={course.image} alt={course.title} layout="fill" className="rounded-[4px] object-cover !relative border border-border aspect-video" />
+                    <Link href={`/courses/${course.slug}`}>
+                         <Image src={course.image} alt={course.title} layout="fill" className="rounded-[4px] object-cover !relative border border-border aspect-video" />
+                    </Link>
                </div>
 
                <div className="flex flex-col gap-2 relative">
@@ -44,13 +47,17 @@ export default function Index({ course }: { course: any }) {
                                    <span className="text-xs text-muted-foreground">{course.students || 0}</span>
                               </div>
                          </div>
-                         <h1 className="font-semibold text-second text-sm line-clamp-2">
-                              {course.title}
-                         </h1>
+                         <Link href={`/courses/${course.slug}`}>
+                              <h1 className="font-semibold text-second text-sm line-clamp-2">
+                                   {course.title}
+                              </h1>
+                         </Link>
                     </div>
-                    <p className="text-xs text-muted-foreground line-clamp-3">
-                         {course.description}
-                    </p>
+                    <Link href={`/courses/${course.slug}`}>
+                         <p className="text-xs text-muted-foreground line-clamp-3">
+                              {course.description}
+                         </p>
+                    </Link>
                     {
                          course.locked ? (
                              // <AlertDialog>
