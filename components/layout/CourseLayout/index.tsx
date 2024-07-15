@@ -2,11 +2,12 @@ import Sidebar from '@/components/layout/SideMenu';
 import Header from '@/components/layout/Header';
 import Link from 'next/link';
 import Image from 'next/image';
+import styles from './styles.module.css';
 
 export default function Index({ children }: { children: React.ReactNode }) {
      return (
           <>
-               <div className="main-grid">
+               <div className={styles.main}>
                     <div className="flex z-50">
                          <div className="flex-[1_1_1px] w-[250px] h-14 flex flex-col fixed z-50 border-r border-border box-border">
                               <Link href="/" className={"cursor-pointer relative flex select-none border-none"}>
