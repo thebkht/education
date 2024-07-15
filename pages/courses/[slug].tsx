@@ -3,6 +3,7 @@ import {getCourseBySlug} from "@/lib/courses";
 import {notFound} from "next/navigation";
 import CourseLayout from "@/components/layout/CourseLayout";
 import Image from "next/image";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/UI/Tabs";
 
 export default  function Page() {
     const router = useRouter();
@@ -24,8 +25,16 @@ export default  function Page() {
                         <Image src={course.image} alt={course.title} width={520} height={294}
                                className="rounded border border-border"/>
                     </div>
-                    <div className="flex flex-col gap-4">
-                        <div className="flex flex-col rounded border border-border bg-background py-2"></div>
+                    <div>
+                        <Tabs defaultValue={'content'} className="space-y-4">
+                            <TabsList className="gap-4">
+                                <TabsTrigger value={"content"}>Содержание курса</TabsTrigger>
+                                <TabsTrigger value={"review"}>Обзор</TabsTrigger>
+                            </TabsList>
+                            <TabsContent value={"content"} className="flex flex-col mt-4">
+
+                            </TabsContent>
+                        </Tabs>
                     </div>
                 </div>
             </CourseLayout>
