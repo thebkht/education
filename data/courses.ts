@@ -7,6 +7,7 @@ export const courses = [
     image: "/course-1.jpeg",
     new: true,
     locked: false,
+    slug: "umumiy-qurilish-ishlarini-tashkil-etish-soha-mutaxassislari",
   },
   {
     title: `Ko‘priklar va sun’iy inshootlar qurish va ta’mirlash ustalarini malakasini oshirish`,
@@ -14,6 +15,7 @@ export const courses = [
     image: "/course-2.jpeg",
     new: true,
     locked: false,
+    slug: "kopriklar-va-suniy-inshootlar-qurish-va-tamirlash-ustalarini-malakasini-oshirish",
   },
   {
     title: `Avtomobil yo‘llarini qurish va ta’mirlashda ishlab chiqarishni tashkil etish va bajarish bo‘limi mutaxassislarini malakasini oshirish`,
@@ -28,6 +30,7 @@ export const courses = [
     image: "/course-4.jpeg",
     new: true,
     locked: true,
+    slug: "avtomobil-yollarini-qurish-va-tamirlashda-ishlab-chiqarishni-tashkil-etish-va-bajarish-bolimi-mutaxassislarini-malakasini-oshirish",
   },
   {
     title: `Yo‘l qurilish materiallari xossalari va qo‘llanishi. Maxalliy materiallar.`,
@@ -35,6 +38,7 @@ export const courses = [
     image: "/course-5.jpeg",
     new: true,
     locked: true,
+    slug: "yol-qurilish-materiallari-xossalari-va-qollanishi-maxalliy-materiallar",
   },
   {
     title: `Yo‘l qurilishida Geodeziya. Teodolit, nivelir va turli xil o‘lchov asboblari bilan geodezik nuqtalarni aniqlashni o‘rgatish. JPS –avtomatik aniqlash-hisoblash usullari.`,
@@ -42,6 +46,7 @@ export const courses = [
     image: "/course-6.jpeg",
     new: true,
     locked: true,
+    slug: "yol-qurilishida-geodeziya-teodolit-nivelir-va-turli-xil-olchov-asboblari-bilan-geodezik-nuqtalarni-aniqlashni-orgatish-jps-avtomatik-aniqlash-hisoblash-usullari",
   },
   {
     title: `Bajariladigan ishlar davomiyligini ish turlari bo‘yicha hisoblash va ishlarni  bajarish kalendar rejasini tuzish`,
@@ -49,6 +54,7 @@ export const courses = [
     image: "/course-7.jpeg",
     new: true,
     locked: true,
+    slug: "bajariladigan-ishlar-davomiyligini-ish-turlari-boyicha-hisoblash-va-ishlarni-bajarish-kalendar-rejasini-tuzish",
   },
   {
     title: `Asos va qoplamalarni qurish ishlari  texnologiyalari, ular orasidagi farqlar. Ish bajarishdagi texnik va operatsion nazorat kriteriyalari`,
@@ -56,5 +62,6 @@ export const courses = [
     image: "/course-8.jpeg",
     new: true,
     locked: true,
+    slug: "asos-va-qoplamalarni-qurish-ishlari-texnologiyalari-ular-orasidagi-farqlar-ish-bajarishdagi-texnik-va-operatsion-nazorat-kriteriyalari",
   },
 ];
