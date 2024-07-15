@@ -33,9 +33,9 @@ export default function Page() {
                         <Tabs defaultValue={'content'} className="space-y-4">
                             <TabsList className="gap-4">
                                 <TabsTrigger value={"content"}>Содержание курса</TabsTrigger>
-                                <TabsTrigger value={"review"}>Обзор</TabsTrigger>
+                                <TabsTrigger value={"overview"}>Обзор</TabsTrigger>
                             </TabsList>
-                            <TabsContent value={"content"} className="flex flex-col mt-4">
+                            <TabsContent value={"content"}>
                                 <Accordion type={"single"} defaultValue="chapter-1" collapsible>
                                     {
                                         chapters.map((chapter, index) => (
@@ -114,6 +114,14 @@ export default function Page() {
                                         ))
                                     }
                                 </Accordion>
+                            </TabsContent>
+                            <TabsContent value={"overview"} className={"flex flex-col gap-4 text-second p-4"}>
+                                <h4 className={"font-semibold text-lg"}>
+                                    Описание курса
+                                </h4>
+                                <p className={"text-sm"}>
+                                    {course.overview}
+                                </p>
                             </TabsContent>
                         </Tabs>
                     </div>
