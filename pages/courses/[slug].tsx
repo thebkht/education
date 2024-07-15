@@ -32,7 +32,7 @@ export default  function Page() {
                                 <TabsTrigger value={"review"}>Обзор</TabsTrigger>
                             </TabsList>
                             <TabsContent value={"content"} className="flex flex-col mt-4">
-
+                                <div className="flex gap-4 p-4 border-b border-border"></div>
                             </TabsContent>
                         </Tabs>
                     </div>
