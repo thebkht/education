@@ -3,8 +3,9 @@ import Header from '@/components/layout/Header';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './styles.module.css';
+import { cn } from '@/lib/utils';
 
-export default function Index({ children }: { children: React.ReactNode }) {
+export default function Index({ children, className }: { children: React.ReactNode, className?: string }) {
      return (
           <>
                <div className={styles.main}>
@@ -22,7 +23,7 @@ export default function Index({ children }: { children: React.ReactNode }) {
                               <div className="flex flex-1 min-w-0">
                                    <div className="flex justify-center flex-[1_0_1px] min-w-0 [overflow-anchor:none] overflow-x-auto">
                                         <div className="flex px-4 flex-1 min-w-0">
-                                             <div className="flex flex-1 justify-center min-w-0">
+                                             <div className={cn("flex flex-1 justify-center min-w-0", className)}>
                                                   <div className="flex flex-col py-4">
                                                        {children}
                                                   </div>
