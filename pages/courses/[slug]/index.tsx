@@ -101,7 +101,10 @@ export default function Page() {
                                                                                 </div>
                                                                                 {
                                                                                      !section.locked && section.hasQuiz && (
-                                                                                          <Button size={'sm'} className={'font-medium py-1.5'}>
+                                                                                          <Button size={'sm'} className={'font-medium py-1.5'}
+                                                                                               onClick={
+                                                                                                    () => router.push(`/courses/${course.slug}/quiz/1`)
+                                                                                               }>
                                                                                                Пройти тест
                                                                                           </Button>
                                                                                      )
