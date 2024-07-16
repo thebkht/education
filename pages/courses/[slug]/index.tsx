@@ -5,7 +5,7 @@ import CourseLayout from "@/components/layout/CourseLayout";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/UI/Tabs";
 import { sections } from "@/data/course-chapters";
-import { Index as Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/UI/Accordion";
+import Accordion, { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/UI/Accordion";
 import { Icons } from "@/components/icons";
 import Button from "@/components/UI/Button"
 
@@ -17,8 +17,8 @@ export default function Page() {
 
      return (
           <>
-               <CourseLayout>
-                    <div className="flex-1 max-w-5xl flex flex-col gap-6 py-9">
+               <CourseLayout className={"mx-auto"}>
+                    <div className="flex-1 max-w-5xl flex flex-col gap-6 py-9 mx-auto w-full">
                          <div className="flex items-center gap-6">
                               <div className="flex flex-col gap-6 flex-1">
                                    <div className="flex flex-col gap-4">
