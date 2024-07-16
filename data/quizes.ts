@@ -1,6 +1,6 @@
 export const quizes = [
   {
-    id: 1,
+    id: "1",
     questions: [
       {
         id: 1,
@@ -118,7 +118,7 @@ export const quizes = [
     ],
   },
   {
-    id: 2,
+    id: "2",
     questions: [
       {
         id: 1,
