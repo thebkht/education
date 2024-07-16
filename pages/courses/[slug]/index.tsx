@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import CourseLayout from "@/components/layout/CourseLayout";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/UI/Tabs";
-import { chapters } from "@/data/course-chapters";
+import { sections } from "@/data/course-chapters";
 import { Index as Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/UI/Accordion";
 import { Icons } from "@/components/icons";
 import Button from "@/components/UI/Button"
@@ -38,7 +38,7 @@ export default function Page() {
                                    <TabsContent value={"content"}>
                                         <Accordion type={"single"} defaultValue="chapter-1" collapsible>
                                              {
-                                                  chapters.map((chapter, index) => (
+                                                  sections.map((section, index) => (
                                                        <AccordionItem value={`chapter-${index + 1}`} key={index} >
                                                             <AccordionTrigger>
                                                                  <div className="flex justify-between items-center w-full">
@@ -47,13 +47,13 @@ export default function Page() {
                                                                                 className="flex gap-2 text-second text-lg font-semibold">
                                                                                 Раздел {index + 1}:
                                                                                 <span className={'text-second-foreground font-normal'}>
-                                                                                     {chapter.title}
+                                                                                     {section.title}
                                                                                 </span>
                                                                            </div>
                                                                       </div>
                                                                       <span className={'text-muted-foreground text-sm'}>
                                                                            {
-                                                                                chapter.sections.filter(section => section.completed).length + "/" + chapter.sections.length
+                                                                                section.lectures.filter(lecture => lecture.completed).length + "/" + section.lectures.length
                                                                            }
                                                                       </span>
                                                                  </div>
@@ -65,7 +65,7 @@ export default function Page() {
                                                                                 className={'h-[18px] w-[18px] text-second-foreground'} />
                                                                            <div className="flex gap-1 font-semibold text-second">
                                                                                 Видео:
-                                                                                <span className={'font-normal'}>{chapter.videos}</span>
+                                                                                <span className={'font-normal'}>{section.videos}</span>
                                                                            </div>
                                                                       </div>
                                                                       <div className="flex items-center gap-2">
@@ -73,21 +73,21 @@ export default function Page() {
                                                                                 className={'h-[18px] w-[18px] text-second-foreground'} />
                                                                            <div className="flex gap-1 font-semibold text-second">
                                                                                 Тест:
-                                                                                <span className={'font-normal'}>{chapter.quizes}</span>
+                                                                                <span className={'font-normal'}>{section.quizes}</span>
                                                                            </div>
                                                                       </div>
                                                                  </div>
                                                                  <p className={'text-second-foreground'}>
-                                                                      {chapter.desc}
+                                                                      {section.desc}
                                                                  </p>
                                                             </AccordionContent>
                                                             {
-                                                                 chapter.sections.map((section, index) => (
+                                                                 section.lectures.map((lecture, index) => (
                                                                       <AccordionContent key={index}>
                                                                            <div className="flex items-center justify-between">
                                                                                 <div className="flex gap-2 items-center">
                                                                                      {
-                                                                                          !section.locked ? (section.completed ? (
+                                                                                          !lecture.locked ? (lecture.completed ? (
                                                                                                <Icons.checked className={'h-8 w-8 text-muted-foreground'} />
                                                                                           ) : (
                                                                                                <Icons.unchecked className={'h-8 w-8 text-muted-foreground'} />
@@ -96,18 +96,25 @@ export default function Page() {
                                                                                           )
                                                                                      }
                                                                                      <p className={'text-second-foreground max-w-[800px]'}>
-                                                                                          {section.title}
+                                                                                          {lecture.title}
                                                                                      </p>
                                                                                 </div>
                                                                                 {
-                                                                                     !section.locked && section.hasQuiz && (
+                                                                                     !lecture.locked && (index === 0 ? (
                                                                                           <Button size={'sm'} className={'font-medium py-1.5'}
                                                                                                onClick={
                                                                                                     () => router.push(`/courses/${course.slug}/quiz/1`)
                                                                                                }>
                                                                                                Пройти тест
                                                                                           </Button>
-                                                                                     )
+                                                                                     ) : (
+                                                                                          <Button size={'sm'} className={'font-medium py-1.5'}
+                                                                                               onClick={
+                                                                                                    () => router.push(`/courses/${course.slug}/section/${section.id}/lecture/${lecture.id}`)
+                                                                                               }>
+                                                                                               Продолжить
+                                                                                          </Button>
+                                                                                     ))
                                                                                 }
                                                                            </div>
                                                                       </AccordionContent>
