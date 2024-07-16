@@ -5,6 +5,7 @@ import Accordion, { AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { sections } from "@/data/course-chapters";
 import { Icons } from "@/components/icons";
 import Button from "@/components/UI/Button";
+import Link from "next/link";
 
 export default function LecturePage() {
      const router = useRouter();
@@ -81,25 +82,27 @@ export default function LecturePage() {
                                                             </div>
                                                        </AccordionTrigger>
                                                        {section.lectures.map((lecture, index) => (
-                                                            <AccordionContent key={lecture.id} className="bg-background border-b py-2 px-4">
-                                                                 <div className="flex items-center justify-between">
-                                                                      <div className="flex gap-1 flex-col">
+                                                            <Link href={`/courses/${slug}/lecture/${section.id}/${lecture.id}`} key={lecture.id}>
+                                                                 <AccordionContent key={lecture.id} className="bg-background border-b py-2 px-4">
+                                                                      <div className="flex items-center justify-between">
+                                                                           <div className="flex gap-1 flex-col">
 
-                                                                           <div className="flex gap-2 text-second-foreground items-center text-sm">
-                                                                                <p>
-                                                                                     {index + 1}.
-                                                                                </p>
-                                                                                <p className={'line-clamp-1'}>
-                                                                                     {lecture.title}
+                                                                                <div className="flex gap-2 text-second-foreground items-center text-sm">
+                                                                                     <p>
+                                                                                          {index + 1}.
+                                                                                     </p>
+                                                                                     <p className={'line-clamp-1'}>
+                                                                                          {lecture.title}
+                                                                                     </p>
+                                                                                </div>
+                                                                                <p className="text-muted-foreground text-xs">
+                                                                                     Описание курса
                                                                                 </p>
                                                                            </div>
-                                                                           <p className="text-muted-foreground text-xs">
-                                                                                Описание курса
-                                                                           </p>
-                                                                      </div>
 
-                                                                 </div>
-                                                            </AccordionContent>
+                                                                      </div>
+                                                                 </AccordionContent>
+                                                            </Link>
                                                        ))}
                                                   </AccordionItem>
                                              ))}
