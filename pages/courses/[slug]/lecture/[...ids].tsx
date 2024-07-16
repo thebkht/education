@@ -105,6 +105,18 @@ export default function LecturePage() {
                                              ))}
                                         </Accordion>
                                    </div>
+                                   <Button
+                                        type="submit"
+                                        size="sm"
+                                        className={
+                                             "h-10 w-fit"
+                                        }
+                                   >
+                                        <div className="flex items-center gap-2 font-medium">
+                                             <Icons.checkMark className={"h-4 w-4"} />
+                                             Завершить
+                                        </div>
+                                   </Button>
                               </div>
                          </div>
                     </div>
