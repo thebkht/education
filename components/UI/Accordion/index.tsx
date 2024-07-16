@@ -45,4 +45,5 @@ const AccordionContent = ({ className, children, ...props }: React.ComponentProp
      )
 }
 
-export { Index, AccordionItem, AccordionTrigger, AccordionContent }
+export { AccordionItem, AccordionTrigger, AccordionContent }
+export default Index
