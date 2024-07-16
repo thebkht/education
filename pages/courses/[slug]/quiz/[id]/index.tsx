@@ -54,7 +54,7 @@ export default function QuizPage() {
 
     return (
         <>
-            <CourseLayout>
+            <CourseLayout className={"mx-auto"}>
                 <div className="flex gap-6 flex-col">
                     <div className="flex flex-col gap-4">
                         <div className="flex flex-col gap-10 bg-background p-6 rounded border max-w-[1574px]">
