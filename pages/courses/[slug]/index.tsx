@@ -110,7 +110,7 @@ export default function Page() {
                                                                                      ) : (
                                                                                           <Button size={'sm'} className={'font-medium py-1.5'}
                                                                                                onClick={
-                                                                                                    () => router.push(`/courses/${course.slug}/section/${section.id}/lecture/${lecture.id}`)
+                                                                                                    () => router.push(`/courses/${course.slug}/lecture/${section.id}/${lecture.id}`)
                                                                                                }>
                                                                                                Продолжить
                                                                                           </Button>

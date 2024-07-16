@@ -17,7 +17,7 @@ export const sections = [
       {
         id: 2,
         title: `Bajariladigan ishlar davomiyligini ish turlari bo‘yicha hisoblash va ishlarni  bajarish kalendar rejasini tuzish`,
-        locked: true,
+        locked: false,
         completed: false,
         hasQuiz: false,
       },
