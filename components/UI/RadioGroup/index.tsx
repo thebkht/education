@@ -24,7 +24,7 @@ export const RadioGroupItem = ({ className, ...props }: React.ComponentPropsWith
             {...props}
         >
             <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-                <Circle className="h-2.5 w-2.5 fill-current text-current" />
+                <Circle className="h-3 w-3 fill-current text-current" />
             </RadioGroupPrimitive.Indicator>
         </RadioGroupPrimitive.Item>
     )
