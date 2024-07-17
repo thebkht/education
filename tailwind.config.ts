@@ -45,6 +45,9 @@ const config: Config = {
         muted: {
           foreground: "hsla(var(--muted-foreground))",
         },
+        success: "hsla(var(--success))",
+        destructive: "hsla(var(--destructive))",
+        accent2: "hsla(var(--accent2))"
       },
     },
   },

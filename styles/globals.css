@@ -16,7 +16,10 @@
   --second-foreground: 246, 23%, 33%;
   --muted-foreground: 0, 0%, 60%;
   --border: 216, 12%, 84%;
-  --input: 216, 12%, 84%
+  --input: 216, 12%, 84%;
+  --success: 133, 54%, 52%;
+  --destructive: 0, 100%, 50%, 1;
+  --accent2: 220, 82%, 98%
 }
 
 @media (prefers-color-scheme: dark) {
