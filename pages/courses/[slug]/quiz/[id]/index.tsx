@@ -47,9 +47,8 @@ export default function QuizPage() {
     const { questions } = quiz;
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
         console.log(values);
+        router.push(`/courses/${courseId}/quiz/${id}/results`);
     }
 
     return (
@@ -137,16 +136,14 @@ export default function QuizPage() {
                                         type="submit"
                                         size="sm"
                                         className={
-                                            "h-10 w-fit disabled:bg-muted-foreground disabled:border-muted-foreground"
+                                            "h-10 w-fit disabled:bg-muted-foreground items-center gap-2 font-medium disabled:border-muted-foreground"
                                         }
                                         disabled={
                                             form.formState.isSubmitting || !form.formState.isValid
                                         }
                                     >
-                                        <div className="flex items-center gap-2 font-medium">
-                                            <Icons.checkMark className={"h-4 w-4"} />
-                                            Завершить
-                                        </div>
+                                        <Icons.checkMark className={"h-4 w-4"} />
+                                        Завершить
                                     </Button>
                                 </form>
                             </Form>

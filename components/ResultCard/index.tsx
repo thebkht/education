@@ -5,7 +5,7 @@ export default function Index({value, title = "Umumiy savollar soni", className,
     return (
         <>
             <div
-                className={cn("flex flex-col justify-center items-center font-semibold text-2xl rounded-lg py-9 gap-6 w-96 bg-accent2 text-second-foreground", className)}>
+                className={cn("flex flex-col justify-center items-center font-semibold text-2xl rounded-lg py-9 gap-6 2xl:w-96 md:w-80 bg-accent2 text-second-foreground", className)}>
                 {title}
                 <span className={cn("font-bold text-5xl", valueClass)}>
                                 {value}
