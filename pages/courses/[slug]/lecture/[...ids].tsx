@@ -64,7 +64,7 @@ export default function LecturePage() {
                                         </div>
                                         <Accordion type="single" collapsible defaultValue={`${section_id}`}>
                                              {sections.map((section, index) => (
-                                                  <AccordionItem value={`${section.id}`} key={section.id} className="bg-indigo-50">
+                                                  <AccordionItem value={`${section.id}`} key={section.id} className="bg-accent2">
                                                        <AccordionTrigger>
                                                             <div className="flex justify-between items-center w-full">
                                                                  <div className="flex gap-1 flex-col">
@@ -83,7 +83,7 @@ export default function LecturePage() {
                                                        </AccordionTrigger>
                                                        {section.lectures.map((lecture, index) => (
                                                             <Link href={`/courses/${slug}/lecture/${section.id}/${lecture.id}`} key={lecture.id}>
-                                                                 <AccordionContent key={lecture.id} className="bg-background border-b py-2 px-4">
+                                                                 <AccordionContent key={lecture.id} className="bg-background border-b py-2 px-4 hover:bg-accent2">
                                                                       <div className="flex items-center justify-between">
                                                                            <div className="flex gap-1 flex-col">
 
