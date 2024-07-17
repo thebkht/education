@@ -58,7 +58,7 @@ export default function ResultPage() {
                         {
                             isPassed ? (
                                 <Button size="sm" className="h-10 font-medium gap-2"
-
+                                    onClick={() => router.push(`/courses/${courseId}/certificate/`)}
                                 >
                                     Sertifikat olish
                                     <Icons.download className={"h-5 w-5"} />
@@ -76,7 +76,7 @@ export default function ResultPage() {
                                                 Пожалуйста, заплатите, чтобы пересдать тест
                                             </Balancer>
                                         </AlertDialogDescription>
-                                        <AlertDialogAction  className={'w-fit mx-auto py-2 px-4 h-10 font-medium'}>
+                                        <AlertDialogAction className={'w-fit mx-auto py-2 px-4 h-10 font-medium'}>
                                             Повторная подача
                                         </AlertDialogAction>
                                     </AlertDialogContent>

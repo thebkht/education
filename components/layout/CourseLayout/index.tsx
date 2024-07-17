@@ -10,9 +10,9 @@ export default function Index({ children, className }: { children: React.ReactNo
           <>
                <div className={styles.main}>
                     <div className="flex z-50">
-                         <div className="flex-[1_1_1px] w-[250px] h-14 flex flex-col fixed z-50 border-r border-border box-border">
+                         <div className="flex-[1_1_1px] w-[250px] h-14 px-4 justify-center flex flex-col fixed z-50 border-r border-border box-border">
                               <Link href="/" className={"cursor-pointer relative flex select-none border-none"}>
-                                   <Image src="/logo.png" alt="Logo" width={175} height={56} />
+                                   <Image src="/logo.png" alt="Logo" width={141} height={45} />
                               </Link>
                          </div>
                     </div>
