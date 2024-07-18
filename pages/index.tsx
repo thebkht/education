@@ -7,17 +7,14 @@ import { CoursesSection } from "@/components/home/courses-section";
 import { InstructorSection } from "@/components/home/instructors-section";
 import { TestimonialSection } from "@/components/home/testimonials-section";
 import Footer from "@/components/layout/Footer";
-import { Metadata } from "next";
+import Metadata from "@/components/Metadata";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Avtomobil yo'llari ilmiy-tadqiqot instituti",
-}
 
 export default function Home() {
   return (
     <>
+      <Metadata />
       <div className={`${inter.className} flex flex-col gap-5`}>
         <Navbar />
         <Hero />

@@ -6,6 +6,7 @@ import { sections } from "@/data/course-chapters";
 import { Icons } from "@/components/icons";
 import Button from "@/components/UI/Button";
 import Link from "next/link";
+import Metadata from "@/components/Metadata";
 
 export default function LecturePage() {
      const router = useRouter();
@@ -22,6 +23,7 @@ export default function LecturePage() {
 
      return (
           <>
+               <Metadata title={`${course.title}`} description={course.description} />
                <CoursesLayout>
                     <div className="flex flex-col gap-6">
                          <div className="flex max-w-[1064px] items-center mr-auto">

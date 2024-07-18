@@ -13,6 +13,9 @@ import {
     AlertDialogTrigger
 } from "@/components/UI/AlertDialog";
 import Balancer from "react-wrap-balancer";
+import { getCourseBySlug } from "@/lib/courses";
+import Metadata from "@/components/Metadata";
+import { notFound } from "next/navigation";
 
 export default function ResultPage() {
     const router = useRouter();
@@ -29,8 +32,12 @@ export default function ResultPage() {
     const isPassed = scorePercentage >= 85;
     const Icon = isPassed ? Icons.approved : Icons.rejected;
 
+    const course = getCourseBySlug(courseId);
+    if (!course) return notFound();
+
     return (
         <>
+            <Metadata title={`${course.title}`} description={course.description} image={course.image} />
             <CourseLayout className={"flex-none mx-auto"}>
                 <div
                     className="flex flex-col rounded-2xl p-6 gap-24 bg-background flex-[1_0_auto] w-full items-center justify-center max-w-[1622px] max-h-[976px]">

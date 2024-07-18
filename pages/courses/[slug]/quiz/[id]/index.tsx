@@ -16,6 +16,8 @@ import { RadioGroupItem } from "@/components/UI/RadioGroup";
 import Button from "@/components/UI/Button";
 import React from "react";
 import { Icons } from "@/components/icons";
+import Metadata from "@/components/Metadata";
+import { getCourseBySlug } from "@/lib/courses";
 
 const formSchema = z.object({
     answers: z.array(
@@ -51,8 +53,16 @@ export default function QuizPage() {
         router.push(`/courses/${courseId}/quiz/${id}/results`);
     }
 
+    const course = getCourseBySlug(courseId);
+    if (!course) return notFound();
+
     return (
         <>
+            <Metadata
+                title={`${course.title}`}
+                description={course.description}
+                image={course.image}
+            />
             <CourseLayout className={"mx-auto"}>
                 <div className="flex gap-6 flex-col">
                     <div className="flex flex-col gap-4">

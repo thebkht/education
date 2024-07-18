@@ -3,10 +3,12 @@ import { courses } from '@/data/courses';
 import CourseCard from '@/components/CourseCard2';
 import { Icons } from '@/components/icons';
 import Input from '@/components/UI/Input';
+import Metadata from '@/components/Metadata';
 
 export default function Courses() {
      return (
           <>
+               <Metadata title="Kurslar" description="Kurslar" />
                <CourseLayout>
                     <div className="flex gap-6 items-center">
                          <div className="bg-background w-60 rounded-[4px] py-2.5 px-4 flex items-center gap-2">
