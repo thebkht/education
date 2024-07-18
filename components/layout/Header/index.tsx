@@ -26,7 +26,7 @@ export default function Index({ collapsed: initialCollapsed, onCollapse }: { col
 
      React.useEffect(() => {
           onCollapse(collapsed);
-     }, [collapsed]);
+     }, [collapsed, onCollapse]);
 
      return (
           <>
@@ -40,7 +40,7 @@ export default function Index({ collapsed: initialCollapsed, onCollapse }: { col
                                    <Icons.menu className="w-5 h-5" />
                                    <span className="sr-only">Menu</span>
                               </Button>
-                              <Badge>Мои курсы</Badge>
+                              <Badge>Mening kurslarim</Badge>
                          </div>
                          <div className="flex items-center gap-3">
                               <div className="flex items-center gap-1 text-sm font-medium">
