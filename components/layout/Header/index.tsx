@@ -7,9 +7,10 @@ import React from "react";
 
 type DeadlineProps = { days: number; hours: number; minutes: number; }
 
-export default function Index() {
+export default function Index({ collapsed: initialCollapsed, onCollapse }: { collapsed: boolean; onCollapse: (collapsed: boolean) => void }) {
      const [nextWeek, setNextWeek] = React.useState<Date>(new Date(Date.now() + 7 * 24 * 60 * 60 * 1000));
      const [deadline, setDeadline] = React.useState<DeadlineProps | null>(null);
+     const [collapsed, setCollapsed] = React.useState<boolean>(initialCollapsed);
 
      // Corrected code to update deadline every minute
      React.useEffect(() => {
@@ -23,14 +24,22 @@ export default function Index() {
           return () => clearInterval(intervalId); // Cleanup on unmount or nextWeek change
      }, [nextWeek]);
 
+     React.useEffect(() => {
+          onCollapse(collapsed);
+     }, [collapsed]);
+
      return (
           <>
                <div className="flex h-14 flex-[0_0_auto]">
-                    <div className="flex flex-[1_1_1px] py-2 px-6 box-border fixed h-14 w-[calc(100vw-250px)] border-b z-40 justify-between items-center">
+                    <div className={`flex flex-[1_1_1px] py-2 px-6 box-border fixed h-14 ${collapsed ? "w-[calc(100vw-72px)]" : "w-[calc(100vw-250px)]"} border-b z-40 justify-between items-center transition-all duration-300 ease-in-out`}>
                          <div className="flex items-center gap-4">
-                              <div className="font-medium text-second text-lg">
-                                   Обучение
-                              </div>
+                              <Button
+                                   className="flex items-center gap-2 bg-background text-foreground border-none"
+                                   onClick={() => setCollapsed(!collapsed)}
+                              >
+                                   <Icons.menu className="w-5 h-5" />
+                                   <span className="sr-only">Menu</span>
+                              </Button>
                               <Badge>Мои курсы</Badge>
                          </div>
                          <div className="flex items-center gap-3">
