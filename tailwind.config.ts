@@ -33,7 +33,10 @@ const config: Config = {
         border: "hsla(var(--border))",
         input: "hsla(var(--input))",
         foreground: "hsla(var(--foreground))",
-        secondary: "hsla(var(--secondary))",
+        secondary: {
+          DEFAULT: "hsla(var(--secondary))",
+          foreground: "hsla(var(--secondary-foreground))",
+        },
         second: {
           DEFAULT: "hsla(var(--second))",
           foreground: "hsla(var(--second-foreground))",

@@ -20,12 +20,12 @@ export default function Page() {
           <>
                <Metadata title={course.title} description={course.description} image={course.image} />
                <CourseLayout className={"mx-auto"}>
-                    <div className="flex-1 max-w-5xl flex flex-col gap-6 py-9 mx-auto w-full">
+                    <div className="flex-1 max-w-[1064px] flex flex-col gap-6 py-9 mx-auto w-full">
                          <div className="flex items-center gap-6">
                               <div className="flex flex-col gap-6 flex-1">
                                    <div className="flex flex-col gap-4">
                                         <h4 className={'font-bold text-2xl text-second'}>{course.title}</h4>
-                                        <p className={'text-second-foreground text-base'}>{course.description}</p>
+                                        <p className={'text-secondary-foreground text-base'}>{course.description}</p>
                                    </div>
                               </div>
                               <Image src={course.image} alt={course.title} width={520} height={294}
