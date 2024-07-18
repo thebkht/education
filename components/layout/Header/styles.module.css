@@ -1,0 +1,11 @@
+.dropdown {
+     @apply flex gap-6 items-center;
+}
+
+.dropdown svg {
+     @apply transition-transform duration-300 ease-in-out;
+}
+
+.dropdown[data-state="open"] svg.select {
+     @apply transform rotate-180;
+}
