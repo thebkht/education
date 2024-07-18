@@ -57,7 +57,7 @@ export default function Index({
                     >
                          <div className="flex items-center gap-4">
                               <Button
-                                   className="flex items-center gap-2 bg-background text-foreground border-none"
+                                   className="flex items-center gap-2 p-2 bg-background text-foreground border-none"
                                    onClick={() => setCollapsed(!collapsed)}
                               >
                                    <Icons.menu className="w-5 h-5" />
