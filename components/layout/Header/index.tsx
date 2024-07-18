@@ -53,7 +53,7 @@ export default function Index({
                <div className="flex h-14 flex-[0_0_auto]">
                     <div
                          className={`flex flex-[1_1_1px] py-2 px-6 box-border fixed h-14 ${collapsed ? "w-[calc(100vw-72px)]" : "w-[calc(100vw-250px)]"
-                              } border-b z-40 justify-between items-center transition-all duration-300 ease-in-out`}
+                              } border-b border-popover z-40 justify-between items-center`}
                     >
                          <div className="flex items-center gap-4">
                               <Button
