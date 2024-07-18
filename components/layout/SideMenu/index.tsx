@@ -11,7 +11,7 @@ export default function Index() {
                                    <Icons.home className="h-[18] w-[18px] text-primary-foreground" />
                               </div>
                               <span className="font-medium text-sm text-primary">
-                                   Мои курсы
+                                   Mening kurslarim
                               </span>
                          </Link>
                     </div>

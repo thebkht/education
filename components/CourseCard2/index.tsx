@@ -12,8 +12,10 @@ import Balancer from "react-wrap-balancer";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/UI/DIalog";
 import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/router";
 
 export default function Index({ course }: { course: any }) {
+     const router = useRouter();
      const [open, setOpen] = React.useState(false);
      return (<>
           <AlertDialog open={open} onOpenChange={setOpen}>
@@ -29,8 +31,8 @@ export default function Index({ course }: { course: any }) {
                     </AlertDialogAction>
                </AlertDialogContent>
           </AlertDialog>
-          <div className="flex flex-col gap-2 rounded-lg border border-border bg-background p-4">
-               <div className="flex justify-end items-end flex-1 aspect-video relative">
+          <div className="flex flex-col gap-2 rounded-lg border border-border bg-background p-4 hover:shadow-lg shadow-md">
+               <div className="aspect-video relative h-auto w-full">
                     {
                          course.locked ? (
                               <div className="h-full w-full bg-black/40 flex justify-center items-center rounded absolute z-10 backdrop-blur-lg cursor-pointer" onClick={
@@ -42,7 +44,7 @@ export default function Index({ course }: { course: any }) {
                               <div className="h-full w-full bg-black/40 rounded absolute z-10 pointer-events-none"></div>
                          )
                     }
-                    <Link href={course.locked ? "#" : `/courses/${course.slug}`}
+                    <div
                          onClick={
                               () => {
                                    if (course.locked) {
@@ -51,7 +53,7 @@ export default function Index({ course }: { course: any }) {
                               }
                          }>
                          <Image src={course.image} alt={course.title} layout="fill" className="rounded-[4px] object-cover !relative border border-border aspect-video" />
-                    </Link>
+                    </div>
                </div>
 
                <div className="flex flex-col gap-2 relative">
@@ -63,7 +65,7 @@ export default function Index({ course }: { course: any }) {
                                    <span className="text-xs text-muted-foreground">{course.students || 0}</span>
                               </div>
                          </div>
-                         <Link href={course.locked ? "#" : `/courses/${course.slug}`}
+                         <div
                               onClick={
                                    () => {
                                         if (course.locked) {
@@ -74,9 +76,9 @@ export default function Index({ course }: { course: any }) {
                               <h1 className="font-semibold text-second text-sm line-clamp-2">
                                    {course.title}
                               </h1>
-                         </Link>
+                         </div>
                     </div>
-                    <Link href={course.locked ? "#" : `/courses/${course.slug}`}
+                    <div
                          onClick={
                               () => {
                                    if (course.locked) {
@@ -87,24 +89,25 @@ export default function Index({ course }: { course: any }) {
                          <p className="text-xs text-muted-foreground line-clamp-3">
                               {course.description}
                          </p>
-                    </Link>
+                    </div>
                     {
                          course.locked ? (
                               <Dialog>
                                    <DialogTrigger asChild>
                                         <Button className={"w-fit rounded"}>Заключить договор на курс</Button>
                                    </DialogTrigger>
-                                   <DialogContent className={"p-0 max-w-[984px] max-h-[948px] h-full border-none mb-3"} noClose>
-                                        <object data="" type="application/pdf" className={"h-full w-full"}></object>
-                                        <Button className={"w-fit rounded"}>Подписать</Button>
-                                        <Button className={"w-fit rounded"}>Подписать</Button>
+                                   <DialogContent className={"max-w-[984px] max-h-[98dvh] mb-3"}>
+                                        <object data="" type="application/pdf" className={"h-4/5 w-full"}></object>
+                                        <Button size={"sm"} className={"w-fit rounded"}>
+                                             Скачать
+                                        </Button>
                                    </DialogContent>
                               </Dialog>
                          ) : (
-                              <Button className={"w-fit rounded"}>
-                                   <Link href={`/courses/${course.slug}`}>
-                                        Перейти к курсу
-                                   </Link>
+                              <Button className={"w-fit rounded"}
+                                   onClick={() => router.push(`/courses/${course.slug}`)}
+                              >
+                                   Перейти к курсу
                               </Button>
                          )
                     }
