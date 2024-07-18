@@ -25,7 +25,7 @@ export default function LecturePage() {
           <>
                <Metadata title={`${course.title}`} description={course.description} />
                <CoursesLayout>
-                    <div className="flex flex-col gap-6">
+                    <div className="space-y-6 box-border">
                          <div className="flex max-w-[1064px] items-center mr-auto">
                               <h3 className="font-semibold text-second text-base">{course.title}</h3>
                          </div>
