@@ -1,10 +1,11 @@
 import { Icons } from "@/components/icons";
 import Badge from "@/components/UI/Badge";
 import Button from "@/components/UI/Button";
+import DropdownMenu, { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/UI/DropdownMenu";
 import { formatDeadline } from "@/lib/formatter";
 import React from "react";
 
-type DeadlineProps = {     days: number;     hours: number;     minutes: number; }
+type DeadlineProps = { days: number; hours: number; minutes: number; }
 
 export default function Index() {
      const [nextWeek, setNextWeek] = React.useState<Date>(new Date(Date.now() + 7 * 24 * 60 * 60 * 1000));
@@ -53,10 +54,18 @@ export default function Index() {
                               </div>
                          </div>
                          <div className="flex gap-6 items-center">
-                              <Button className="flex gap-2 rounded-[4px] py-2.5 px-2 bg-background border-none text-foreground">
-                                   <span className="text-sm text-second font-medium">jz015yv4</span>
-                                   <Icons.chevronDown className="w-3" />
-                              </Button>
+                              <DropdownMenu>
+                                   <DropdownMenuTrigger className="flex items-center gap-2 rounded-[4px] py-2.5 px-2 bg-background border-none text-foreground">
+                                        <span className="text-sm text-second font-medium">jz015yv4</span>
+                                        <Icons.chevronDown className="w-3" />
+                                   </DropdownMenuTrigger>
+                                   <DropdownMenuContent>
+                                        <DropdownMenuItem className="py-2 px-3 flex items-center gap-3 text-sm">
+                                             <Icons.logout className="w-4 h-4" />
+                                             Tizimdan chiqish
+                                        </DropdownMenuItem>
+                                   </DropdownMenuContent>
+                              </DropdownMenu>
                               <div className="h-10 w-10 bg-primary/10 rounded-full flex justify-center items-center">
                                    <Icons.user className="h-5 w-5 text-primary" />
                               </div>
