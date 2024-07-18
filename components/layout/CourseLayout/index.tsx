@@ -5,13 +5,16 @@ import Image from 'next/image';
 import styles from './styles.module.css';
 import { cn } from '@/lib/utils';
 import React from 'react';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Index({ children, className }: { children: React.ReactNode, className?: string }) {
      const [collapsed, setCollapsed] = React.useState<boolean>(false);
 
      return (
           <>
-               <div className={cn(styles.main, collapsed && styles.collapsed)}>
+               <div className={cn(styles.main, collapsed && styles.collapsed, inter.className)}>
                     <div className="flex z-50">
                          <div className={`flex-[1_1_1px] ${collapsed ? "w-[72px]" : "w-[250px]"} h-14 px-4 justify-center flex flex-col fixed z-50 border-r border-border box-border`}>
                               <Link href="/courses" className={"cursor-pointer relative flex select-none border-none rounded-lg"}>
