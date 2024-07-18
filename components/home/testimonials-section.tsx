@@ -1,6 +1,7 @@
 import TestimonialCard from "@/components/TestimonialCard";
-import TestimonialForm from "@/components/TestimonialForm";
 import { testimonials } from "@/data/testimonials";
+import { A11y, Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 export function TestimonialSection() {
      return (
@@ -10,14 +11,25 @@ export function TestimonialSection() {
                          <h3 className="text-2xl font-bold text-second">Kurslar haqida fikr-mulohaza</h3>
                     </div>
                     <div className="flex flex-col items-center gap-6">
-                         <div className="flex lg:flex-row flex-col flex-wrap gap-3 items-stretch lg:justify-normal lg:w-fit w-full justify-stretch">
+                         <Swiper
+                              modules={[Autoplay, A11y]}
+                              slidesPerView={3}
+                              spaceBetween={12}
+                              className="w-full"
+                              loop
+                              autoplay={{
+                                   delay: 2500,
+                                   disableOnInteraction: false,
+                              }}
+                         >
                               {
                                    testimonials.map((testimonial, index) => (
-                                        <TestimonialCard key={index} testimonial={testimonial} />
+                                        <SwiperSlide key={index}>
+                                             <TestimonialCard key={index} testimonial={testimonial} />
+                                        </SwiperSlide>
                                    ))
                               }
-                         </div>
-                         <TestimonialForm />
+                         </Swiper>
                     </div>
                </div>
           </>

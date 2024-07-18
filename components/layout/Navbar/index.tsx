@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/UI/Button";
+import { useRouter } from "next/router";
 
 export default function SiteHeader() {
+     const router = useRouter();
      return (
           <nav className="container flex items-center justify-between w-full mx-auto">
                <Link href="/">
@@ -12,7 +14,11 @@ export default function SiteHeader() {
                     <Link href="tel:+998711234567" className="text-primary font-medium">
                          +998 71 123 45 67
                     </Link>
-                    <Button size={'sm'}>Kirish</Button>
+                    <Button size={'sm'}
+                         onClick={
+                              () => router.push("/courses")
+                         }
+                    >Kirish</Button>
                </div>
           </nav>
      );

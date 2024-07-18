@@ -1,12 +1,17 @@
 import Image from "next/image";
 import Balancer from "react-wrap-balancer";
-
 import { Icons } from "@/components/icons";
-import Button from "@/components/UI/Button";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
+import {
+     Navigation,
+     Pagination,
+     A11y,
+     Autoplay
+}
+
+     from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -18,7 +23,7 @@ export default function Index() {
                <Swiper
                     modules={[Navigation, Pagination, A11y, Autoplay]}
                     navigation
-                    className="h-[428px]"
+                    className="h-[428px] hero-carousel"
                     loop={true}
                     autoplay={{
                          delay: 5000,
@@ -81,11 +86,7 @@ export default function Index() {
                                    <p className="lg:text-2xl text-xl font-medium text-right">
                                         Sh.M Mirziyoyev
                                    </p>
-                                   <Button variant={"secondary"} size={"lg"} className="w-fit"
-                                   >
 
-                                        Kursni boshlash
-                                   </Button>
                               </div>
                               <div>
 
@@ -119,11 +120,7 @@ export default function Index() {
                                    <p className="lg:text-2xl text-xl font-medium text-right">
                                         Sh.M Mirziyoyev
                                    </p>
-                                   <Button variant={"secondary"} size={"lg"} className="w-fit"
-                                   >
 
-                                        Kursni boshlash
-                                   </Button>
                               </div>
                               <div>
 
@@ -157,11 +154,6 @@ export default function Index() {
                                    <p className="lg:text-2xl text-xl font-medium text-right">
                                         Sh.M Mirziyoyev
                                    </p>
-                                   <Button variant={"secondary"} size={"lg"} className="w-fit"
-                                   >
-
-                                        Kursni boshlash
-                                   </Button>
                               </div>
                               <div>
 

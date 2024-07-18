@@ -19,4 +19,9 @@ export const instructors = [
     position: "Film Maker & Director",
     image: "/instructor-4.png",
   },
+  {
+    name: "Yermakova Nailya",
+    position: "Film Maker & Director",
+    image: "/instructor-4.png",
+  },
 ];
