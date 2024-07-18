@@ -48,11 +48,6 @@ export default function Index() {
                                    <p className="lg:text-2xl text-xl font-medium text-right">
                                         Sh.M Mirziyoyev
                                    </p>
-                                   <Button variant={"secondary"} size={"lg"} className="w-fit"
-                                   >
-
-                                        Kursni boshlash
-                                   </Button>
                               </div>
                               <div>
 

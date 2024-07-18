@@ -12,7 +12,6 @@ export default function SiteHeader() {
                     <Link href="tel:+998711234567" className="text-primary font-medium">
                          +998 71 123 45 67
                     </Link>
-                    <Button variant={'outline'} size={'sm'}>Ro&apos;yxatdan o&apos;tish</Button>
                     <Button size={'sm'}>Kirish</Button>
                </div>
           </nav>

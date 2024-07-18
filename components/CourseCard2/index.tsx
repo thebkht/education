@@ -42,14 +42,6 @@ export default function Index({ course }: { course: any }) {
                               <div className="h-full w-full bg-black/40 rounded absolute z-10 pointer-events-none"></div>
                          )
                     }
-                    {
-                         course.new && (
-                              <div className="flex gap-2 py-2 px-3 border-t border-l border-border rounded-tl bg-background text-second text-sm absolute right-0 bottom-0 z-20 items-center justify-center">
-                                   <div className="h-3 w-3 bg-blue-600 rounded-full"></div>
-                                   <span>Новый</span>
-                              </div>
-                         )
-                    }
                     <Link href={course.locked ? "#" : `/courses/${course.slug}`}
                          onClick={
                               () => {
@@ -97,17 +89,23 @@ export default function Index({ course }: { course: any }) {
                          </p>
                     </Link>
                     {
-                         !course.locked ? (
+                         course.locked ? (
                               <Dialog>
                                    <DialogTrigger asChild>
                                         <Button className={"w-fit rounded"}>Заключить договор на курс</Button>
                                    </DialogTrigger>
                                    <DialogContent className={"p-0 max-w-[984px] max-h-[948px] h-full border-none mb-3"} noClose>
                                         <object data="" type="application/pdf" className={"h-full w-full"}></object>
+                                        <Button className={"w-fit rounded"}>Подписать</Button>
+                                        <Button className={"w-fit rounded"}>Подписать</Button>
                                    </DialogContent>
                               </Dialog>
                          ) : (
-                              <Button className={"w-fit rounded"} disabled>Заключить договор на курс</Button>
+                              <Button className={"w-fit rounded"}>
+                                   <Link href={`/courses/${course.slug}`}>
+                                        Перейти к курсу
+                                   </Link>
+                              </Button>
                          )
                     }
                </div>
