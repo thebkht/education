@@ -5,6 +5,7 @@ import { Icons } from "@/components/icons";
 import { useRouter } from "next/router";
 import { getCourseBySlug } from "@/lib/courses";
 import { notFound } from "next/navigation";
+import Metadata from "@/components/Metadata";
 
 export default function CertificatePage() {
      const router = useRouter();
