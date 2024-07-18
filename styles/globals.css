@@ -30,6 +30,16 @@
   }
 }
 
+button:focus,
+input:focus,
+a:focus,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px hsla(var(--primary), 0.5) !important;
+}
+
 body {
   @apply bg-background text-foreground;
 }
