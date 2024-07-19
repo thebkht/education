@@ -26,3 +26,5 @@ const teacher = z.object({
   speciality: z.string(),
   picture: z.string(),
 });
+
+export type Teacher = z.infer<typeof teacher>;
