@@ -22,9 +22,11 @@ type DeadlineProps = {
 export default function Index({
      collapsed: initialCollapsed,
      onCollapse,
+     session,
 }: {
      collapsed: boolean;
      onCollapse: (collapsed: boolean) => void;
+     session: any;
 }) {
      const [nextWeek, setNextWeek] = React.useState<Date>(
           new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)

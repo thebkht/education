@@ -9,7 +9,36 @@ import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Index({ children, className }: { children: React.ReactNode, className?: string }) {
+export const getServerSideProps = async () => {
+     //fetch session from api /accounts/me
+     //if session exists, return user data, otherwise return to / page
+     const res = await fetch(`${process.env.API_URL}/accounts/me`, {
+          method: 'GET',
+          headers: {
+               'Content-Type': 'application/json',
+          },
+     });
+     const data = await res.json();
+     if (!data) {
+          return {
+               redirect: {
+                    destination: '/',
+                    permanent: false,
+               },
+          };
+     }
+     return {
+          props: {
+               user: data,
+          },
+     };
+}
+
+type IndexProps = {
+     user: any;
+}
+
+export default function Index({ children, className, user }: { children: React.ReactNode, className?: string } & IndexProps) {
      const [collapsed, setCollapsed] = React.useState<boolean>(false);
 
      return (
@@ -22,7 +51,7 @@ export default function Index({ children, className }: { children: React.ReactNo
                               </Link>
                          </div>
                     </div>
-                    <Header collapsed={collapsed} onCollapse={setCollapsed} />
+                    <Header collapsed={collapsed} onCollapse={setCollapsed} session={user} />
                     <Sidebar collapsed={collapsed} />
                     <main className="flex relative justify-center z-0 min-h-0 flex-[1_0_auto] bg-accent">
                          <div className="flex w-full flex-[1_0_auto]">
