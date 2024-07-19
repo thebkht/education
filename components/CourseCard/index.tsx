@@ -1,4 +1,4 @@
-import { CourseDetail } from "@/lib/types/course";
+import { CourseDetail } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 

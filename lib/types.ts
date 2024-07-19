@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const courseDetail = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   name: z.string(),
   short_description: z.string(),
   description: z.string().optional(),
@@ -20,3 +20,9 @@ const course = z.object({
 });
 
 export type Course = z.infer<typeof course>;
+
+const teacher = z.object({
+  fullname: z.string(),
+  speciality: z.string(),
+  picture: z.string(),
+});

@@ -1,4 +1,4 @@
-import { CourseDetail } from "./types/course";
+import { CourseDetail } from "./types";
 
 export async function getAllCourses() {
   const res = await fetch(`${process.env.API_URL}/courses/all`);

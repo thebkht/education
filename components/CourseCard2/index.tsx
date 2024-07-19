@@ -13,8 +13,9 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/UI/DIalog";
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
+import { Course } from "@/lib/types";
 
-export default function Index({ course }: { course: any }) {
+export default function Index({ course }: { course: Course }) {
      const router = useRouter();
      const [open, setOpen] = React.useState(false);
      return (<>
@@ -34,7 +35,7 @@ export default function Index({ course }: { course: any }) {
           <div className="flex flex-col gap-2 rounded-lg border border-border bg-background p-4 hover:shadow-lg shadow-md">
                <div className="aspect-video relative h-auto w-full">
                     {
-                         course.locked ? (
+                         !course.has_access ? (
                               <div className="h-full w-full bg-black/40 flex justify-center items-center rounded absolute z-10 backdrop-blur-lg cursor-pointer" onClick={
                                    () => setOpen(true)
                               }>
@@ -47,67 +48,60 @@ export default function Index({ course }: { course: any }) {
                     <div
                          onClick={
                               () => {
-                                   if (course.locked) {
+                                   if (!course.has_access) {
                                         setOpen(true)
                                    }
                               }
                          }>
-                         <Image src={course.image} alt={course.title} layout="fill" className="rounded-[4px] object-cover !relative border border-border aspect-video" />
+                         <Image src={course.image} alt={course.name} layout="fill" className="rounded-[4px] object-cover !relative border border-border aspect-video" />
                     </div>
                </div>
 
                <div className="flex flex-col gap-2 relative">
                     <div className="flex flex-col gap-1">
-                         <div className="flex flex-1 justify-between items-center">
-                              {course.topic ?? <span className="text-xs text-muted-foreground">{course.topic}</span>}
-                              <div className="flex gap-1 items-end">
-                                   <span className="text-xs text-muted-foreground">Ученик:</span>
-                                   <span className="text-xs text-muted-foreground">{course.students || 0}</span>
-                              </div>
-                         </div>
                          <div
                               onClick={
                                    () => {
-                                        if (course.locked) {
+                                        if (!course.has_access) {
                                              setOpen(true)
                                         }
                                    }
                               }>
                               <h1 className="font-semibold text-second text-sm line-clamp-2">
-                                   {course.title}
+                                   {course.name}
                               </h1>
                          </div>
                     </div>
                     <div
                          onClick={
                               () => {
-                                   if (course.locked) {
+                                   if (!course.has_access) {
                                         setOpen(true)
                                    }
                               }
                          }>
                          <p className="text-xs text-muted-foreground line-clamp-3">
-                              {course.description}
+                              {course.short_description}
                          </p>
                     </div>
                     {
-                         course.locked ? (
+                         !course.has_access ? (
                               <Dialog>
                                    <DialogTrigger asChild>
-                                        <Button className={"w-fit rounded"}>Заключить договор на курс</Button>
+                                        <Button className={"w-fit rounded"}>Kurs uchun shartnoma tuzish</Button>
                                    </DialogTrigger>
                                    <DialogContent className={"max-w-[984px] max-h-[98dvh] mb-3"}>
                                         <object data="" type="application/pdf" className={"h-4/5 w-full"}></object>
                                         <Button size={"sm"} className={"w-fit rounded"}>
-                                             Скачать
+                                             Yuklab olish
                                         </Button>
                                    </DialogContent>
                               </Dialog>
                          ) : (
                               <Button className={"w-fit rounded"}
-                                   onClick={() => router.push(`/courses/${course.slug}`)}
+                                   onClick={() => router.push(`/courses/${course.id}`)}
                               >
-                                   Перейти к курсу
+                                   Kursga o&apos;tish
                               </Button>
                          )
                     }

@@ -1,10 +1,15 @@
 import CourseCard from "@/components/CourseCard";
 import Button from "@/components/UI/Button";
+import { courses as fakeCourses } from "@/data/courses";
 import { getAllCourses } from "@/lib/fetchers";
-import { CourseDetail } from "@/lib/types/course";
+import { CourseDetail } from "@/lib/types";
 
-export async function CoursesSection() {
-     const courses = await getAllCourses();
+export function CoursesSection({ courses }: { courses: CourseDetail[] }) {
+
+     if (!courses) {
+          return null;
+     }
+
      return (
           <>
                <div className="flex flex-col container mx-auto gap-6 xl:p-0 px-4">
@@ -13,7 +18,7 @@ export async function CoursesSection() {
                     </div>
                     <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-6">
                          {
-                              courses.map((course: CourseDetail, index: number) => (
+                              courses?.map((course: CourseDetail, index: number) => (
                                    <CourseCard key={index} course={course} />
                               ))
                          }
