@@ -10,6 +10,7 @@ import {
 
      from "swiper/modules";
 import "swiper/css";
+import { Teacher } from "@/lib/types";
 
 export function InstructorSection() {
      return (<>
@@ -29,7 +30,7 @@ export function InstructorSection() {
                     }}
                >
                     {
-                         instructors.map((instructor, index) => (
+                         instructors.map((instructor: Teacher, index) => (
                               <SwiperSlide key={index}>
                                    <InstructorCard instructor={instructor} />
                               </SwiperSlide>
