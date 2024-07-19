@@ -8,25 +8,30 @@ import { InstructorSection } from "@/components/home/instructors-section";
 import { TestimonialSection } from "@/components/home/testimonials-section";
 import Footer from "@/components/layout/Footer";
 import Metadata from "@/components/Metadata";
-import { CourseDetail } from "@/lib/types";
+import { CourseDetail, Teacher } from "@/lib/types";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const getServerSideProps = async () => {
-  const res = await fetch(`${process.env.API_URL}/courses/all`);
-  const data = await res.json();
+  const resCourses = await fetch(`${process.env.API_URL}/courses/all`);
+  const courseData = await resCourses.json();
+
+  const resTeachers = await fetch(`${process.env.API_URL}/accounts/teachers`);
+  const teacherData = await resTeachers.json();
   return {
     props: {
-      courses: data,
+      courses: courseData,
+      teachers: teacherData,
     },
   };
 }
 
 type HomeProps = {
   courses: CourseDetail[];
+  teachers: Teacher[];
 }
 
-export default function Home({ courses }: HomeProps) {
+export default function Home({ courses, teachers }: HomeProps) {
   return (
     <>
       <Metadata />
@@ -36,7 +41,7 @@ export default function Home({ courses }: HomeProps) {
         <Facts />
         <div className="flex flex-col gap-[120px] justify-center mx-auto">
           <CoursesSection courses={courses} />
-          <InstructorSection />
+          <InstructorSection teachers={teachers} />
           <TestimonialSection />
         </div>
         <Footer />

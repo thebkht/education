@@ -12,7 +12,7 @@ import {
 import "swiper/css";
 import { Teacher } from "@/lib/types";
 
-export function InstructorSection() {
+export function InstructorSection({ teachers }: { teachers: Teacher[] }) {
      return (<>
           <div className="flex flex-col gap-2 mx-auto container xl:p-0 px-4">
                <div className="flex-1">
