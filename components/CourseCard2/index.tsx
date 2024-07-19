@@ -92,7 +92,9 @@ export default function Index({ course }: { course: Course }) {
                                    </DialogTrigger>
                                    <DialogContent className={"max-w-[984px] max-h-[98dvh] mb-3"}>
                                         <object data={course.contract_file} type="application/pdf" className={"h-4/5 w-full"}></object>
-                                        <Button size={"sm"} className={"w-fit rounded"}>
+                                        <Button size={"sm"} className={"w-fit rounded"}
+                                             onClick={() => course.contract_file && router.push(course.contract_file)}
+                                        >
                                              Yuklab olish
                                         </Button>
                                    </DialogContent>

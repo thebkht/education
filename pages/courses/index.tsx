@@ -18,19 +18,6 @@ interface User {
      email: string;
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-     const res = await fetch(`${process.env.API_URL}/accounts/me`);
-     const user = await res.json();
-
-     return {
-          props: {
-               initialUser: user,
-          },
-     };
-};
-
-
-
 export default function Courses({ initialUser, courses }: IndexProps) {
      const user = useUser();
      return (
@@ -46,7 +33,7 @@ export default function Courses({ initialUser, courses }: IndexProps) {
                          </div>
                          <div className="flex-1 grid xl:grid-cols-4 grid-cols-3 gap-x-6 gap-y-4 my-4">
                               {
-                                   courses.map((course, index) => (
+                                   courses?.map((course, index) => (
                                         <CourseCard key={index} course={course} />
                                    ))
                               }

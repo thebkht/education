@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { getCourseBySlug } from "@/lib/courses";
-import { notFound } from "next/navigation";
 import CourseLayout from "@/components/layout/CourseLayout";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/UI/Tabs";
@@ -9,26 +8,29 @@ import Accordion, { AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Icons } from "@/components/icons";
 import Button from "@/components/UI/Button"
 import Metadata from "@/components/Metadata";
+import { notFound } from "next/navigation";
+import { courses } from "@/data/courses";
 
-export default function Page() {
+export default function Page({ }) {
      const router = useRouter();
-     const course = getCourseBySlug(router.query.slug)
+     const course = courses[0];
+     console.log(course);
 
      if (!course) return notFound();
 
      return (
           <>
-               <Metadata title={course.title} description={course.description} image={course.image} />
+               <Metadata title={course.name} description={course.short_description} image={course.image} />
                <CourseLayout className={"mx-auto"}>
                     <div className="flex-1 max-w-[1064px] flex flex-col gap-6 py-9 mx-auto w-full">
                          <div className="flex items-center gap-6">
                               <div className="flex flex-col gap-6 flex-1">
                                    <div className="flex flex-col gap-4">
-                                        <h4 className={'font-bold text-2xl text-second'}>{course.title}</h4>
-                                        <p className={'text-secondary-foreground text-base'}>{course.description}</p>
+                                        <h4 className={'font-bold text-2xl text-second'}>{course.name}</h4>
+                                        <p className={'text-secondary-foreground text-base'}>{course.short_description}</p>
                                    </div>
                               </div>
-                              <Image src={course.image} alt={course.title} width={520} height={294}
+                              <Image src={course.image} alt={course.name} width={520} height={294}
                                    className="rounded border border-border" />
                          </div>
                          <div>
@@ -105,14 +107,14 @@ export default function Page() {
                                                                                      !lecture.locked && (index === 0 ? (
                                                                                           <Button size={'sm'} className={'font-medium py-1.5'}
                                                                                                onClick={
-                                                                                                    () => router.push(`/courses/${course.slug}/quiz/1`)
+                                                                                                    () => router.push(`/courses/${course.id}/quiz/1`)
                                                                                                }>
                                                                                                Пройти тест
                                                                                           </Button>
                                                                                      ) : (
                                                                                           <Button size={'sm'} className={'font-medium py-1.5'}
                                                                                                onClick={
-                                                                                                    () => router.push(`/courses/${course.slug}/lecture/${section.id}/${lecture.id}`)
+                                                                                                    () => router.push(`/courses/${course.id}/lecture/${section.id}/${lecture.id}`)
                                                                                                }>
                                                                                                Продолжить
                                                                                           </Button>
@@ -132,7 +134,7 @@ export default function Page() {
                                              Описание курса
                                         </h4>
                                         <p className={"text-sm"}>
-                                             {course.overview}
+                                             {course.description}
                                         </p>
                                    </TabsContent>
                               </Tabs>

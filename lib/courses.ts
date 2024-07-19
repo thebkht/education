@@ -1,5 +1,6 @@
 import { courses } from "@/data/courses";
 
-export function getCourseBySlug(slug: string | string[] | undefined) {
-  return courses.find((course) => course.slug === slug);
+export function getCourseBySlug(slug: string) {
+  //return course by index(slug)
+  return courses[Number(slug) - 1];
 }
