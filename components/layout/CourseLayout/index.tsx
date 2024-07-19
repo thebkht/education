@@ -6,40 +6,13 @@ import styles from './styles.module.css';
 import { cn } from '@/lib/utils';
 import React from 'react';
 import { Inter } from 'next/font/google';
+import { useUser } from '@/context/UserContext';
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const getServerSideProps = async () => {
-     //fetch session from api /accounts/me
-     //if session exists, return user data, otherwise return to / page
-     const res = await fetch(`${process.env.API_URL}/accounts/me`, {
-          method: 'GET',
-          headers: {
-               'Content-Type': 'application/json',
-          },
-     });
-     const data = await res.json();
-     if (!data) {
-          return {
-               redirect: {
-                    destination: '/',
-                    permanent: false,
-               },
-          };
-     }
-     return {
-          props: {
-               user: data,
-          },
-     };
-}
-
-type IndexProps = {
-     user: any;
-}
-
-export default function Index({ children, className, user }: { children: React.ReactNode, className?: string } & IndexProps) {
+export default function Index({ children, className }: { children: React.ReactNode, className?: string }) {
      const [collapsed, setCollapsed] = React.useState<boolean>(false);
+     const user = useUser();
 
      return (
           <>
