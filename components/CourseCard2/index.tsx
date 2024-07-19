@@ -91,7 +91,7 @@ export default function Index({ course }: { course: Course }) {
                                         <Button className={"w-fit rounded"}>Kurs uchun shartnoma tuzish</Button>
                                    </DialogTrigger>
                                    <DialogContent className={"max-w-[984px] max-h-[98dvh] mb-3"}>
-                                        <object data="" type="application/pdf" className={"h-4/5 w-full"}></object>
+                                        <object data={course.contract_file} type="application/pdf" className={"h-4/5 w-full"}></object>
                                         <Button size={"sm"} className={"w-fit rounded"}>
                                              Yuklab olish
                                         </Button>
