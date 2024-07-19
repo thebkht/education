@@ -87,8 +87,10 @@ body {
   @apply  !bg-primary !h-2 !w-2 !opacity-100
 }
 
-.container {
-  max-width: 1200px !important;
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1200px;
+  }
 }
 
 .hero-carousel .swiper-slide {
