@@ -17,6 +17,7 @@ type IndexProps = {
 };
 
 export default function Courses({ user, courses }: IndexProps) {
+  console.log(courses, "courses");
   return (
     <>
       <Metadata title="Shaxsiy kabinet" description="Kurslar" />

@@ -18,17 +18,23 @@ import { CourseDetail } from "@/lib/types";
 import { IUser } from "@/interfaces/auth";
 import { GetServerSidePropsContext } from "next";
 import AuthMiddleware from "@/middlewares/auth";
+import { axios } from "@/api/interseptors";
+import { parseCookies } from "nookies";
+import { getHeaders } from "@/helpers";
 
 export default function Page({
   course,
+  modules,
   user,
 }: {
   course: CourseDetail;
   user: IUser;
+  modules: any;
 }) {
   const router = useRouter();
   const fakeCourse = courses[0];
-  console.log(course);
+  console.log(course, "course");
+  console.log(modules, "modules");
 
   if (!course) course = fakeCourse;
 
@@ -37,7 +43,7 @@ export default function Page({
       <Metadata
         title={course.name}
         description={course.short_description}
-        image={course.image}
+        image={course.image.base64}
       />
       <CourseLayout className={"mx-auto"} user={user}>
         <div className="mx-auto flex w-full max-w-[1064px] flex-1 flex-col gap-6 py-9">
@@ -53,7 +59,7 @@ export default function Page({
               </div>
             </div>
             <Image
-              src={course.image}
+              src={course.image.base64 ?? course.image.src}
               alt={course.name}
               width={520}
               height={294}
@@ -202,7 +208,19 @@ export default function Page({
 const getServerSidePropsFunction = async (
   context: GetServerSidePropsContext,
 ) => {
-  return {};
+  const cookies = parseCookies(context);
+  const token = cookies.token;
+  const course = await axios.get(
+    `/courses/${context.params?.id}`,
+    getHeaders(token),
+  );
+  const modules = await axios.get(`/modules`, getHeaders(token));
+  return {
+    props: {
+      course: course.data,
+      modules: modules.data,
+    },
+  };
 };
 
 export const getServerSideProps = AuthMiddleware(getServerSidePropsFunction);

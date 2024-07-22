@@ -5,7 +5,10 @@ const courseDetail = z.object({
   name: z.string(),
   short_description: z.string(),
   description: z.string().optional(),
-  image: z.string(),
+  image: z.object({
+    src: z.string(),
+    base64: z.string().optional(),
+  }),
 });
 
 export type CourseDetail = z.infer<typeof courseDetail>;
@@ -15,7 +18,10 @@ const course = z.object({
   name: z.string(),
   short_description: z.string(),
   has_access: z.boolean(),
-  image: z.string(),
+  image: z.object({
+    src: z.string(),
+    base64: z.string().optional(),
+  }),
   contract_file: z.string().optional(),
 });
 
