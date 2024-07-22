@@ -80,7 +80,7 @@ export default function Home({ courses, teachers, user }: HomeProps) {
         <Hero />
         <Facts />
         <div className="mx-auto flex flex-col justify-center gap-[120px]">
-          <CoursesSection courses={courses} />
+          <CoursesSection courses={courses} user={user} />
           <InstructorSection teachers={teachers} />
           <TestimonialSection />
         </div>

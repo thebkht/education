@@ -19,7 +19,7 @@ type IndexProps = {
 export default function Courses({ user, courses }: IndexProps) {
   return (
     <>
-      <Metadata title="Mening Kurslarim" description="Kurslar" />
+      <Metadata title="Shaxsiy kabinet" description="Kurslar" />
       <Layout user={user}>
         <div className="box-border">
           <div className="flex items-center gap-6">
@@ -48,7 +48,7 @@ const getServerSidePropsFunction = async (
 ) => {
   const cookies = parseCookies(context);
   const token = cookies.token;
-  let courses = await axios.get<any>(`courses`, getHeaders(token));
+  let courses = await axios.get(`courses`, getHeaders(token));
 
   return {
     props: {

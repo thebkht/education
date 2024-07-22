@@ -16,7 +16,7 @@ export default function SiteHeader({ user }: { user?: IUser | null }) {
           +998 71 123 45 67
         </Link>
         <Button size={"sm"} onClick={() => router.push("/?code=123")}>
-          {user?.fullName ?? "Kirish"}
+          {"Shaxsiy kabinet" ?? "Kirish"}
         </Button>
       </div>
     </nav>
