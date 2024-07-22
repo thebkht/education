@@ -22,12 +22,14 @@ export default function Index({
         </div>
         <div className="relative z-0 aspect-[28/40] h-full w-full flex-1">
           <Image
-            src={instructor.picture}
+            src={instructor.picture.src}
             layout="fill"
             objectFit="cover"
             objectPosition="center"
+            placeholder="blur"
+            blurDataURL={instructor.picture.base64}
             alt={instructor.fullname}
-            className="!relative h-full w-full rounded-lg"
+            className="!relative aspect-[28/40] h-full w-full rounded-lg object-cover"
           />
         </div>
       </div>
