@@ -33,7 +33,7 @@ export default function Index({ course }: { course: Course }) {
           </AlertDialogAction>
         </AlertDialogContent>
       </AlertDialog>
-      <div className="flex flex-col gap-2 rounded-lg border border-border bg-background p-4 shadow-md hover:shadow-lg">
+      <div className="flex flex-col gap-2 rounded-lg bg-background p-4 shadow-md hover:shadow-lg">
         <div className="relative aspect-video h-auto w-full">
           {!course.has_access ? (
             <div
@@ -43,7 +43,7 @@ export default function Index({ course }: { course: Course }) {
               <Icons.lock className="h-12 w-12 text-background" />
             </div>
           ) : (
-            <div className="pointer-events-none absolute z-10 h-full w-full rounded bg-black/40"></div>
+            <div className="pointer-events-none absolute z-10 h-full w-full rounded"></div>
           )}
           <div
             onClick={() => {
@@ -58,7 +58,7 @@ export default function Index({ course }: { course: Course }) {
               layout="fill"
               placeholder="blur"
               blurDataURL={course.image.base64}
-              className="!relative aspect-video rounded-[4px] border border-border object-cover"
+              className="!relative aspect-video rounded-[4px] object-cover"
             />
           </div>
         </div>
