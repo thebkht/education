@@ -22,6 +22,7 @@ const getServerSidePropsFunction = async (
   context: GetServerSidePropsContext,
 ) => {
   let courses = await axios.get<any>(`courses/all`);
+  let teachers = await axios.get<any>(`accounts/teachers`);
   const cookies = parseCookies(context);
   const token = cookies.token;
   let user;
@@ -48,6 +49,7 @@ const getServerSidePropsFunction = async (
       return {
         props: {
           courses: courses.data,
+          teachers: teachers.data,
           user: null,
         },
       };
@@ -57,6 +59,7 @@ const getServerSidePropsFunction = async (
   return {
     props: {
       courses: courses.data,
+      teachers: teachers.data,
       user: user ?? null,
     },
   };
