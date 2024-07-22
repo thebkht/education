@@ -31,7 +31,10 @@ export type Course = z.infer<typeof course>;
 const teacher = z.object({
   fullname: z.string(),
   speciality: z.string(),
-  picture: z.string(),
+  picture: z.object({
+    src: z.string(),
+    base64: z.string().optional(),
+  }),
 });
 
 export type Teacher = z.infer<typeof teacher>;
