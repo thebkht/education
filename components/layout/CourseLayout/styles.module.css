@@ -4,5 +4,5 @@
 }
 
 .collapsed {
-     grid: 56px 1fr / 72px 1fr;
+     grid: 56px 1fr / 72px 1fr !important;
 }

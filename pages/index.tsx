@@ -10,17 +10,54 @@ import Footer from "@/components/layout/Footer";
 import Metadata from "@/components/Metadata";
 import { CourseDetail, Teacher } from "@/lib/types";
 import { axios } from "@/api/interseptors";
+import { GetServerSidePropsContext } from "next";
+import { parseCookies } from "nookies";
+import { AuthService } from "@/services/auth";
+import { IUser } from "@/interfaces/auth";
+import AuthMiddleware from "@/middlewares/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const getServerSideProps = async () => {
-  const courses = await axios.get("/courses/all");
+const getServerSidePropsFunction = async (
+  context: GetServerSidePropsContext,
+) => {
+  let courses = await axios.get<any>(`courses/all`);
+  const cookies = parseCookies(context);
+  const token = cookies.token;
+  let user;
 
-  const teachers = await axios.get("/accounts/teachers");
+  try {
+    user = await AuthService.me(token);
+  } catch (error) {
+    user = null;
+  }
+
+  if (!!context?.query?.code) {
+    try {
+      const user = await AuthService.login(token);
+      context.res.setHeader("Set-Cookie", [
+        `token=${user?.token}; Max-Age=${24 * 60 * 60}; Path=/; HttpOnly; SameSite=Strict`,
+      ]);
+      return {
+        redirect: {
+          destination: "/courses",
+          permanent: false,
+        },
+      };
+    } catch (error) {
+      return {
+        props: {
+          courses: courses.data,
+          user: null,
+        },
+      };
+    }
+  }
+
   return {
     props: {
       courses: courses.data,
-      teachers: teachers.data,
+      user: user ?? null,
     },
   };
 };
@@ -28,14 +65,18 @@ export const getServerSideProps = async () => {
 type HomeProps = {
   courses: CourseDetail[];
   teachers: Teacher[];
+  user: IUser | null;
 };
 
-export default function Home({ courses, teachers }: HomeProps) {
+export default function Home({ courses, teachers, user }: HomeProps) {
+  console.log(user, "user");
+  console.log(courses, "courses");
+
   return (
     <>
       <Metadata />
       <div className={`${inter.className} flex flex-col gap-5`}>
-        <Navbar />
+        <Navbar user={user} />
         <Hero />
         <Facts />
         <div className="mx-auto flex flex-col justify-center gap-[120px]">
@@ -48,3 +89,8 @@ export default function Home({ courses, teachers }: HomeProps) {
     </>
   );
 }
+
+export const getServerSideProps = AuthMiddleware(
+  getServerSidePropsFunction,
+  true,
+);

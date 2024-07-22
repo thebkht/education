@@ -1,9 +1,15 @@
-interface User {
+interface IUser {
   fullName: string;
 }
 
-interface Login {
-  fullName: string;
+interface ILogin {
+  fullname: string;
+  access_token: string;
 }
 
-export type { User, Login };
+interface ISignup {
+  fullName: string;
+  token: string;
+}
+
+export type { IUser, ILogin, ISignup };

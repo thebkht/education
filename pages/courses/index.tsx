@@ -3,27 +3,24 @@ import CourseCard from "@/components/CourseCard2";
 import { Icons } from "@/components/icons";
 import Input from "@/components/UI/Input";
 import Metadata from "@/components/Metadata";
-import { GetServerSideProps } from "next";
-import { useUser } from "@/context/UserContext";
 import { Course } from "@/lib/types";
+import { IUser } from "@/interfaces/auth";
+import { GetServerSidePropsContext } from "next";
+import { axios } from "@/api/interseptors";
+import { parseCookies } from "nookies";
+import { getHeaders } from "@/helpers";
+import AuthMiddleware from "@/middlewares/auth";
 
 type IndexProps = {
-  initialUser: User;
+  user: IUser;
   courses: Course[];
 };
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
-
-export default function Courses({ initialUser, courses }: IndexProps) {
-  const user = useUser();
+export default function Courses({ user, courses }: IndexProps) {
   return (
     <>
       <Metadata title="Mening Kurslarim" description="Kurslar" />
-      <Layout>
+      <Layout user={user}>
         <div className="box-border">
           <div className="flex items-center gap-6">
             <div className="flex w-60 items-center gap-2 rounded-[4px] bg-background px-4 py-2.5 focus:border focus:border-primary">
@@ -45,3 +42,19 @@ export default function Courses({ initialUser, courses }: IndexProps) {
     </>
   );
 }
+
+const getServerSidePropsFunction = async (
+  context: GetServerSidePropsContext,
+) => {
+  const cookies = parseCookies(context);
+  const token = cookies.token;
+  let courses = await axios.get<any>(`courses`, getHeaders(token));
+
+  return {
+    props: {
+      courses: courses.data,
+    },
+  };
+};
+
+export const getServerSideProps = AuthMiddleware(getServerSidePropsFunction);
