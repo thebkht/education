@@ -53,9 +53,11 @@ export default function Index({ course }: { course: Course }) {
             }}
           >
             <Image
-              src={course.image.base64 ?? course.image.src}
+              src={course.image.src}
               alt={course.name}
               layout="fill"
+              placeholder="blur"
+              blurDataURL={course.image.base64}
               className="!relative aspect-video rounded-[4px] border border-border object-cover"
             />
           </div>

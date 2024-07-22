@@ -14,9 +14,11 @@ export default function Index({
       >
         <div className="h-40 w-full rounded-lg">
           <Image
-            src={course.image.base64 ?? course.image.src}
+            src={course.image.src}
             alt={course.name}
             layout="fill"
+            placeholder="blur"
+            blurDataURL={course.image.base64}
             className="!relative rounded-lg object-cover"
           />
         </div>
