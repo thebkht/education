@@ -23,12 +23,12 @@ export const getServerSideProps = async () => {
       teachers: teachers.data,
     },
   };
-}
+};
 
 type HomeProps = {
   courses: CourseDetail[];
   teachers: Teacher[];
-}
+};
 
 export default function Home({ courses, teachers }: HomeProps) {
   return (
@@ -38,7 +38,7 @@ export default function Home({ courses, teachers }: HomeProps) {
         <Navbar />
         <Hero />
         <Facts />
-        <div className="flex flex-col gap-[120px] justify-center mx-auto">
+        <div className="mx-auto flex flex-col justify-center gap-[120px]">
           <CoursesSection courses={courses} />
           <InstructorSection teachers={teachers} />
           <TestimonialSection />
