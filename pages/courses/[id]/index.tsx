@@ -14,7 +14,7 @@ import Button from "@/components/UI/Button";
 import Metadata from "@/components/Metadata";
 import { notFound } from "next/navigation";
 import { courses } from "@/data/courses";
-import { CourseDetail } from "@/lib/types";
+import { CourseDetail, Module } from "@/lib/types";
 import { IUser } from "@/interfaces/auth";
 import { GetServerSidePropsContext } from "next";
 import AuthMiddleware from "@/middlewares/auth";
@@ -29,7 +29,7 @@ export default function Page({
 }: {
   course: CourseDetail;
   user: IUser;
-  modules: any;
+  modules: Module[];
 }) {
   const router = useRouter();
   const fakeCourse = courses[0];
@@ -59,10 +59,12 @@ export default function Page({
               </div>
             </div>
             <Image
-              src={course.image.base64 ?? course.image.src}
+              src={course.image.src}
               alt={course.name}
               width={520}
               height={294}
+              placeholder="blur"
+              blurDataURL={course.image.base64}
               className="rounded border border-border"
             />
           </div>
@@ -73,34 +75,36 @@ export default function Page({
                 <TabsTrigger value={"overview"}>Обзор</TabsTrigger>
               </TabsList>
               <TabsContent value={"content"}>
-                <Accordion type={"single"} defaultValue="chapter-1" collapsible>
-                  {sections.map((section, index) => (
-                    <AccordionItem value={`chapter-${index + 1}`} key={index}>
+                <Accordion type={"single"} defaultValue="module-1" collapsible>
+                  {modules.map((module, index) => (
+                    <AccordionItem value={`module-${index + 1}`} key={index}>
                       <AccordionTrigger>
                         <div className="flex w-full items-center justify-between">
                           <div className="flex flex-col gap-1">
                             <div className="flex gap-2 text-lg font-semibold text-second">
                               Раздел {index + 1}:
                               <span
-                                className={"font-normal text-second-foreground"}
+                                className={
+                                  "text-left font-normal text-second-foreground"
+                                }
                               >
-                                {section.title}
+                                {module.name}
                               </span>
                             </div>
                           </div>
-                          <span className={"text-sm text-muted-foreground"}>
+                          {/* <span className={"text-sm text-muted-foreground"}>
                             {section.lectures.filter(
                               (lecture) => lecture.completed,
                             ).length +
                               "/" +
                               section.lectures.length}
-                          </span>
+                          </span> */}
                         </div>
                       </AccordionTrigger>
                       <AccordionContent
                         className={"flex flex-col gap-4 border-b"}
                       >
-                        <div className="flex items-center gap-6">
+                        {/* <div className="flex items-center gap-6">
                           <div className="flex items-center gap-2">
                             <Icons.play
                               className={
@@ -127,12 +131,12 @@ export default function Page({
                               </span>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <p className={"text-second-foreground"}>
-                          {section.desc}
+                          {module.description}
                         </p>
                       </AccordionContent>
-                      {section.lectures.map((lecture, index) => (
+                      {/* {section.lectures.map((lecture, index) => (
                         <AccordionContent key={index}>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
@@ -185,7 +189,7 @@ export default function Page({
                               ))}
                           </div>
                         </AccordionContent>
-                      ))}
+                      ))} */}
                     </AccordionItem>
                   ))}
                 </Accordion>
@@ -214,7 +218,15 @@ const getServerSidePropsFunction = async (
     `/courses/${context.params?.id}`,
     getHeaders(token),
   );
-  const modules = await axios.get(`/modules`, getHeaders(token));
+  console.log(course, "course");
+  const modules = await axios.get<any>(
+    `courses/modules-all?course=${context.params?.id}`,
+    getHeaders(token),
+  );
+  /* const lessons = await axios.get<any>(
+    `/courses/lessons?module${modules.data[0].id}`,
+    getHeaders(token),
+  ); */
   return {
     props: {
       course: course.data,
