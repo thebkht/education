@@ -53,6 +53,9 @@ const config: Config = {
         destructive: "hsla(var(--destructive))",
         accent2: "hsla(var(--accent2))",
       },
+      aspectRatio: {
+        "28/40": "28/40",
+      },
     },
   },
   plugins: [],
