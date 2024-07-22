@@ -14,10 +14,32 @@ import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
 import { Course } from "@/lib/types";
+import { axios } from "@/api/interseptors";
+import { parseCookies } from "nookies";
+import { getHeaders } from "@/helpers";
 
 export default function Index({ course }: { course: Course }) {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [contractFile, setContractFile] = React.useState<string | null>(null);
+
+  const handleRegisterCourse = async () => {
+    try {
+      const cookies = parseCookies();
+      const token = cookies.token;
+      const res = await axios.get(
+        `courses/register-course?course=${course.id}`,
+        getHeaders(token),
+      );
+      if (res.data?.contract_file) {
+        setContractFile(res.data.contract_file);
+        setOpenDialog(true);
+      }
+    } catch (error) {
+      console.error("Error registering course:", error);
+    }
+  };
   return (
     <>
       <AlertDialog open={open} onOpenChange={setOpen}>
@@ -89,29 +111,9 @@ export default function Index({ course }: { course: Course }) {
             </p>
           </div>
           {!course.has_access ? (
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className={"w-fit rounded"}>
-                  Kurs uchun shartnoma tuzish
-                </Button>
-              </DialogTrigger>
-              <DialogContent className={"mb-3 max-h-[98dvh] max-w-[984px]"}>
-                <object
-                  data={course.contract_file}
-                  type="application/pdf"
-                  className={"h-4/5 w-full"}
-                ></object>
-                <Button
-                  size={"sm"}
-                  className={"w-fit rounded"}
-                  onClick={() =>
-                    course.contract_file && router.push(course.contract_file)
-                  }
-                >
-                  Yuklab olish
-                </Button>
-              </DialogContent>
-            </Dialog>
+            <Button className={"w-fit rounded"} onClick={handleRegisterCourse}>
+              Kurs uchun shartnoma tuzish
+            </Button>
           ) : (
             <Button
               className={"w-fit rounded"}
@@ -122,6 +124,24 @@ export default function Index({ course }: { course: Course }) {
           )}
         </div>
       </div>
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+        <DialogContent className={"mb-3 max-h-[98dvh] max-w-[984px]"}>
+          <object
+            data={contractFile ?? ""}
+            type="application/pdf"
+            className={"h-4/5 w-full"}
+          ></object>
+          <Button
+            size={"sm"}
+            className={"w-fit rounded"}
+            onClick={() =>
+              course.contract_file && router.push(course.contract_file)
+            }
+          >
+            Yuklab olish
+          </Button>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
