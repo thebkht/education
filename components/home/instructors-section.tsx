@@ -1,7 +1,6 @@
 import InstructorCard from "@/components/InstructorCard";
-import { instructors } from "@/data/instructors";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
+import { A11y, Autoplay } from "swiper/modules";
 import "swiper/css";
 import { Teacher } from "@/lib/types";
 
