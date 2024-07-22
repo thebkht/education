@@ -6,7 +6,7 @@ const getLocalStorage = (key: string) => {
   return null;
 };
 
-const setLocalStorage = (key: string, value: string) => {
+const setLocalStorage = (value: any, key?: string) => {
   localStorage.setItem(key ?? "user", JSON.stringify(value));
 };
 
