@@ -9,19 +9,18 @@ import { TestimonialSection } from "@/components/home/testimonials-section";
 import Footer from "@/components/layout/Footer";
 import Metadata from "@/components/Metadata";
 import { CourseDetail, Teacher } from "@/lib/types";
+import { axios } from "@/api/interseptors";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const getServerSideProps = async () => {
-  const resCourses = await fetch(`${process.env.API_URL}/courses/all`);
-  const courseData = await resCourses.json();
+  const courses = await axios.get("/courses/all");
 
-  const resTeachers = await fetch(`${process.env.API_URL}/accounts/teachers`);
-  const teacherData = await resTeachers.json();
+  const teachers = await axios.get("/accounts/teachers");
   return {
     props: {
-      courses: courseData,
-      teachers: teacherData,
+      courses: courses.data,
+      teachers: teachers.data,
     },
   };
 }
