@@ -23,6 +23,7 @@ const course = z.object({
     base64: z.string().optional(),
   }),
   contract_file: z.string().optional(),
+  status: z.number(),
 });
 
 export type Course = z.infer<typeof course>;
@@ -34,3 +35,12 @@ const teacher = z.object({
 });
 
 export type Teacher = z.infer<typeof teacher>;
+
+const modules = z.object({
+  id: z.number(),
+  name: z.string(),
+  description: z.string(),
+  has_access: z.boolean(),
+});
+
+export type Module = z.infer<typeof modules>;
