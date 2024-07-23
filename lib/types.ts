@@ -45,7 +45,7 @@ const lesson = z.object({
   description: z.string(),
   pdf_file: z.string().optional(),
   presentation_file: z.string().optional(),
-  video_file: z.string(),
+  video_url: z.string(),
   completed_date: z.string().optional(),
   started_date: z.string().optional(),
   has_access: z.boolean().optional(),
