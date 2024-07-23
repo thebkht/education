@@ -58,7 +58,7 @@ const modules = z.object({
   name: z.string(),
   description: z.string(),
   has_access: z.boolean(),
-  lessons: z.array(lesson).optional(),
+  lessons: z.array(lesson),
 });
 
 export type Module = z.infer<typeof modules>;
