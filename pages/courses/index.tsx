@@ -10,7 +10,7 @@ import { axios } from "@/api/interseptors";
 import { parseCookies } from "nookies";
 import { getHeaders } from "@/helpers";
 import AuthMiddleware from "@/middlewares/auth";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useDebounce } from "use-debounce";
 
@@ -33,6 +33,27 @@ export default function Courses({
   const [courses, setCourses] = useState<Course[]>(initialCourses);
 
   const [query] = useDebounce(search, 500);
+
+  useEffect(() => {
+    setCourses(initialCourses);
+  }, [initialCourses]);
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+
+    console.log("query", query);
+
+    if (!query || query === "") {
+      router.push(`${router.pathname}`);
+    } else if (query.length >= 3) {
+      router.push(`${router.pathname}${search ? `?search=${search}` : ``}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
+
   return (
     <>
       <Metadata title="Shaxsiy kabinet" description="Kurslar" />
@@ -43,6 +64,8 @@ export default function Courses({
               <Input
                 type="text"
                 placeholder="Qidiruv"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 className="h-fit w-full border-none bg-transparent p-0 focus:outline-none focus-visible:shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
               />
               <Icons.search className="h-4 w-4 text-muted-foreground" />
@@ -64,11 +87,17 @@ const getServerSidePropsFunction = async (
 ) => {
   const cookies = parseCookies(context);
   const token = cookies.token;
-  let courses = await axios.get(`courses`, getHeaders(token));
+  const searchQuery = context.query.search || "";
+  let courses = await axios.get<any>(
+    `courses/`,
+    getHeaders(token, { name: searchQuery }),
+  );
 
   return {
     props: {
       courses: courses.data,
+      searchQuery,
+      token,
     },
   };
 };
