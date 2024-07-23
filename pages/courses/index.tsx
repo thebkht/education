@@ -56,7 +56,7 @@ export default function Courses({
 
   return (
     <>
-      <Metadata title="Shaxsiy kabinet" description="Kurslar" />
+      <Metadata title="Shaxsiy kabinet" description="Kurslar" noFollow />
       <Layout user={user}>
         <div className="box-border">
           <div className="flex items-center gap-6">
