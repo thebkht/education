@@ -78,7 +78,10 @@ export default function Page({
                 <Accordion type={"single"} defaultValue="module-1" collapsible>
                   {modules.map((module, index) => (
                     <AccordionItem value={`module-${index + 1}`} key={index}>
-                      <AccordionTrigger>
+                      <AccordionTrigger
+                        disabled={!module.has_access}
+                        className={`${!module.has_access && "pointer-events-none opacity-50"}`}
+                      >
                         <div className="flex w-full items-center justify-between">
                           <div className="flex flex-col gap-1">
                             <div className="flex gap-2 text-lg font-semibold text-second">
@@ -102,7 +105,7 @@ export default function Page({
                         </div>
                       </AccordionTrigger>
                       <AccordionContent
-                        className={"flex flex-col gap-4 border-b"}
+                        className={`flex flex-col gap-4 border-b ${!module.has_access && "pointer-events-none opacity-50"}`}
                       >
                         {/* <div className="flex items-center gap-6">
                           <div className="flex items-center gap-2">
@@ -137,7 +140,10 @@ export default function Page({
                         </p>
                       </AccordionContent>
                       {module.lessons?.map((lesson, index) => (
-                        <AccordionContent key={index}>
+                        <AccordionContent
+                          key={index}
+                          className={`${!module.has_access && "pointer-events-none opacity-50"}`}
+                        >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                               {
