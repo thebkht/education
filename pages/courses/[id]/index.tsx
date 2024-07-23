@@ -14,7 +14,7 @@ import Button from "@/components/UI/Button";
 import Metadata from "@/components/Metadata";
 import { notFound } from "next/navigation";
 import { courses } from "@/data/courses";
-import { CourseDetail, Module } from "@/lib/types";
+import { CourseDetail, Lesson, Module } from "@/lib/types";
 import { IUser } from "@/interfaces/auth";
 import { GetServerSidePropsContext } from "next";
 import AuthMiddleware from "@/middlewares/auth";
@@ -136,12 +136,12 @@ export default function Page({
                           {module.description}
                         </p>
                       </AccordionContent>
-                      {/* {section.lectures.map((lecture, index) => (
+                      {module.lessons?.map((lesson, index) => (
                         <AccordionContent key={index}>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                              {!lecture.locked ? (
-                                lecture.completed ? (
+                              {lesson.has_access ? (
+                                lesson.completed_date !== null ? (
                                   <Icons.checked
                                     className={"h-8 w-8 text-muted-foreground"}
                                   />
@@ -160,10 +160,10 @@ export default function Page({
                                   "max-w-[800px] text-second-foreground"
                                 }
                               >
-                                {lecture.title}
+                                {lesson.name}
                               </p>
                             </div>
-                            {!lecture.locked &&
+                            {lesson.has_access &&
                               (index === 0 ? (
                                 <Button
                                   size={"sm"}
@@ -180,7 +180,7 @@ export default function Page({
                                   className={"py-1.5 font-medium"}
                                   onClick={() =>
                                     router.push(
-                                      `/courses/${course.id}/lecture/${section.id}/${lecture.id}`,
+                                      `/courses/${course.id}/lecture/${module.id}/${lesson.id}`,
                                     )
                                   }
                                 >
@@ -189,7 +189,7 @@ export default function Page({
                               ))}
                           </div>
                         </AccordionContent>
-                      ))} */}
+                      ))}
                     </AccordionItem>
                   ))}
                 </Accordion>
@@ -218,15 +218,21 @@ const getServerSidePropsFunction = async (
     `/courses/${context.params?.id}`,
     getHeaders(token),
   );
-  console.log(course, "course");
   const modules = await axios.get<any>(
-    `courses/modules-all?course=${context.params?.id}`,
+    `courses/modules?course=${context.params?.id}`,
     getHeaders(token),
   );
-  /* const lessons = await axios.get<any>(
-    `/courses/lessons?module${modules.data[0].id}`,
-    getHeaders(token),
-  ); */
+
+  for (const mod of modules.data) {
+    const lessons = await axios.get<any>(
+      `courses/lessons?module=${mod.id}`,
+      getHeaders(token),
+    );
+    // Ensure lessons data is awaited and assigned correctly
+    mod.lessons = lessons.data;
+  }
+
+  console.log(modules, "modules");
   return {
     props: {
       course: course.data,
