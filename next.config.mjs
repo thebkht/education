@@ -7,6 +7,10 @@ const nextConfig = {
         protocol: "http",
         hostname: "in.technocorp.uz",
       },
+      {
+        protocol: "https",
+        hostname: "in.technocorp.uz",
+      },
     ],
   },
 };
