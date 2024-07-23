@@ -10,14 +10,29 @@ import { axios } from "@/api/interseptors";
 import { parseCookies } from "nookies";
 import { getHeaders } from "@/helpers";
 import AuthMiddleware from "@/middlewares/auth";
+import { useRef, useState } from "react";
+import { useRouter } from "next/router";
+import { useDebounce } from "use-debounce";
 
 type IndexProps = {
   user: IUser;
   courses: Course[];
+  searchQuery: string;
+  token: string;
 };
 
-export default function Courses({ user, courses }: IndexProps) {
-  console.log(courses, "courses");
+export default function Courses({
+  user,
+  courses: initialCourses,
+  token,
+  searchQuery,
+}: IndexProps) {
+  const router = useRouter();
+  const initialRender = useRef(true);
+  const [search, setSearch] = useState(searchQuery);
+  const [courses, setCourses] = useState<Course[]>(initialCourses);
+
+  const [query] = useDebounce(search, 500);
   return (
     <>
       <Metadata title="Shaxsiy kabinet" description="Kurslar" />
