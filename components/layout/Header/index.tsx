@@ -56,7 +56,7 @@ export default function Index({
         <div
           className={`fixed box-border flex h-14 flex-[1_1_1px] px-6 py-2 ${
             collapsed ? "w-[calc(100vw-72px)]" : "w-[calc(100vw-250px)]"
-          } z-40 items-center justify-between border-b border-popover`}
+          } z-0 items-center justify-between border-b border-popover`}
         >
           <div className="flex items-center gap-4">
             <Button

@@ -73,7 +73,7 @@ export default function Courses({
           </div>
           <div className="my-4 grid flex-1 grid-cols-3 gap-x-6 gap-y-4 xl:grid-cols-4">
             {courses?.map((course, index) => (
-              <CourseCard key={index} course={course} />
+              <CourseCard key={index} course={course} token={token} />
             ))}
           </div>
         </div>

@@ -17,8 +17,16 @@ import { Course } from "@/lib/types";
 import { axios } from "@/api/interseptors";
 import { parseCookies } from "nookies";
 import { getHeaders } from "@/helpers";
+import { toast } from "sonner";
+import { AxiosError } from "axios";
 
-export default function Index({ course }: { course: Course }) {
+export default function Index({
+  course,
+  token,
+}: {
+  course: Course;
+  token?: string;
+}) {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -26,18 +34,23 @@ export default function Index({ course }: { course: Course }) {
 
   const handleRegisterCourse = async () => {
     try {
-      const cookies = parseCookies();
-      const token = cookies.token;
       const res = await axios.get(
         `courses/register-course?course=${course.id}`,
-        getHeaders(token),
+        getHeaders(token ?? ""),
       );
-      if (res.data?.contract_file) {
-        setContractFile(res.data.contract_file);
+      if (res.status === 400) {
+        toast.info(res.data.message);
+      } else if (res.status === 200) {
+        setContractFile(res.data.file);
         setOpenDialog(true);
       }
-    } catch (error) {
-      console.error("Error registering course:", error);
+    } catch (error: AxiosError | any) {
+      console.log(error);
+      if (error.response?.status === 400) {
+        toast.info(error.response.data.message);
+      } else {
+        toast.error("Kursga ro'yxatdan o'tishda xatolik yuz berdi");
+      }
     }
   };
   return (
@@ -46,12 +59,13 @@ export default function Index({ course }: { course: Course }) {
         <AlertDialogContent>
           <AlertDialogDescription className={"text-center"}>
             <Balancer>
-              Если вы произвели оплату, но курсы не открылись, обратитесь к
-              администратору системы. тел: +998 (71) 123-45-67
+              Agar kursga to&apos;lovni amalga oshirmagan bo&apos;lsangiz, lekin
+              kursga o&apos;tish imkoni yo&apos;q bo&apos;lsa, tizim
+              administratoriga murojaat qiling. TEL: +998 99 999 99 99
             </Balancer>
           </AlertDialogDescription>
           <AlertDialogAction className={"mx-auto w-fit"}>
-            Понятно
+            Tushunarli
           </AlertDialogAction>
         </AlertDialogContent>
       </AlertDialog>

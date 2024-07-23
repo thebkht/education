@@ -8,6 +8,7 @@ import React from "react";
 import { Inter } from "next/font/google";
 import { getLocalStorage, setLocalStorage } from "@/helpers/localStorage";
 import { IUser } from "@/interfaces/auth";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -73,6 +74,7 @@ export default function Index({
                   <div className={cn("flex flex-1 justify-center", className)}>
                     <div className="flex w-full flex-col px-6 py-4">
                       {children}
+                      <Toaster position="top-center" richColors />
                     </div>
                   </div>
                 </div>
