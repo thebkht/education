@@ -32,18 +32,18 @@ export default function Page({
   modules: Module[];
 }) {
   const router = useRouter();
-  const fakeCourse = courses[0];
-  console.log(course, "course");
-  console.log(modules, "modules");
 
-  if (!course) course = fakeCourse;
+  if (!course) {
+    return notFound();
+  }
 
   return (
     <>
       <Metadata
         title={course.name}
         description={course.short_description}
-        image={course.image.base64}
+        image={course.image.src}
+        noFollow
       />
       <CourseLayout className={"mx-auto"} user={user}>
         <div className="mx-auto flex w-full max-w-[1064px] flex-1 flex-col gap-6 py-9">
@@ -92,13 +92,13 @@ export default function Page({
                               </span>
                             </div>
                           </div>
-                          {/* <span className={"text-sm text-muted-foreground"}>
-                            {section.lectures.filter(
-                              (lecture) => lecture.completed,
+                          <span className={"text-sm text-muted-foreground"}>
+                            {module.lessons.filter(
+                              (lecture) => lecture.completed_date !== null,
                             ).length +
                               "/" +
-                              section.lectures.length}
-                          </span> */}
+                              module.lessons.length}
+                          </span>
                         </div>
                       </AccordionTrigger>
                       <AccordionContent
@@ -140,8 +140,14 @@ export default function Page({
                         <AccordionContent key={index}>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                              {lesson.has_access ? (
-                                lesson.completed_date !== null ? (
+                              {
+                                // if previous lesson is not completed the lock icon will be shown
+                                index !== 0 &&
+                                !module.lessons[index - 1].completed_date ? (
+                                  <Icons.lock
+                                    className={"h-8 w-8 text-muted-foreground"}
+                                  />
+                                ) : lesson.completed_date !== null ? (
                                   <Icons.checked
                                     className={"h-8 w-8 text-muted-foreground"}
                                   />
@@ -150,11 +156,7 @@ export default function Page({
                                     className={"h-8 w-8 text-muted-foreground"}
                                   />
                                 )
-                              ) : (
-                                <Icons.lock
-                                  className={"h-8 w-8 text-muted-foreground"}
-                                />
-                              )}
+                              }
                               <p
                                 className={
                                   "max-w-[800px] text-second-foreground"
@@ -163,7 +165,10 @@ export default function Page({
                                 {lesson.name}
                               </p>
                             </div>
-                            {lesson.has_access &&
+                            {!(
+                              index !== 0 &&
+                              module.lessons[index - 1].completed_date
+                            ) &&
                               (index === 0 ? (
                                 <Button
                                   size={"sm"}
