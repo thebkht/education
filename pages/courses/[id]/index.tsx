@@ -13,8 +13,7 @@ import { Icons } from "@/components/icons";
 import Button from "@/components/UI/Button";
 import Metadata from "@/components/Metadata";
 import { notFound } from "next/navigation";
-import { courses } from "@/data/courses";
-import { CourseDetail, Lesson, Module } from "@/lib/types";
+import { CourseDetail, Module } from "@/lib/types";
 import { IUser } from "@/interfaces/auth";
 import { GetServerSidePropsContext } from "next";
 import AuthMiddleware from "@/middlewares/auth";
@@ -74,40 +73,19 @@ export default function Page({
                 <TabsTrigger value={"content"}>Содержание курса</TabsTrigger>
                 <TabsTrigger value={"overview"}>Обзор</TabsTrigger>
               </TabsList>
-              <TabsContent value={"content"}>
-                <Accordion type={"single"} defaultValue="module-1" collapsible>
+              <TabsContent value={"content"} className="p-0 px-3">
+                <Accordion
+                  type={"single"}
+                  defaultValue="module-1"
+                  className="p-0"
+                  collapsible
+                >
                   {modules.map((module, index) => (
                     <AccordionItem value={`module-${index + 1}`} key={index}>
-                      <AccordionTrigger
-                        disabled={!module.has_access}
-                        className={`${!module.has_access && "pointer-events-none opacity-50"}`}
-                      >
-                        <div className="flex w-full items-center justify-between">
-                          <div className="flex flex-col gap-1">
-                            <div className="flex gap-2 text-lg font-semibold text-second">
-                              Раздел {index + 1}:
-                              <span
-                                className={
-                                  "text-left font-normal text-second-foreground"
-                                }
-                              >
-                                {module.name}
-                              </span>
-                            </div>
-                          </div>
-                          <span className={"text-sm text-muted-foreground"}>
-                            {module.lessons.filter(
-                              (lecture) => lecture.completed_date !== null,
-                            ).length +
-                              "/" +
-                              module.lessons.length}
-                          </span>
-                        </div>
-                      </AccordionTrigger>
                       <AccordionContent
-                        className={`flex flex-col gap-4 border-b ${!module.has_access && "pointer-events-none opacity-50"}`}
+                        className={`flex justify-between border-b ${index != 0 && !module.has_access && "pointer-events-none opacity-50"}`}
                       >
-                        {/* <div className="flex items-center gap-6">
+                        <div className="flex items-center gap-6">
                           <div className="flex items-center gap-2">
                             <Icons.play
                               className={
@@ -115,10 +93,7 @@ export default function Page({
                               }
                             />
                             <div className="flex gap-1 font-semibold text-second">
-                              Видео:
-                              <span className={"font-normal"}>
-                                {section.videos}
-                              </span>
+                              Video:<span className={"font-normal"}>14</span>
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
@@ -128,79 +103,65 @@ export default function Page({
                               }
                             />
                             <div className="flex gap-1 font-semibold text-second">
-                              Тест:
-                              <span className={"font-normal"}>
-                                {section.quizes}
-                              </span>
+                              Test:<span className={"font-normal"}>10</span>
                             </div>
                           </div>
-                        </div> */}
-                        <p className={"text-second-foreground"}>
-                          {module.description}
-                        </p>
+                        </div>
+                        <span className={"text-sm text-muted-foreground"}>
+                          0/1
+                        </span>
                       </AccordionContent>
-                      {module.lessons?.map((lesson, index) => (
-                        <AccordionContent
-                          key={index}
-                          className={`${!module.has_access && "pointer-events-none opacity-50"}`}
-                        >
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              {
-                                // if previous lesson is not completed the lock icon will be shown
-                                index !== 0 &&
-                                !module.lessons[index - 1].completed_date ? (
-                                  <Icons.lock
-                                    className={"h-8 w-8 text-muted-foreground"}
-                                  />
-                                ) : lesson.completed_date !== null ? (
-                                  <Icons.checked
-                                    className={"h-8 w-8 text-muted-foreground"}
-                                  />
-                                ) : (
-                                  <Icons.unchecked
-                                    className={"h-8 w-8 text-muted-foreground"}
-                                  />
-                                )
-                              }
-                              <p
-                                className={
-                                  "max-w-[800px] text-second-foreground"
+                      <AccordionContent
+                        key={index}
+                        className={`${index != 0 && !module.has_access && "pointer-events-none opacity-50"}`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            {index != 0 && !module.has_access ? (
+                              <Icons.lock
+                                className={"h-8 w-8 text-muted-foreground"}
+                              />
+                            ) : module.completed ? (
+                              <Icons.checked
+                                className={"h-8 w-8 text-muted-foreground"}
+                              />
+                            ) : (
+                              <Icons.unchecked
+                                className={"h-8 w-8 text-muted-foreground"}
+                              />
+                            )}
+                            <p
+                              className={"max-w-[800px] text-second-foreground"}
+                            >
+                              {module.name}
+                            </p>
+                          </div>
+                          {!(index != 0 && !module.has_access) &&
+                            (index !== 0 ? (
+                              <Button
+                                size={"sm"}
+                                className={"py-1.5 font-medium"}
+                                onClick={() =>
+                                  router.push(`/courses/${course.id}/quiz/1`)
                                 }
                               >
-                                {lesson.name}
-                              </p>
-                            </div>
-                            {!(
-                              index !== 0 &&
-                              module.lessons[index - 1].completed_date
-                            ) &&
-                              (index === 0 ? (
-                                <Button
-                                  size={"sm"}
-                                  className={"py-1.5 font-medium"}
-                                  onClick={() =>
-                                    router.push(`/courses/${course.id}/quiz/1`)
-                                  }
-                                >
-                                  Пройти тест
-                                </Button>
-                              ) : (
-                                <Button
-                                  size={"sm"}
-                                  className={"py-1.5 font-medium"}
-                                  onClick={() =>
-                                    router.push(
-                                      `/courses/${course.id}/lecture/${module.id}/${lesson.id}`,
-                                    )
-                                  }
-                                >
-                                  Продолжить
-                                </Button>
-                              ))}
-                          </div>
-                        </AccordionContent>
-                      ))}
+                                Testni boshlash
+                              </Button>
+                            ) : (
+                              <Button
+                                size={"sm"}
+                                className={"py-1.5 font-medium"}
+                                onClick={() =>
+                                  router.push(
+                                    `/courses/${course.id}/module/${module.id}`,
+                                  )
+                                }
+                              >
+                                Davom etish
+                              </Button>
+                            ))}
+                        </div>
+                      </AccordionContent>
                     </AccordionItem>
                   ))}
                 </Accordion>
@@ -233,17 +194,6 @@ const getServerSidePropsFunction = async (
     `courses/modules?course=${context.params?.id}`,
     getHeaders(token),
   );
-
-  for (const mod of modules.data) {
-    const lessons = await axios.get<any>(
-      `courses/lessons?module=${mod.id}`,
-      getHeaders(token),
-    );
-    // Ensure lessons data is awaited and assigned correctly
-    mod.lessons = lessons.data;
-  }
-
-  console.log(modules, "modules");
   return {
     props: {
       course: course.data,
