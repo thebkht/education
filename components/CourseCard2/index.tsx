@@ -31,7 +31,7 @@ export default function Index({
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [contractFile, setContractFile] = React.useState<string | null>(null);
+  const [isRegistered, setIsRegistered] = React.useState(false);
 
   const handleRegisterCourse = async () => {
     const registerCoursePromise = async () => {
@@ -40,12 +40,10 @@ export default function Index({
           `courses/register-course?course=${course.id}`,
           getHeaders(token ?? ""),
         );
-
         if (res.status === 400) {
           throw new Error(res.data.message);
         } else if (res.status === 200) {
-          setContractFile(res.data.file);
-          setOpenDialog(true);
+          setIsRegistered(true);
           return res.data;
         }
       } catch (error: any) {
@@ -140,8 +138,19 @@ export default function Index({
             </p>
           </div>
           {!course.has_access ? (
-            <Button className={"w-fit rounded"} onClick={handleRegisterCourse}>
-              Kurs uchun shartnoma tuzish
+            <Button
+              className={"w-fit rounded"}
+              onClick={() => {
+                if (isRegistered && course.file) {
+                  router.push(course.file);
+                } else {
+                  handleRegisterCourse();
+                }
+              }}
+            >
+              {isRegistered
+                ? "Shartnomani yuklab olish"
+                : "Kursga ro'yxatdan o'tish"}
             </Button>
           ) : (
             <Button
@@ -156,16 +165,14 @@ export default function Index({
       <AlertDialog open={openDialog} onOpenChange={setOpenDialog}>
         <AlertDialogContent className={"mb-3 max-h-[98dvh] max-w-[984px]"}>
           <object
-            data={contractFile ?? ""}
+            data={course.file ?? ""}
             type="application/pdf"
             className={"h-4/5 w-full"}
           ></object>
           <Button
             size={"sm"}
             className={"w-fit rounded"}
-            onClick={() =>
-              course.contract_file && router.push(course.contract_file)
-            }
+            onClick={() => course.file && router.push(course.file)}
           >
             Yuklab olish
           </Button>
