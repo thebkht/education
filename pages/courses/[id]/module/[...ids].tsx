@@ -135,15 +135,8 @@ export default function LecturePage({
                       >
                         <div className="flex w-full items-center justify-between">
                           <div className="flex flex-col gap-1">
-                            <div className="flex gap-2 text-sm font-semibold text-second">
-                              Раздел {index + 1}:
-                              <span
-                                className={
-                                  "text-left font-normal text-second-foreground"
-                                }
-                              >
-                                {mod.name}
-                              </span>
+                            <div className="flex gap-2 text-left font-normal text-second-foreground">
+                              {mod.name}
                             </div>
                           </div>
                           <span
