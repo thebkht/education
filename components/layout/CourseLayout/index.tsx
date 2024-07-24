@@ -74,7 +74,7 @@ export default function Index({
                   <div className={cn("flex flex-1 justify-center", className)}>
                     <div className="flex w-full flex-col px-6 py-4">
                       {children}
-                      <Toaster position="top-center" richColors />
+                      <Toaster position="bottom-center" richColors />
                     </div>
                   </div>
                 </div>
