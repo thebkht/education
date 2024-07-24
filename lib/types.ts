@@ -22,7 +22,7 @@ const course = z.object({
     src: z.string(),
     base64: z.string().optional(),
   }),
-  contract_file: z.string().optional(),
+  file: z.string().optional(),
   status: z.number(),
 });
 
