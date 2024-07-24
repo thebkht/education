@@ -19,6 +19,7 @@ import { getHeaders } from "@/helpers";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { X } from "lucide-react";
+import { any } from "zod";
 
 export default function Index({
   course,
@@ -33,28 +34,40 @@ export default function Index({
   const [contractFile, setContractFile] = React.useState<string | null>(null);
 
   const handleRegisterCourse = async () => {
-    try {
-      const res = await axios.get(
-        `courses/register-course?course=${course.id}`,
-        getHeaders(token ?? ""),
-      );
-      console.log(res);
+    const registerCoursePromise = async () => {
+      try {
+        const res = await axios.get(
+          `courses/register-course?course=${course.id}`,
+          getHeaders(token ?? ""),
+        );
 
-      if (res.status === 400) {
-        toast.info(res.data.message);
-      } else if (res.status === 200) {
-        setContractFile(res.data.file);
-        setOpenDialog(true);
+        if (res.status === 400) {
+          throw new Error(res.data.message);
+        } else if (res.status === 200) {
+          setContractFile(res.data.file);
+          setOpenDialog(true);
+          return res.data;
+        }
+      } catch (error: any) {
+        if (error.response?.status === 400) {
+          throw new Error(error.response.data.message);
+        } else {
+          throw new Error("Kursga ro'yxatdan o'tishda xatolik yuz berdi");
+        }
       }
-    } catch (error: AxiosError | any) {
-      console.log(error);
-      if (error.response?.status === 400) {
-        toast.info(error.response.data.message);
-      } else {
-        toast.error("Kursga ro'yxatdan o'tishda xatolik yuz berdi");
-      }
-    }
+    };
+
+    toast.promise(registerCoursePromise, {
+      loading: "Yuklanmoqda...",
+      success: (data) => {
+        return `Muvaffaqiyatli ro'yxatdan o'tdingiz: ${data.file ? "Shartnoma fayli olindi" : ""}`;
+      },
+      error: (error) => {
+        return error.message;
+      },
+    });
   };
+
   return (
     <>
       <AlertDialog open={open} onOpenChange={setOpen}>
