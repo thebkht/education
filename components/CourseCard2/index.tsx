@@ -4,21 +4,21 @@ import { Icons } from "../icons";
 import {
   AlertDialog,
   AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogTrigger,
 } from "@/components/UI/AlertDialog";
 import Balancer from "react-wrap-balancer";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/UI/DIalog";
-import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
 import { Course } from "@/lib/types";
 import { axios } from "@/api/interseptors";
-import { parseCookies } from "nookies";
 import { getHeaders } from "@/helpers";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+import { X } from "lucide-react";
 
 export default function Index({
   course,
@@ -38,6 +38,8 @@ export default function Index({
         `courses/register-course?course=${course.id}`,
         getHeaders(token ?? ""),
       );
+      console.log(res);
+
       if (res.status === 400) {
         toast.info(res.data.message);
       } else if (res.status === 200) {
@@ -138,8 +140,8 @@ export default function Index({
           )}
         </div>
       </div>
-      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogContent className={"mb-3 max-h-[98dvh] max-w-[984px]"}>
+      <AlertDialog open={openDialog} onOpenChange={setOpenDialog}>
+        <AlertDialogContent className={"mb-3 max-h-[98dvh] max-w-[984px]"}>
           <object
             data={contractFile ?? ""}
             type="application/pdf"
@@ -154,8 +156,12 @@ export default function Index({
           >
             Yuklab olish
           </Button>
-        </DialogContent>
-      </Dialog>
+          <AlertDialogCancel className="focus:ring-ring absolute right-4 top-4 h-fit w-fit rounded-sm border-none p-0 opacity-70 ring-offset-background transition-opacity hover:bg-transparent hover:text-foreground hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </AlertDialogCancel>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }
