@@ -111,13 +111,10 @@ export default function Page({
                           0/1
                         </span>
                       </AccordionContent>
-                      <AccordionContent
-                        key={index}
-                        className={`${index != 0 && !module.has_access && "pointer-events-none opacity-50"}`}
-                      >
+                      <AccordionContent key={index}>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            {index != 0 && !module.has_access ? (
+                            {index != 0 && !modules[index - 1].completed ? (
                               <Icons.lock
                                 className={"h-8 w-8 text-muted-foreground"}
                               />
@@ -136,7 +133,7 @@ export default function Page({
                               {module.name}
                             </p>
                           </div>
-                          {!(index != 0 && !module.has_access) &&
+                          {!(index != 0 && !modules[index - 1].completed) &&
                             (index !== 0 ? (
                               <Button
                                 size={"sm"}
