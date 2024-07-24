@@ -19,6 +19,7 @@ import AuthMiddleware from "@/middlewares/auth";
 import { CourseDetail, Lesson, Module } from "@/lib/types";
 import { IUser } from "@/interfaces/auth";
 import { useEffect, useState } from "react";
+import notFound from "@/pages/404";
 
 type Props = {
   course: CourseDetail;
@@ -34,43 +35,37 @@ function getYouTubeVideoID(url: string): string | null {
   return match ? match[1] : null;
 }
 
-export default function LecturePage({ course, modules, lessons, user }: Props) {
+export default function LecturePage({
+  course,
+  modules,
+  lessons,
+  user,
+  lesson,
+}: Props) {
   const router = useRouter();
-  console.log(lessons, modules);
+  if (!course) {
+    return notFound();
+  }
   const { id, ids } = router.query;
   const lessonId = ids && ids[1];
-  //set lesson from lessons array by lessonId, if lessonId is null set first lesson
-  const [lesson, setLesson] = useState<Lesson | undefined>(
-    lessonId ? lessons?.find((l) => l.id === parseInt(lessonId)) : undefined,
-  );
-  const moduleId = ids && ids[0];
-  const [module, setModule] = useState<Module | undefined>(
-    moduleId ? modules?.find((m) => m.id === parseInt(moduleId)) : modules[0],
-  );
-  useEffect(() => {
-    if (!lessonId && !lesson && lessons.length > 0) {
-      setLesson(lessons[0]);
-    } else if (!lesson) {
-      null;
-    }
-  }, [lessonId, lesson, lessons]);
 
-  if (!module) {
-    return null;
+  const moduleId = ids && ids[0];
+  if (!moduleId) {
+    return notFound();
   }
 
   return (
     <>
       <Metadata
-        title={`${course.name}`}
-        description={course.description}
+        title={`${lesson?.name} - ${course.name}`}
+        description={lesson?.description}
         image={course.image.src}
       />
       <Layout user={user}>
         <div className="box-border space-y-6">
           <div className="mr-auto flex max-w-[1064px] items-center">
             <h3 className="text-base font-semibold text-second">
-              {lesson ? lesson.name : module.name}
+              {lesson.name}
             </h3>
           </div>
           <div className="grid grid-cols-12 gap-6">
@@ -91,7 +86,7 @@ export default function LecturePage({ course, modules, lessons, user }: Props) {
                 <div className="flex w-full justify-between text-sm">
                   <p className="text-muted-foreground">Kurs tavsifi</p>
                   <p className="line-clamp-[10] max-w-[68%] text-second">
-                    {lesson ? lesson.description : module.description}
+                    {lesson.description}
                   </p>
                 </div>
               </div>
@@ -224,10 +219,7 @@ const getServerSidePropsFunction = async (
 
   if (modules.data === undefined) {
     return {
-      redirect: {
-        destination: `/courses/${context.params?.id}`,
-        permanent: false,
-      },
+      notFound: true,
     };
   }
 
@@ -238,10 +230,7 @@ const getServerSidePropsFunction = async (
   if (moduleId) {
     if (!mod) {
       return {
-        redirect: {
-          destination: `/courses/${context.params?.id}`,
-          permanent: false,
-        },
+        notFound: true,
       };
     }
   }
@@ -250,34 +239,33 @@ const getServerSidePropsFunction = async (
     `courses/lessons?module=${moduleId}`,
     getHeaders(token),
   );
-  console.log(lessons);
-  if (lessons.data === undefined) {
+  if (lessonId && !lessons.data) {
     return {
-      redirect: {
-        destination: `/courses/${context.params?.id}/`,
-        permanent: false,
-      },
+      notFound: true,
     };
   }
-  const lesson = lessons.data.find(
-    (l: Lesson) => l.id === parseInt(lessonId || ""),
-  );
-  if (lessonId) {
-    if (!lesson) {
-      return {
-        redirect: {
-          destination: `/courses/${context.params?.id}/module/${moduleId}`,
-          permanent: false,
-        },
-      };
-    }
+  console.log(lessons.data, "lessons");
+
+  let lesson;
+  if (!lessonId) {
+    lesson = lessons.data[0];
+  } else {
+    lesson = lessons.data.find(
+      (l: Lesson) => l.id === parseInt(lessonId || ""),
+    );
+  }
+  console.log(lessonId, lesson, "lesson");
+  if (!lesson) {
+    return {
+      notFound: true,
+    };
   }
   return {
     props: {
       course: course.data,
       modules: modules.data,
-      lesson: lesson ? lesson : null,
       lessons: lessons.data,
+      lesson,
     },
   };
 };
