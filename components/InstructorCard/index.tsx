@@ -1,38 +1,37 @@
 import { Teacher } from "@/lib/types";
 import Image from "next/image";
 
-export default function Index({
-  instructor,
-  ...props
-}: { instructor: Teacher } & React.ComponentPropsWithoutRef<"div">) {
+type IndexProps = {
+  instructor: Teacher;
+} & React.ComponentPropsWithoutRef<"div">;
+
+export default function Index({ instructor, ...props }: IndexProps) {
   return (
-    <>
-      <div className="relative flex flex-col-reverse rounded-lg">
-        <div className="absolute z-20 h-full w-full rounded-lg bg-gradient-to-b from-slate-50/0 to-black/5"></div>
-        <div className="absolute z-10 h-full w-full rounded-lg bg-gradient-to-b from-neutral-50/0 to-black/25"></div>
-        <div className="relative flex-1">
-          <div className="absolute bottom-3 z-30 flex h-full w-full flex-col items-center justify-end gap-1">
-            <p className="text-center font-bold text-primary-foreground md:text-xl xl:text-2xl">
-              {instructor.fullname}
-            </p>
-            <span className="text-center text-sm text-primary-foreground xl:text-base">
-              {instructor.speciality}
-            </span>
-          </div>
-        </div>
-        <div className="relative z-0 aspect-[28/40] h-full w-full flex-1">
-          <Image
-            src={instructor.picture.src}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="center"
-            placeholder="blur"
-            blurDataURL={instructor.picture.base64}
-            alt={instructor.fullname}
-            className="!relative aspect-[28/40] h-full w-full rounded-lg object-cover"
-          />
+    <div className="relative flex flex-col-reverse rounded-lg" {...props}>
+      <div className="absolute inset-0 z-20 rounded-lg bg-gradient-to-b from-slate-50/0 to-black/5"></div>
+      <div className="absolute inset-0 z-10 rounded-lg bg-gradient-to-b from-neutral-50/0 to-black/25"></div>
+      <div className="absolute z-30 flex flex-1 items-end justify-center pb-3">
+        <div className="text-center">
+          <p className="font-bold text-primary-foreground md:text-xl xl:text-2xl">
+            {instructor.fullname}
+          </p>
+          <span className="text-sm text-primary-foreground xl:text-base">
+            {instructor.speciality}
+          </span>
         </div>
       </div>
-    </>
+      <div className="relative aspect-[28/40] h-full w-full flex-1">
+        <Image
+          src={instructor.picture.src}
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+          placeholder="blur"
+          blurDataURL={instructor.picture.base64}
+          alt={instructor.fullname}
+          className="rounded-lg"
+        />
+      </div>
+    </div>
   );
 }
