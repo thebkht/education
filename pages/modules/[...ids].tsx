@@ -31,17 +31,17 @@ const LecturePage = ({ lessons, user, lesson }: Props) => {
   const { ids } = router.query;
   const moduleId = ids && ids[0];
 
-  if (!moduleId) {
-    return notFound();
-  }
-
-  if (!lesson) {
+  if (!moduleId || !lesson) {
     return notFound();
   }
 
   return (
     <>
-      <Metadata title={`${lesson.name}`} description={lesson.description} />
+      <Metadata
+        title={`${lesson.name}`}
+        description={lesson.description}
+        noFollow
+      />
       <Layout user={user}>
         <div className="box-border space-y-6">
           <div className="mr-auto flex max-w-[1064px] items-center">
