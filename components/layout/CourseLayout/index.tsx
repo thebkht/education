@@ -45,7 +45,7 @@ export default function Index({
             className={`flex-[1_1_1px] ${collapsed ? "w-[72px]" : "w-[250px]"} fixed z-50 box-border flex h-14 flex-col justify-center border-r border-border px-4`}
           >
             <Link
-              href="/courses"
+              href="/"
               className={
                 "relative flex cursor-pointer select-none rounded-lg border-none"
               }
