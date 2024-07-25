@@ -131,7 +131,7 @@ export default function LecturePage({
                       className="bg-accent2"
                     >
                       <AccordionTrigger
-                        disabled={index !== 0 && !mod.has_access}
+                        disabled={index != 0 && !modules[index - 1].completed}
                       >
                         <div className="flex w-full items-center justify-between">
                           <div className="flex flex-col gap-1">
