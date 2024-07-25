@@ -73,95 +73,86 @@ export default function Page({
                 <TabsTrigger value={"content"}>Содержание курса</TabsTrigger>
                 <TabsTrigger value={"overview"}>Обзор</TabsTrigger>
               </TabsList>
-              <TabsContent value={"content"} className="p-0 px-3">
-                <Accordion
-                  type={"single"}
-                  defaultValue="module-1"
-                  className="p-0"
-                  collapsible
+              <TabsContent
+                value={"content"}
+                className="border-popover p-0 px-3"
+              >
+                <div
+                  className={`flex justify-between overflow-hidden border-b p-4 pl-6 transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down`}
                 >
-                  {modules.map((module, index) => (
-                    <AccordionItem value={`module-${index + 1}`} key={index}>
-                      <AccordionContent
-                        className={`flex justify-between border-b ${index != 0 && !module.has_access && "pointer-events-none opacity-50"}`}
-                      >
-                        <div className="flex items-center gap-6">
-                          <div className="flex items-center gap-2">
-                            <Icons.play
-                              className={
-                                "h-[18px] w-[18px] text-second-foreground"
-                              }
+                  <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-2">
+                      <Icons.play
+                        className={"h-[18px] w-[18px] text-second-foreground"}
+                      />
+                      <div className="flex gap-1 font-semibold text-second">
+                        Video:<span className={"font-normal"}>14</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Icons.list
+                        className={"h-[18px] w-[18px] text-second-foreground"}
+                      />
+                      <div className="flex gap-1 font-semibold text-second">
+                        Test:<span className={"font-normal"}>10</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span className={"text-sm text-muted-foreground"}>0/1</span>
+                </div>
+                {modules.map((module, index) => (
+                  <div key={index}>
+                    <div
+                      className="overflow-hidden p-4 pl-6 transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+                      key={index}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          {index != 0 && !modules[index - 1].completed ? (
+                            <Icons.lock
+                              className={"h-8 w-8 text-muted-foreground"}
                             />
-                            <div className="flex gap-1 font-semibold text-second">
-                              Video:<span className={"font-normal"}>14</span>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Icons.list
-                              className={
-                                "h-[18px] w-[18px] text-second-foreground"
-                              }
+                          ) : module.completed ? (
+                            <Icons.checked
+                              className={"h-8 w-8 text-muted-foreground"}
                             />
-                            <div className="flex gap-1 font-semibold text-second">
-                              Test:<span className={"font-normal"}>10</span>
-                            </div>
-                          </div>
+                          ) : (
+                            <Icons.unchecked
+                              className={"h-8 w-8 text-muted-foreground"}
+                            />
+                          )}
+                          <p className={"max-w-[800px] text-second-foreground"}>
+                            {module.name}
+                          </p>
                         </div>
-                        <span className={"text-sm text-muted-foreground"}>
-                          0/1
-                        </span>
-                      </AccordionContent>
-                      <AccordionContent key={index}>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            {index != 0 && !modules[index - 1].completed ? (
-                              <Icons.lock
-                                className={"h-8 w-8 text-muted-foreground"}
-                              />
-                            ) : module.completed ? (
-                              <Icons.checked
-                                className={"h-8 w-8 text-muted-foreground"}
-                              />
-                            ) : (
-                              <Icons.unchecked
-                                className={"h-8 w-8 text-muted-foreground"}
-                              />
-                            )}
-                            <p
-                              className={"max-w-[800px] text-second-foreground"}
+                        {!(index != 0 && !modules[index - 1].completed) &&
+                          (index !== 0 ? (
+                            <Button
+                              size={"sm"}
+                              className={"py-1.5 font-medium"}
+                              onClick={() =>
+                                router.push(`/courses/${course.id}/quiz/1`)
+                              }
                             >
-                              {module.name}
-                            </p>
-                          </div>
-                          {!(index != 0 && !modules[index - 1].completed) &&
-                            (index !== 0 ? (
-                              <Button
-                                size={"sm"}
-                                className={"py-1.5 font-medium"}
-                                onClick={() =>
-                                  router.push(`/courses/${course.id}/quiz/1`)
-                                }
-                              >
-                                Testni boshlash
-                              </Button>
-                            ) : (
-                              <Button
-                                size={"sm"}
-                                className={"py-1.5 font-medium"}
-                                onClick={() =>
-                                  router.push(
-                                    `/courses/${course.id}/module/${module.id}`,
-                                  )
-                                }
-                              >
-                                Davom etish
-                              </Button>
-                            ))}
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
+                              Testni boshlash
+                            </Button>
+                          ) : (
+                            <Button
+                              size={"sm"}
+                              className={"py-1.5 font-medium"}
+                              onClick={() =>
+                                router.push(
+                                  `/courses/${course.id}/module/${module.id}`,
+                                )
+                              }
+                            >
+                              Davom etish
+                            </Button>
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </TabsContent>
               <TabsContent
                 value={"overview"}
