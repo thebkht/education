@@ -2,15 +2,7 @@ import { Icons } from "@/components/icons";
 import { CourseDetail, Module } from "@/lib/types";
 import Button from "@/components/UI/Button";
 
-const Index = ({
-  modules,
-  courseId,
-  router,
-}: {
-  modules: Module[];
-  courseId: CourseDetail["id"];
-  router: any;
-}) => (
+const Index = ({ modules, router }: { modules: Module[]; router: any }) => (
   <div className="rounded border border-popover bg-background">
     <div className="flex justify-between overflow-hidden rounded border-b p-4 pl-6 transition-all">
       <div className="flex items-center gap-6">
@@ -41,7 +33,6 @@ const Index = ({
         module={module}
         index={index}
         modules={modules}
-        courseId={courseId}
         router={router}
       />
     ))}
@@ -68,13 +59,11 @@ const ModuleCard = ({
   module,
   index,
   modules,
-  courseId,
   router,
 }: {
   module: Module;
   index: number;
   modules: Module[];
-  courseId: CourseDetail["id"];
   router: any;
 }) => (
   <div className="overflow-hidden p-4 pl-6 transition-all">
@@ -93,9 +82,7 @@ const ModuleCard = ({
         <Button
           size="sm"
           className="py-1.5 font-medium"
-          onClick={() =>
-            router.push(`/courses/${courseId}/module/${module.id}`)
-          }
+          onClick={() => router.push(`/modules/${module.id}`)}
         >
           {index !== 0 ? "Testni boshlash" : "Davom etish"}
         </Button>

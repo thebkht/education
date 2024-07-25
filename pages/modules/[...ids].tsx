@@ -14,7 +14,6 @@ import notFound from "@/pages/404";
 import LessonContent from "@/components/LessonContent";
 
 type Props = {
-  course: CourseDetail;
   lessons: Lesson[];
   lesson: Lesson;
   user: IUser;
@@ -26,26 +25,23 @@ const getYouTubeVideoID = (url: string): string | null => {
   return match ? match[1] : null;
 };
 
-const LecturePage = ({ course, lessons, user, lesson }: Props) => {
+const LecturePage = ({ lessons, user, lesson }: Props) => {
   const router = useRouter();
-  if (!course) {
-    return notFound();
-  }
+
   const { ids } = router.query;
-  const lessonId = ids && ids[1];
   const moduleId = ids && ids[0];
 
   if (!moduleId) {
     return notFound();
   }
 
+  if (!lesson) {
+    return notFound();
+  }
+
   return (
     <>
-      <Metadata
-        title={`${lesson?.name} - ${course.name}`}
-        description={lesson?.description}
-        image={course.image.src}
-      />
+      <Metadata title={`${lesson.name}`} description={lesson.description} />
       <Layout user={user}>
         <div className="box-border space-y-6">
           <div className="mr-auto flex max-w-[1064px] items-center">
@@ -57,7 +53,7 @@ const LecturePage = ({ course, lessons, user, lesson }: Props) => {
             <div className="col-span-8 flex flex-col gap-4">
               <iframe
                 id="ytplayer"
-                src={`https://www.youtube.com/embed/${getYouTubeVideoID(lesson?.video_url ?? "")}?modestbranding=1&playsinline=1&color=white`}
+                src={`https://www.youtube.com/embed/${getYouTubeVideoID(lesson.video_url ?? "")}?modestbranding=1&playsinline=1&color=white`}
                 className="aspect-video max-h-[600px] w-full max-w-[1064px] rounded border shadow"
               />
               <div className="flex max-w-[1064px] flex-col gap-3">
@@ -95,10 +91,6 @@ const getServerSidePropsFunction = async (
 ) => {
   const cookies = parseCookies(context);
   const token = cookies.token;
-  const course = await axios.get(
-    `/courses/${context.params?.id}`,
-    getHeaders(token),
-  );
 
   const moduleId = context.params?.ids?.[0];
   const lessonId = context.params?.ids?.[1];
@@ -125,7 +117,6 @@ const getServerSidePropsFunction = async (
 
   return {
     props: {
-      course: course.data,
       lessons: lessons.data,
       lesson,
     },

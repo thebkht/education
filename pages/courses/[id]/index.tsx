@@ -56,11 +56,7 @@ export default function Page({
                 value="content"
                 className="space-y-4 border-none bg-transparent p-0 px-3"
               >
-                <CourseContent
-                  modules={modules}
-                  courseId={course.id}
-                  router={router}
-                />
+                <CourseContent modules={modules} router={router} />
                 <Button className="w-full" disabled={!completed}>
                   Yakuniy testni boshlash
                 </Button>
