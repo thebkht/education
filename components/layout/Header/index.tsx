@@ -69,7 +69,7 @@ export default function Index({
               <Icons.menu className="h-5 w-5" />
               <span className="sr-only">Menu</span>
             </Button>
-            {collapsed && <Badge>Mening kurslarim</Badge>}
+            {collapsed ? <Badge>Mening kurslarim</Badge> : null}
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1 text-sm font-medium">
