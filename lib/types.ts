@@ -23,7 +23,6 @@ const course = z.object({
     base64: z.string().optional(),
   }),
   file: z.string().optional(),
-  status: z.number(),
 });
 
 export type Course = z.infer<typeof course>;
