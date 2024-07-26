@@ -20,9 +20,10 @@ import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { X } from "lucide-react";
 import { any } from "zod";
+import { getServerSideProps } from "@/pages/courses";
 
 export default function Index({
-  course,
+  course: initialCourse,
   token,
 }: {
   course: Course;
@@ -31,7 +32,14 @@ export default function Index({
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [isRegistered, setIsRegistered] = React.useState(false);
+  const [course, setCourse] = React.useState<Course>(initialCourse);
+  const [isRegistered, setIsRegistered] = React.useState(course.file);
+
+  React.useEffect(() => {
+    setCourse(initialCourse);
+    setIsRegistered(course.file);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialCourse]);
 
   const handleRegisterCourse = async () => {
     const registerCoursePromise = async () => {
@@ -43,8 +51,8 @@ export default function Index({
         if (res.status === 400) {
           throw new Error(res.data.message);
         } else if (res.status === 200) {
-          setIsRegistered(true);
-          return res.data;
+          const courses = await axios.get("courses", getHeaders(token ?? ""));
+          setCourse(courses.data.find((c: Course) => c.id === course.id));
         }
       } catch (error: any) {
         if (error.response?.status === 400) {
@@ -57,8 +65,8 @@ export default function Index({
 
     toast.promise(registerCoursePromise, {
       loading: "Yuklanmoqda...",
-      success: (data) => {
-        return `Muvaffaqiyatli ro'yxatdan o'tdingiz: ${data.file ? "Shartnoma fayli olindi" : ""}`;
+      success: () => {
+        return `Muvaffaqiyatli ro'yxatdan o'tdingiz: ${course.file ? "Shartnoma fayli olindi" : ""}`;
       },
       error: (error) => {
         return error.message;
