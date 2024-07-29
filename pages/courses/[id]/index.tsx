@@ -54,7 +54,7 @@ export default function Page({
               </TabsList>
               <TabsContent
                 value="content"
-                className="space-y-4 border-none bg-transparent p-0 px-3"
+                className="space-y-4 border-none bg-transparent p-0"
               >
                 <CourseContent modules={modules} router={router} />
                 <Button className="w-full" disabled={!completed}>
