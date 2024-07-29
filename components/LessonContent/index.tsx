@@ -4,6 +4,7 @@ import Accordion, {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/UI/Accordion";
+import { useRouter } from "next/router";
 
 const Index = ({
   lessons,
@@ -11,43 +12,57 @@ const Index = ({
 }: {
   lessons: Lesson[];
   moduleId: Module["id"];
-}) => (
-  <div className="w-full">
-    <div className="flex w-full gap-6 rounded-t border-b bg-background px-4 py-3">
-      <div className="flex w-full items-center justify-between">
-        <h4 className="text-base font-semibold text-second">Kurs tarkibi</h4>
-        <Progress lessons={lessons} />
+}) => {
+  const router = useRouter();
+  return (
+    <div className="w-full">
+      <div className="flex w-full gap-6 rounded-t border-b bg-background px-4 py-3">
+        <div className="flex w-full items-center justify-between">
+          <h4 className="text-base font-semibold text-second">Kurs tarkibi</h4>
+          <Progress lessons={lessons} />
+        </div>
       </div>
-    </div>
-    <Accordion type="single" collapsible defaultValue={`${moduleId}`}>
-      {lessons.map((lesson, index) => (
-        <AccordionItem
-          value={`${lesson.id}`}
-          key={lesson.id}
-          className="bg-accent2"
-        >
-          <AccordionTrigger
-            disabled={index != 0 && lessons[index - 1].completed_date === null}
+      <Accordion type="single" collapsible defaultValue={`${moduleId}`}>
+        {lessons.map((lesson, index) => (
+          <AccordionItem
+            value={`${lesson.id}`}
+            key={lesson.id}
+            className="bg-accent2"
           >
-            <div className="flex w-full items-center justify-between">
-              <div className="flex flex-col gap-1">
-                <div className="flex gap-2 text-left font-normal text-second-foreground">
-                  {lesson.name}
+            <AccordionTrigger
+              disabled={
+                index != 0 && lessons[index - 1].completed_date === null
+              }
+            >
+              <div className="flex w-full items-center justify-between">
+                <div className="flex flex-col gap-1">
+                  <div className="flex gap-2 text-left font-normal text-second-foreground">
+                    {lesson.name}
+                  </div>
                 </div>
               </div>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="border-b bg-background px-4 py-2 hover:bg-accent2">
-            PDF fayl
-          </AccordionContent>
-          <AccordionContent className="border-b bg-background px-4 py-2 hover:bg-accent2">
-            Prezentatsiya fayl
-          </AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  </div>
-);
+            </AccordionTrigger>
+            <AccordionContent
+              onClick={() => lesson.pdf_file && router.push(lesson.pdf_file)}
+              className="cursor-pointer border-b bg-background px-4 py-2 hover:bg-accent2"
+            >
+              PDF fayl
+            </AccordionContent>
+            <AccordionContent
+              onClick={() =>
+                lesson.presentation_file &&
+                router.push(lesson.presentation_file)
+              }
+              className="cursor-pointer border-b bg-background px-4 py-2 hover:bg-accent2"
+            >
+              Prezentatsiya fayl
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </div>
+  );
+};
 
 const Progress = ({ lessons }: { lessons: Lesson[] }) => {
   const completedLessons = lessons.filter(
