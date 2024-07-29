@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { axios } from "@/api/interseptors";
 import { getHeaders } from "@/helpers";
 import { toast } from "sonner";
+import { useState } from "react";
 
 const Index = ({
   modules,
@@ -82,6 +83,7 @@ const ModuleCard = ({
   course: CourseDetail;
 }) => {
   const router = useRouter();
+  const [completed, setCompleted] = useState(false);
 
   const handleGenerateQuestions = async (token: string, type: number) => {
     const promise = async () => {
@@ -92,7 +94,15 @@ const ModuleCard = ({
         );
         router.push(`/tests/${res.data.test_enrollment}`);
       } catch (e: any) {
-        throw new Error(e.response.data.message);
+        if (
+          e.response.status === 400 ||
+          e.response.data.message ===
+            "Siz boshlang'ich testni topshirib bo'lgansiz"
+        ) {
+          setCompleted(true);
+          throw new Error(e.response.data.message);
+        }
+        throw new Error("Xatolik yuz berdi");
       }
     };
 
@@ -120,12 +130,12 @@ const ModuleCard = ({
             size="sm"
             className="py-1.5 font-medium"
             onClick={() => {
-              index === 0
+              index === 0 && !completed
                 ? handleGenerateQuestions(token, 1)
                 : router.push(`/modules/${module.id}`);
             }}
           >
-            {index === 0 ? "Testni boshlash" : "Davom etish"}
+            {index === 0 && !completed ? "Testni boshlash" : "Davom etish"}
           </Button>
         )}
       </div>
