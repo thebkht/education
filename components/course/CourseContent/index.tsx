@@ -1,8 +1,20 @@
 import { Icons } from "@/components/icons";
 import { CourseDetail, Module } from "@/lib/types";
 import Button from "@/components/UI/Button";
+import { useRouter } from "next/router";
+import { axios } from "@/api/interseptors";
+import { getHeaders } from "@/helpers";
+import { toast } from "sonner";
 
-const Index = ({ modules, router }: { modules: Module[]; router: any }) => (
+const Index = ({
+  modules,
+  token,
+  course,
+}: {
+  modules: Module[];
+  token: string;
+  course: CourseDetail;
+}) => (
   <div className="rounded border border-popover bg-background">
     <div className="flex justify-between overflow-hidden rounded border-b p-4 pl-6 transition-all">
       <div className="flex items-center gap-6">
@@ -33,7 +45,8 @@ const Index = ({ modules, router }: { modules: Module[]; router: any }) => (
         module={module}
         index={index}
         modules={modules}
-        router={router}
+        token={token}
+        course={course}
       />
     ))}
   </div>
@@ -59,36 +72,65 @@ const ModuleCard = ({
   module,
   index,
   modules,
-  router,
+  course,
+  token,
 }: {
   module: Module;
   index: number;
   modules: Module[];
-  router: any;
-}) => (
-  <div className="overflow-hidden p-4 pl-6 transition-all">
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        {index !== 0 && !modules[index - 1].completed ? (
-          <Icons.lock className="h-8 w-8 text-muted-foreground" />
-        ) : module.completed ? (
-          <Icons.checked className="h-8 w-8 text-muted-foreground" />
-        ) : (
-          <Icons.unchecked className="h-8 w-8 text-muted-foreground" />
+  token: string;
+  course: CourseDetail;
+}) => {
+  const router = useRouter();
+
+  const handleGenerateQuestions = async (token: string, type: number) => {
+    const promise = async () => {
+      try {
+        const res = await axios.get<any>(
+          `/tests/generate-questions`,
+          getHeaders(token, { course: course.id, type }),
+        );
+        router.push(`/tests/${res.data.test_enrollment}`);
+      } catch (e: any) {
+        throw new Error(e.response.data.message);
+      }
+    };
+
+    toast.promise(promise, {
+      loading: "Yuklanmoqda...",
+      success: "Test muvaffaqiyatli boshlandi",
+      error: (error) => error.message,
+    });
+  };
+  return (
+    <div className="overflow-hidden p-4 pl-6 transition-all">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          {index !== 0 && !modules[index - 1].completed ? (
+            <Icons.lock className="h-8 w-8 text-muted-foreground" />
+          ) : module.completed ? (
+            <Icons.checked className="h-8 w-8 text-muted-foreground" />
+          ) : (
+            <Icons.unchecked className="h-8 w-8 text-muted-foreground" />
+          )}
+          <p className="max-w-[800px] text-second-foreground">{module.name}</p>
+        </div>
+        {!(index !== 0 && !modules[index - 1].completed) && (
+          <Button
+            size="sm"
+            className="py-1.5 font-medium"
+            onClick={() => {
+              index === 0
+                ? handleGenerateQuestions(token, 1)
+                : router.push(`/modules/${module.id}`);
+            }}
+          >
+            {index === 0 ? "Testni boshlash" : "Davom etish"}
+          </Button>
         )}
-        <p className="max-w-[800px] text-second-foreground">{module.name}</p>
       </div>
-      {!(index !== 0 && !modules[index - 1].completed) && (
-        <Button
-          size="sm"
-          className="py-1.5 font-medium"
-          onClick={() => router.push(`/modules/${module.id}`)}
-        >
-          {index !== 0 ? "Testni boshlash" : "Davom etish"}
-        </Button>
-      )}
     </div>
-  </div>
-);
+  );
+};
 
 export default Index;
