@@ -24,6 +24,7 @@ import { Test } from "@/lib/types";
 import { IUser } from "@/interfaces/auth";
 import { axios } from "@/api/interseptors";
 import notFound from "@/pages/404";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   test_enrolment: z.number(),
@@ -38,9 +39,10 @@ const formSchema = z.object({
 type Props = {
   test: Test;
   user: IUser;
+  token: string;
 };
 
-export default function TestPage({ test, user }: Props) {
+export default function TestPage({ test, user, token }: Props) {
   const router = useRouter();
   console.log(test);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -59,7 +61,21 @@ export default function TestPage({ test, user }: Props) {
   const { questions } = test;
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    const promise = async () => {
+      try {
+        await axios.post(`/tests/submit`, getHeaders(token, values));
+        /* router.push(`/tests/${test.id}/result`); */
+      } catch (error: any) {
+        console.log(error);
+        throw new Error("Xatolik yuz berdi");
+      }
+    };
+
+    toast.promise(promise, {
+      loading: "Yuklanmoqda...",
+      success: "Test muvaffaqiyatli bajarildi",
+      error: (error) => error.message,
+    });
   }
 
   return (
@@ -187,6 +203,7 @@ const getServerSidePropsFunction = async (
     return {
       props: {
         test: test.data,
+        token,
       },
     };
   } catch (error) {
