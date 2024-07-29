@@ -5,15 +5,37 @@ import Accordion, {
   AccordionTrigger,
 } from "@/components/UI/Accordion";
 import { useRouter } from "next/router";
+import Button from "@/components/UI/Button";
+import { axios } from "@/api/interseptors";
+import { getHeaders } from "@/helpers";
+import { toast } from "sonner";
 
-const Index = ({
-  lessons,
-  moduleId,
-}: {
-  lessons: Lesson[];
-  moduleId: Module["id"];
-}) => {
+const Index = ({ lessons, token }: { lessons: Lesson[]; token: string }) => {
   const router = useRouter();
+  const handleStartLesson = async (lessonId: Lesson["id"]) => {
+    const promise = async () => {
+      try {
+        const formData = new FormData();
+        formData.append("lesson", lessonId.toString());
+        const res = await axios.post<any>(
+          "courses/start-lesson",
+          formData,
+          getHeaders(token),
+        );
+        console.log(res);
+        return res.data;
+      } catch (error: any) {
+        console.log(error);
+        throw new Error(error.response.data.message);
+      }
+    };
+
+    toast.promise(promise(), {
+      loading: "Yuklanmoqda...",
+      success: (data) => data.message,
+      error: (error) => error.message,
+    });
+  };
   return (
     <div className="w-full">
       <div className="flex w-full gap-6 rounded-t border-b bg-background px-4 py-3">
@@ -22,7 +44,13 @@ const Index = ({
           <Progress lessons={lessons} />
         </div>
       </div>
-      <Accordion type="single" collapsible defaultValue={`${moduleId}`}>
+      <Accordion
+        type="single"
+        collapsible
+        defaultValue={lessons
+          .find((lesson) => lesson.started_date !== null)
+          ?.id.toString()}
+      >
         {lessons.map((lesson, index) => (
           <AccordionItem
             value={`${lesson.id}`}
@@ -30,23 +58,40 @@ const Index = ({
             className="bg-accent2"
           >
             <AccordionTrigger
+              onClick={() => {
+                if (lesson.started_date === null) {
+                  handleStartLesson(lesson.id);
+                }
+              }}
               disabled={
                 index != 0 && lessons[index - 1].completed_date === null
               }
+              className="text-left"
             >
-              <div className="flex w-full items-center justify-between">
-                <div className="flex flex-col gap-1">
-                  <div className="flex gap-2 text-left font-normal text-second-foreground">
-                    {lesson.name}
-                  </div>
+              <div className="flex grow items-center gap-1">
+                <div className="flex grow gap-2 text-left font-normal text-second-foreground">
+                  {index + 1} - dars
                 </div>
+                {!lesson.started_date ||
+                  (index != 0 && lessons[index - 1].completed_date === null && (
+                    <Button
+                      size={"sm"}
+                      onClick={async () => await handleStartLesson(lesson.id)}
+                      role="button"
+                    >
+                      <div>Darsni boshlash</div>
+                    </Button>
+                  ))}
               </div>
             </AccordionTrigger>
+            <AccordionContent className="cursor-pointer border-b bg-background px-4 py-2 hover:bg-accent2">
+              {lesson.name}
+            </AccordionContent>
             <AccordionContent
               onClick={() => lesson.pdf_file && router.push(lesson.pdf_file)}
               className="cursor-pointer border-b bg-background px-4 py-2 hover:bg-accent2"
             >
-              PDF fayl
+              1. Mavzu bo‘yicha o‘quv qo‘llanma (PDF)
             </AccordionContent>
             <AccordionContent
               onClick={() =>
@@ -55,7 +100,7 @@ const Index = ({
               }
               className="cursor-pointer border-b bg-background px-4 py-2 hover:bg-accent2"
             >
-              Prezentatsiya fayl
+              2. Mavzu bo‘yicha o‘quv qo‘llanma (PPT)
             </AccordionContent>
           </AccordionItem>
         ))}
