@@ -17,16 +17,29 @@ type Props = {
   lessons: Lesson[];
   lesson: Lesson;
   user: IUser;
+  token: string;
 };
 
-const getYouTubeVideoID = (url: string): string | null => {
+const getVideoID = (url: string): string | null => {
   const regex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/;
   const match = url.match(regex);
   return match ? match[1] : null;
 };
-
-const LecturePage = ({ lessons, user, lesson }: Props) => {
+const createUrl = (url: string): string => {
+  if (
+    (url?.startsWith("https://youtu") ||
+      url?.startsWith("http://youtu") ||
+      url?.startsWith("https://www.youtu")) &&
+    getVideoID(url)
+  ) {
+    return `https://www.youtube.com/embed/${getVideoID(url)}?&modestbranding=1&showinfo=0&autoplay=0&controls=1&loop=1`;
+  } else {
+    return url + "?&modestbranding=1&showinfo=0&autoplay=0&controls=1&loop=1";
+  }
+};
+const LecturePage = ({ lessons, user, lesson, token }: Props) => {
   const router = useRouter();
+  console.log(lesson);
 
   const { ids } = router.query;
   const moduleId = ids && ids[0];
@@ -53,7 +66,8 @@ const LecturePage = ({ lessons, user, lesson }: Props) => {
             <div className="col-span-8 flex flex-col gap-4">
               <iframe
                 id="ytplayer"
-                src={`https://www.youtube.com/embed/${getYouTubeVideoID(lesson.video_url ?? "")}?modestbranding=1&playsinline=1&color=white`}
+                src={createUrl(lesson.video_url ?? "")}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 className="aspect-video max-h-[600px] w-full max-w-[1064px] rounded border shadow"
               />
               <div className="flex max-w-[1064px] flex-col gap-3">
@@ -71,7 +85,7 @@ const LecturePage = ({ lessons, user, lesson }: Props) => {
               </div>
             </div>
             <div className="col-span-4 flex flex-col gap-4">
-              <LessonContent lessons={lessons} moduleId={Number(moduleId)} />
+              <LessonContent lessons={lessons} token={token} />
               <Button type="submit" size="sm" className="h-10 w-fit">
                 <div className="flex items-center gap-2 font-medium">
                   <Icons.checkMark className="h-4 w-4" />
@@ -119,6 +133,7 @@ const getServerSidePropsFunction = async (
     props: {
       lessons: lessons.data,
       lesson,
+      token,
     },
   };
 };
