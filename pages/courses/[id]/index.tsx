@@ -19,10 +19,12 @@ export default function Page({
   course,
   user,
   modules,
+  token,
 }: {
   course: CourseDetail;
   user: IUser;
   modules: Module[];
+  token: string;
 }) {
   const router = useRouter();
   const [completed, setCompleted] = useState(false);
@@ -56,7 +58,11 @@ export default function Page({
                 value="content"
                 className="space-y-4 border-none bg-transparent p-0"
               >
-                <CourseContent modules={modules} router={router} />
+                <CourseContent
+                  modules={modules}
+                  token={token}
+                  course={course}
+                />
                 <Button className="w-full" disabled={!completed}>
                   Yakuniy testni boshlash
                 </Button>
@@ -82,7 +88,7 @@ const getServerSidePropsFunction = async (
   const cookies = parseCookies(context);
   const token = cookies.token;
   const course = await axios.get(
-    `/courses/${context.params?.id}`,
+    `courses/${context.params?.id}`,
     getHeaders(token),
   );
   const modules = await axios.get(
@@ -93,6 +99,7 @@ const getServerSidePropsFunction = async (
     props: {
       course: course.data,
       modules: modules.data,
+      token,
     },
   };
 };
