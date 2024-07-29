@@ -44,8 +44,6 @@ export default function Courses({
       return;
     }
 
-    console.log("query", query);
-
     if (!query || query === "") {
       router.push(`${router.pathname}`);
     } else if (query.length >= 3) {
