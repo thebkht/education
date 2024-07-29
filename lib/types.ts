@@ -61,3 +61,26 @@ const modules = z.object({
 });
 
 export type Module = z.infer<typeof modules>;
+
+const option = z.object({
+  id: z.number(),
+  title: z.string(),
+});
+
+const question = z.object({
+  id: z.number(),
+  title: z.string(),
+  type: z.enum(["1", "2"]),
+  options: z.array(option),
+});
+
+const test = z.object({
+  id: z.number(),
+  started_at: z.string(),
+  questions: z.array(question),
+  type: z.enum(["1", "2"]),
+  total_questions: z.number(),
+  finished: z.boolean(),
+});
+
+export type Test = z.infer<typeof test>;
