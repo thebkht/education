@@ -66,6 +66,7 @@ const Index = ({ lessons, token }: { lessons: Lesson[]; token: string }) => {
               disabled={
                 index != 0 && lessons[index - 1].completed_date === null
               }
+              noIcon={lesson.started_date === null}
               className="text-left"
             >
               <div className="flex grow items-center gap-1">
