@@ -63,6 +63,10 @@ export default function TestPage({ test, user, token }: Props) {
   }
   const { questions } = test;
 
+  if (test.finished) {
+    return notFound();
+  }
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     const promise = async () => {
