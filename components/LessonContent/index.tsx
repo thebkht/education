@@ -94,7 +94,9 @@ const Index = ({
               className="text-left"
             >
               <div className="flex grow items-center gap-1">
-                <div className="flex grow gap-2 text-left font-normal text-second-foreground">
+                <div
+                  className={`flex grow gap-2 text-left font-semibold ${lesson.completed_date !== null ? "text-primary" : "text-second-foreground"}`}
+                >
                   {index + 1} - dars
                 </div>
                 {index == 0
@@ -111,7 +113,9 @@ const Index = ({
                     )}
               </div>
             </AccordionTrigger>
-            <AccordionContent className="cursor-pointer border-b bg-background px-4 py-2 hover:bg-accent2">
+            <AccordionContent
+              className={`cursor-pointer border-b bg-background px-4 py-2 hover:bg-accent2`}
+            >
               {lesson.name}
             </AccordionContent>
             {lesson.pdf_file && (
