@@ -21,15 +21,10 @@ export default function Index({
   className?: string;
   user: IUser;
 }) {
-  const [collapsed, setCollapsed] = React.useState<boolean>(
-    getLocalStorage("collapsed"),
-  );
+  const [collapsed, setCollapsed] = React.useState<boolean>(false);
 
   const handleCollapse = () => {
-    setCollapsed((prev) => {
-      setLocalStorage(!prev ? 1 : 0, "collapsed");
-      return !prev;
-    });
+    setCollapsed(!collapsed);
   };
   return (
     <>
