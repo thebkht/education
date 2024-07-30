@@ -57,11 +57,9 @@ const LecturePage = ({
 
   useEffect(() => {
     setTimeout(() => {
-      if (lesson?.started_date) {
-        setLoading(false);
-      }
+      setLoading(false);
     }, 1000);
-  }, [lesson]);
+  }, []);
 
   const { ids } = router.query;
   const moduleId = ids && ids[0];
@@ -108,21 +106,22 @@ const LecturePage = ({
           </div>
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-8 flex flex-col gap-4">
-              {!loading ? (
+              <div className="relative aspect-video w-full">
                 <iframe
                   id="ytplayer"
                   src={createUrl(lesson.video_url ?? "")}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  className="aspect-video max-h-[600px] w-full max-w-[1064px] rounded border shadow"
+                  className="absolute top-1 aspect-video max-h-[600px] w-full max-w-[1064px] rounded border shadow"
                 />
-              ) : (
-                <Skeleton
-                  className="aspect-video max-h-[600px] w-full max-w-[1064px] rounded border"
-                  containerClassName="aspect-w-16 aspect-h-9 flex-1"
-                  baseColor="#d1d5db"
-                  highlightColor="#e9e8ed"
-                />
-              )}
+                {loading && (
+                  <Skeleton
+                    containerClassName="absolute z-[2] rounded top-0 right-0 bottom-0 left-0"
+                    className="h-full w-full"
+                    baseColor="#d1d5db"
+                    highlightColor="#e9e8ed"
+                  />
+                )}
+              </div>
               <div className="flex max-w-[1064px] flex-col gap-3">
                 <div className="text-lg font-medium text-second">
                   Kurs haqida
@@ -142,7 +141,7 @@ const LecturePage = ({
                 lessons={lessons}
                 token={token}
                 moduleId={Number(moduleId)}
-                updateLessons={setLessons}
+                updateLessons={(lessons: Lesson[]) => setLessons(lessons)}
               />
               {lesson?.started_date !== null && (
                 <Button type="submit" size="sm" className="h-10 w-fit">
