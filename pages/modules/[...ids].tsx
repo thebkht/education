@@ -13,6 +13,8 @@ import { IUser } from "@/interfaces/auth";
 import notFound from "@/pages/404";
 import LessonContent from "@/components/LessonContent";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import { Skeleton } from "@/components/Skeleton";
 
 type Props = {
   lessons: Lesson[];
@@ -41,6 +43,13 @@ const createUrl = (url: string): string => {
 const LecturePage = ({ lessons, user, lesson, token }: Props) => {
   const router = useRouter();
   console.log(lesson);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (lesson?.started_date) {
+      setLoading(false);
+    }
+  }, [lesson]);
 
   const { ids } = router.query;
   const moduleId = ids && ids[0];
@@ -87,12 +96,21 @@ const LecturePage = ({ lessons, user, lesson, token }: Props) => {
           </div>
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-8 flex flex-col gap-4">
-              <iframe
-                id="ytplayer"
-                src={createUrl(lesson.video_url ?? "")}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                className="aspect-video max-h-[600px] w-full max-w-[1064px] rounded border shadow"
-              />
+              {!loading ? (
+                <iframe
+                  id="ytplayer"
+                  src={createUrl(lesson.video_url ?? "")}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  className="aspect-video max-h-[600px] w-full max-w-[1064px] rounded border shadow"
+                />
+              ) : (
+                <Skeleton
+                  className="aspect-video max-h-[600px] w-full max-w-[1064px] rounded border"
+                  containerClassName="aspect-w-16 aspect-h-9 flex-1"
+                  baseColor="#d1d5db"
+                  highlightColor="#e9e8ed"
+                />
+              )}
               <div className="flex max-w-[1064px] flex-col gap-3">
                 <div className="text-lg font-medium text-second">
                   Kurs haqida
