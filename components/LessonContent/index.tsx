@@ -99,21 +99,13 @@ const Index = ({
                 </div>
                 {index == 0
                   ? !lesson.started_date && (
-                      <Button
-                        size={"sm"}
-                        onClick={async () => await handleStartLesson(lesson.id)}
-                        role="button"
-                      >
+                      <Button size={"sm"} role="button">
                         <div>Darsni boshlash</div>
                       </Button>
                     )
                   : !lesson.started_date &&
                     !lessons[index - 1].completed_date && (
-                      <Button
-                        size={"sm"}
-                        onClick={async () => await handleStartLesson(lesson.id)}
-                        role="button"
-                      >
+                      <Button size={"sm"} role="button">
                         <div>Darsni boshlash</div>
                       </Button>
                     )}
