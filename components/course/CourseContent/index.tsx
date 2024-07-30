@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { axios } from "@/api/interseptors";
 import { getHeaders } from "@/helpers";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Index = ({
   modules,
@@ -89,6 +89,10 @@ const ModuleCard = ({
 }) => {
   const router = useRouter();
   const [completed, setCompleted] = useState(completedTest);
+
+  useEffect(() => {
+    setCompleted(completedTest);
+  }, [completedTest]);
 
   const handleGenerateQuestions = async (token: string, type: number) => {
     const promise = async () => {
