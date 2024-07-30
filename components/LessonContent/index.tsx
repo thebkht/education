@@ -11,8 +11,23 @@ import { getHeaders } from "@/helpers";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 
-const Index = ({ lessons, token }: { lessons: Lesson[]; token: string }) => {
+const Index = ({
+  lessons: initialLessons,
+  token,
+  moduleId,
+  updateLessons,
+}: {
+  lessons: Lesson[];
+  token: string;
+  moduleId: Module["id"];
+  updateLessons: (lessons: Lesson[]) => void;
+}) => {
   const router = useRouter();
+  const [lessons, setLessons] = useState<Lesson[]>(initialLessons);
+
+  useEffect(() => {
+    setLessons(initialLessons);
+  }, [initialLessons]);
 
   const handleStartLesson = async (lessonId: Lesson["id"]) => {
     const promise = async () => {
@@ -24,7 +39,12 @@ const Index = ({ lessons, token }: { lessons: Lesson[]; token: string }) => {
           formData,
           getHeaders(token),
         );
-        console.log(res);
+        const lessons = await axios.get<any>(
+          "courses/lessons",
+          getHeaders(token, { module: moduleId }),
+        );
+        setLessons(lessons.data);
+        updateLessons(lessons.data);
         return res.data;
       } catch (error: any) {
         console.log(error);
@@ -63,6 +83,8 @@ const Index = ({ lessons, token }: { lessons: Lesson[]; token: string }) => {
               onClick={() => {
                 if (lesson.started_date === null) {
                   handleStartLesson(lesson.id);
+                } else {
+                  router.push(`/modules/${moduleId}/${lesson.id}`);
                 }
               }}
               disabled={
