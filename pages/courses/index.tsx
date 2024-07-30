@@ -35,10 +35,6 @@ export default function Courses({
   const [query] = useDebounce(search, 500);
 
   useEffect(() => {
-    setCourses(initialCourses);
-  }, [initialCourses]);
-
-  useEffect(() => {
     if (initialRender.current) {
       initialRender.current = false;
       return;
@@ -47,8 +43,21 @@ export default function Courses({
     if (!query || query === "") {
       router.push(`${router.pathname}`);
     } else if (query.length >= 3) {
-      router.push(`${router.pathname}${search ? `?search=${search}` : ``}`);
+      router
+        .push(
+          `${router.pathname}${!!search ? `?search=${search}` : ``}`,
+          undefined,
+          { shallow: true },
+        )
+        .then((res) => {
+          console.log(res);
+        });
     }
+    axios
+      .get<any>(`courses/`, getHeaders(token, { name: query }))
+      .then((res) => {
+        setCourses(res?.data ?? []);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
