@@ -12,6 +12,7 @@ import { CourseDetail, Lesson } from "@/lib/types";
 import { IUser } from "@/interfaces/auth";
 import notFound from "@/pages/404";
 import LessonContent from "@/components/LessonContent";
+import { toast } from "sonner";
 
 type Props = {
   lessons: Lesson[];
@@ -47,6 +48,28 @@ const LecturePage = ({ lessons, user, lesson, token }: Props) => {
   if (!moduleId || !lesson) {
     return notFound();
   }
+
+  const handleFinishLesson = async () => {
+    const promise = async () => {
+      try {
+        const res = await axios.patch<any>(
+          "courses/finish-lesson",
+          { lesson: lesson.id },
+          getHeaders(token),
+        );
+        return res.data;
+      } catch (error: any) {
+        throw new Error(error.response.data.message);
+      }
+    };
+
+    toast.promise(promise(), {
+      loading: "Yuklanmoqda...",
+      success: (data) =>
+        data.message ? data.message : "Muvaffaqiyatli yakunlandi",
+      error: (error) => error.message,
+    });
+  };
 
   return (
     <>
@@ -87,7 +110,10 @@ const LecturePage = ({ lessons, user, lesson, token }: Props) => {
             <div className="col-span-4 flex flex-col gap-4">
               <LessonContent lessons={lessons} token={token} />
               <Button type="submit" size="sm" className="h-10 w-fit">
-                <div className="flex items-center gap-2 font-medium">
+                <div
+                  className="flex items-center gap-2 font-medium"
+                  onClick={handleFinishLesson}
+                >
                   <Icons.checkMark className="h-4 w-4" />
                   Tamomlash
                 </div>
