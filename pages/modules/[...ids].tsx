@@ -40,10 +40,20 @@ const createUrl = (url: string): string => {
     return url + "?&modestbranding=1&showinfo=0&autoplay=0&controls=1&loop=1";
   }
 };
-const LecturePage = ({ lessons, user, lesson, token }: Props) => {
+const LecturePage = ({
+  lessons: initialLessons,
+  user,
+  lesson,
+  token,
+}: Props) => {
   const router = useRouter();
   console.log(lesson);
   const [loading, setLoading] = useState(true);
+  const [lessons, setLessons] = useState<Lesson[]>(initialLessons);
+
+  useEffect(() => {
+    setLessons(initialLessons);
+  }, [initialLessons]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -128,16 +138,23 @@ const LecturePage = ({ lessons, user, lesson, token }: Props) => {
               </div>
             </div>
             <div className="col-span-4 flex flex-col gap-4">
-              <LessonContent lessons={lessons} token={token} />
-              <Button type="submit" size="sm" className="h-10 w-fit">
-                <div
-                  className="flex items-center gap-2 font-medium"
-                  onClick={handleFinishLesson}
-                >
-                  <Icons.checkMark className="h-4 w-4" />
-                  Tamomlash
-                </div>
-              </Button>
+              <LessonContent
+                lessons={lessons}
+                token={token}
+                moduleId={Number(moduleId)}
+                updateLessons={setLessons}
+              />
+              {lesson?.started_date !== null && (
+                <Button type="submit" size="sm" className="h-10 w-fit">
+                  <div
+                    className="flex items-center gap-2 font-medium"
+                    onClick={handleFinishLesson}
+                  >
+                    <Icons.checkMark className="h-4 w-4" />
+                    Tamomlash
+                  </div>
+                </Button>
+              )}
             </div>
           </div>
         </div>
