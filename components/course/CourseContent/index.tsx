@@ -11,10 +11,12 @@ const Index = ({
   modules,
   token,
   course,
+  completedTest,
 }: {
   modules: Module[];
   token: string;
   course: CourseDetail;
+  completedTest: boolean;
 }) => (
   <div className="rounded border border-popover bg-background">
     <div className="flex justify-between overflow-hidden rounded border-b p-4 pl-6 transition-all">
@@ -48,6 +50,7 @@ const Index = ({
         modules={modules}
         token={token}
         course={course}
+        completedTest={completedTest}
       />
     ))}
   </div>
@@ -75,15 +78,17 @@ const ModuleCard = ({
   modules,
   course,
   token,
+  completedTest,
 }: {
   module: Module;
   index: number;
   modules: Module[];
   token: string;
   course: CourseDetail;
+  completedTest: boolean;
 }) => {
   const router = useRouter();
-  const [completed, setCompleted] = useState(false);
+  const [completed, setCompleted] = useState(completedTest);
 
   const handleGenerateQuestions = async (token: string, type: number) => {
     const promise = async () => {

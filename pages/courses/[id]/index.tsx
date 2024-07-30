@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/UI/Tabs";
 import Button from "@/components/UI/Button";
 import Metadata from "@/components/Metadata";
 import { notFound } from "next/navigation";
-import { CourseDetail, Module } from "@/lib/types";
+import { CourseDetail, Module, StudentResult } from "@/lib/types";
 import { IUser } from "@/interfaces/auth";
 import { GetServerSidePropsContext } from "next";
 import AuthMiddleware from "@/middlewares/auth";
@@ -20,11 +20,13 @@ export default function Page({
   user,
   modules,
   token,
+  studentResults,
 }: {
   course: CourseDetail;
   user: IUser;
   modules: Module[];
   token: string;
+  studentResults: StudentResult[];
 }) {
   const router = useRouter();
   const [completed, setCompleted] = useState(false);
@@ -32,6 +34,18 @@ export default function Page({
   useEffect(() => {
     setCompleted(modules.every((module) => module.completed));
   }, [modules]);
+
+  const [completedTest, setCompletedTest] = useState<boolean>(false);
+  useEffect(() => {
+    if (studentResults.length > 0) {
+      const result = studentResults.find(
+        (result) => result.course.id === course.id && result.type == "1",
+      );
+      if (result) {
+        setCompletedTest(result.finished);
+      }
+    }
+  }, [studentResults, course]);
 
   if (!course) {
     return notFound();
@@ -62,6 +76,7 @@ export default function Page({
                   modules={modules}
                   token={token}
                   course={course}
+                  completedTest={completedTest}
                 />
                 <Button className="w-full" disabled={!completed}>
                   Yakuniy testni boshlash
@@ -95,11 +110,16 @@ const getServerSidePropsFunction = async (
     `courses/modules?course=${context.params?.id}`,
     getHeaders(token),
   );
+  const studentResults = await axios.get(
+    "/tests/student-results",
+    getHeaders(token),
+  );
   return {
     props: {
       course: course.data,
       modules: modules.data,
       token,
+      studentResults: studentResults.data,
     },
   };
 };
