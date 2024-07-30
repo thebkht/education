@@ -47,6 +47,9 @@ export default function TestPage({ test, user, token }: Props) {
   console.log(test);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      test_enrolment: test.id,
+    },
   });
 
   const { fields, append, remove } = useFieldArray({
