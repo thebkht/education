@@ -46,9 +46,11 @@ const LecturePage = ({ lessons, user, lesson, token }: Props) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (lesson?.started_date) {
-      setLoading(false);
-    }
+    setTimeout(() => {
+      if (lesson?.started_date) {
+        setLoading(false);
+      }
+    }, 1000);
   }, [lesson]);
 
   const { ids } = router.query;
