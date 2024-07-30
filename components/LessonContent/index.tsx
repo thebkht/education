@@ -88,21 +88,25 @@ const Index = ({ lessons, token }: { lessons: Lesson[]; token: string }) => {
             <AccordionContent className="cursor-pointer border-b bg-background px-4 py-2 hover:bg-accent2">
               {lesson.name}
             </AccordionContent>
-            <AccordionContent
-              onClick={() => lesson.pdf_file && router.push(lesson.pdf_file)}
-              className="cursor-pointer border-b bg-background px-4 py-2 hover:bg-accent2"
-            >
-              1. Mavzu bo‘yicha o‘quv qo‘llanma (PDF)
-            </AccordionContent>
-            <AccordionContent
-              onClick={() =>
-                lesson.presentation_file &&
-                router.push(lesson.presentation_file)
-              }
-              className="cursor-pointer border-b bg-background px-4 py-2 hover:bg-accent2"
-            >
-              2. Mavzu bo‘yicha o‘quv qo‘llanma (PPT)
-            </AccordionContent>
+            {lesson.pdf_file && (
+              <AccordionContent
+                onClick={() => lesson.pdf_file && router.push(lesson.pdf_file)}
+                className="cursor-pointer border-b bg-background px-4 py-2 hover:bg-accent2"
+              >
+                1. Mavzu bo‘yicha o‘quv qo‘llanma (PDF)
+              </AccordionContent>
+            )}
+            {lesson.presentation_file && (
+              <AccordionContent
+                onClick={() =>
+                  lesson.presentation_file &&
+                  router.push(lesson.presentation_file)
+                }
+                className="cursor-pointer border-b bg-background px-4 py-2 hover:bg-accent2"
+              >
+                2. Mavzu bo‘yicha o‘quv qo‘llanma (PPT)
+              </AccordionContent>
+            )}
           </AccordionItem>
         ))}
       </Accordion>
