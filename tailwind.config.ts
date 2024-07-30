@@ -55,6 +55,7 @@ const config: Config = {
       },
       aspectRatio: {
         "28/40": "28/40",
+        "52/30": "52/30",
       },
     },
   },

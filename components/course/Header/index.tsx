@@ -18,7 +18,7 @@ const Index = ({ course }: { course: CourseDetail }) => (
       height={294}
       placeholder="blur"
       blurDataURL={course.image.base64}
-      className="rounded border border-border"
+      className="aspect-52/30 rounded border border-border object-cover"
     />
   </div>
 );
