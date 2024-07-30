@@ -84,3 +84,21 @@ const test = z.object({
 });
 
 export type Test = z.infer<typeof test>;
+
+const courseShort = z.object({
+  id: z.number(),
+  name: z.string(),
+  short_description: z.string(),
+});
+
+const studetResult = z.object({
+  id: z.number(),
+  total_questions: z.number(),
+  correct_answers: z.number(),
+  finished: z.boolean(),
+  type: z.enum(["1", "2"]),
+  course: courseShort,
+  certificate_file: z.string(),
+});
+
+export type StudentResult = z.infer<typeof studetResult>;
