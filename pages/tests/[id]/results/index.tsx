@@ -81,39 +81,13 @@ export default function ResultPage({ user, test, token }: Props) {
             />
           </div>
           <div className="flex items-center gap-4">
-            <Button size={"sm"} className={"h-10 font-medium"}>
-              Ko&apos;rib chiqish
+            <Button
+              size={"sm"}
+              className={"h-10 font-medium"}
+              onClick={() => router.push("/courses")}
+            >
+              Bosh sahifaga qaytish
             </Button>
-            {isPassed ? (
-              <Button
-                size="sm"
-                className="h-10 gap-2 font-medium"
-                onClick={() => router.push(test.certificate_file)}
-              >
-                Sertifikat olish
-                <Icons.download className={"h-5 w-5"} />
-              </Button>
-            ) : (
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button size="sm" className="h-10 gap-2 font-medium">
-                    Qayta urinib ko‘ring
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent className={"max-w-fit"}>
-                  <AlertDialogDescription className={"text-center text-sm"}>
-                    <Balancer>
-                      Пожалуйста, заплатите, чтобы пересдать тест
-                    </Balancer>
-                  </AlertDialogDescription>
-                  <AlertDialogAction
-                    className={"mx-auto h-10 w-fit px-4 py-2 font-medium"}
-                  >
-                    Повторная подача
-                  </AlertDialogAction>
-                </AlertDialogContent>
-              </AlertDialog>
-            )}
           </div>
         </div>
       </Layout>
