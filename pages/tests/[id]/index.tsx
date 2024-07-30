@@ -80,7 +80,7 @@ export default function TestPage({ test, user, token }: Props) {
         console.log(res);
       } catch (error: any) {
         console.log(error);
-        throw new Error("Xatolik yuz berdi");
+        throw new Error(error.response.data?.message || "Xatolik yuz berdi");
       }
     };
 
