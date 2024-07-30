@@ -32,6 +32,25 @@
   }
 }
 
+/* width */
+*::-webkit-scrollbar {
+  @apply w-2.5 h-2.5 bg-transparent
+}
+
+
+
+/* Track */
+*::-webkit-scrollbar-track {
+  @apply p-px border-l border-t border-transparent select-none touch-none transition-colors
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+  /* box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.25); */
+  @apply bg-border rounded-lg hover:bg-border/50 transition-colors
+}
+
+
 button:focus,
 input:focus,
 a:focus,
