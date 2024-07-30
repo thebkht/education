@@ -6,6 +6,7 @@ import { axios } from "@/api/interseptors";
 import { getHeaders } from "@/helpers";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const Index = ({
   modules,
@@ -122,7 +123,7 @@ const ModuleCard = ({
     });
   };
   return (
-    <div className="overflow-hidden p-4 pl-6 transition-all">
+    <div className="cursor-pointer overflow-hidden p-4 pl-6 transition-all">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           {index !== 0 && !modules[index - 1].completed ? (
@@ -132,21 +133,32 @@ const ModuleCard = ({
           ) : (
             <Icons.unchecked className="h-8 w-8 text-muted-foreground" />
           )}
-          <p className="max-w-[800px] text-second-foreground">{module.name}</p>
+          {module.completed ? (
+            <Link href={`/modules/${module.id}`}>
+              <p className="max-w-[800px] text-second-foreground">
+                {module.name}
+              </p>
+            </Link>
+          ) : (
+            <p className="max-w-[800px] text-second-foreground">
+              {module.name}
+            </p>
+          )}
         </div>
-        {!(index !== 0 && !modules[index - 1].completed) && (
-          <Button
-            size="sm"
-            className="py-1.5 font-medium"
-            onClick={() => {
-              index === 0 && !completed
-                ? handleGenerateQuestions(token, 1)
-                : router.push(`/modules/${module.id}`);
-            }}
-          >
-            {index === 0 && !completed ? "Testni boshlash" : "Davom etish"}
-          </Button>
-        )}
+        {!(index !== 0 && !modules[index - 1].completed) &&
+          !module.completed && (
+            <Button
+              size="sm"
+              className="py-1.5 font-medium"
+              onClick={() => {
+                index === 0 && !completed
+                  ? handleGenerateQuestions(token, 1)
+                  : router.push(`/modules/${module.id}`);
+              }}
+            >
+              {index === 0 && !completed ? "Testni boshlash" : "Davom etish"}
+            </Button>
+          )}
       </div>
     </div>
   );
