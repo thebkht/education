@@ -30,6 +30,7 @@ export default function Page({
 }) {
   const router = useRouter();
   const [completed, setCompleted] = useState(false);
+  console.log(modules);
 
   useEffect(() => {
     setCompleted(modules.every((module) => module.completed));
