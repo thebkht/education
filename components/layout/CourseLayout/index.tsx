@@ -48,9 +48,10 @@ export default function Index({
               <Image
                 src={collapsed ? "/favicon.ico" : "/logo.png"}
                 alt="Logo"
-                width={collapsed ? 45 : 141}
-                height={45}
-                className="transition-all duration-300 ease-in-out"
+                width={141}
+                height={32}
+                className={`h-auto transition-all duration-300 ease-in-out ${collapsed ? "hidden" : ""}`}
+                style={{ height: "auto" }}
               />
             </Link>
           </div>

@@ -12,14 +12,15 @@ export default function Index({
         className="flex cursor-pointer flex-col gap-2 rounded-3xl"
         {...props}
       >
-        <div className="h-40 w-full rounded-lg">
+        <div className="relative h-40 w-full rounded-lg">
           <Image
             src={course.image.src}
             alt={course.name}
-            layout="fill"
+            fill
             placeholder="blur"
             blurDataURL={course.image.base64}
             className="!relative rounded-lg object-cover"
+            sizes="(max-width: 1920px) 100vw"
           />
         </div>
         <div className="flex flex-col gap-1">

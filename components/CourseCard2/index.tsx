@@ -109,11 +109,13 @@ export default function Index({
                 setOpen(true);
               }
             }}
+            className="relative"
           >
             <Image
               src={course.image.src}
               alt={course.name}
-              layout="fill"
+              fill
+              sizes="(max-width: 1920px) 100vw"
               placeholder="blur"
               blurDataURL={course.image.base64}
               className="!relative aspect-video rounded-[4px] object-cover"
