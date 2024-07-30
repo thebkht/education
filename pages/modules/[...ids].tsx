@@ -70,7 +70,7 @@ const LecturePage = ({ lessons, user, lesson, token }: Props) => {
         );
         return res.data;
       } catch (error: any) {
-        throw new Error(error.response.data.message);
+        throw new Error("Xatolik yuz berdi");
       }
     };
 
