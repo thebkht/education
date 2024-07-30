@@ -27,17 +27,20 @@ export default function Index({
   token,
 }: {
   course: Course;
-  token?: string;
+  token: string;
 }) {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [course, setCourse] = React.useState<Course>(initialCourse);
-  const [isRegistered, setIsRegistered] = React.useState(course.file);
+  const [contractFile, setContractFile] = React.useState<string | null>(null);
+  const [isRegistered, setIsRegistered] = React.useState<boolean>(
+    course.file ? true : false,
+  );
 
   React.useEffect(() => {
     setCourse(initialCourse);
-    setIsRegistered(course.file);
+    setIsRegistered(course.file ? true : false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialCourse]);
 
@@ -46,14 +49,14 @@ export default function Index({
       try {
         const res = await axios.get(
           `courses/register-course?course=${course.id}`,
-          getHeaders(token ?? ""),
+          getHeaders(token),
         );
         if (res.status === 400) {
           throw new Error(res.data.message);
-        } else if (res.status === 200) {
-          const courses = await axios.get("courses", getHeaders(token ?? ""));
-          setCourse(courses.data.find((c: Course) => c.id === course.id));
         }
+        setIsRegistered(true);
+        setContractFile(res.data.file);
+        return res.data;
       } catch (error: any) {
         if (error.response?.status === 400) {
           throw new Error(error.response.data.message);
@@ -65,9 +68,7 @@ export default function Index({
 
     toast.promise(registerCoursePromise, {
       loading: "Yuklanmoqda...",
-      success: () => {
-        return `Muvaffaqiyatli ro'yxatdan o'tdingiz: ${course.file ? "Shartnoma fayli olindi" : ""}`;
-      },
+      success: (data) => data.message,
       error: (error) => {
         return error.message;
       },
@@ -150,7 +151,7 @@ export default function Index({
               className={"w-fit rounded"}
               onClick={() => {
                 if (isRegistered && course.file) {
-                  router.push(course.file);
+                  router.push(course.file ?? contractFile);
                 } else {
                   handleRegisterCourse();
                 }
