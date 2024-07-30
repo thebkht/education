@@ -124,7 +124,6 @@ const Progress = ({ lessons }: { lessons: Lesson[] }) => {
 
   return (
     <div className="flex gap-2 text-sm text-second-foreground">
-      <span>Ваш прогресс:</span>
       <span>
         {completedLessons}/{totalLessons} ({progressPercentage}%)
       </span>
