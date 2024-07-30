@@ -61,10 +61,16 @@ export default function TestPage({ test, user, token }: Props) {
   const { questions } = test;
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
     const promise = async () => {
       try {
-        await axios.post(`/tests/submit`, getHeaders(token, values));
+        const res = await axios.post(
+          `/tests/submit`,
+          values,
+          getHeaders(token),
+        );
         /* router.push(`/tests/${test.id}/result`); */
+        console.log(res);
       } catch (error: any) {
         console.log(error);
         throw new Error("Xatolik yuz berdi");
@@ -162,12 +168,13 @@ export default function TestPage({ test, user, token }: Props) {
                   <Button
                     type="submit"
                     size="sm"
+                    onClick={() => onSubmit(form.getValues())}
                     className={
                       "h-10 w-fit items-center gap-2 font-medium disabled:border-muted-foreground disabled:bg-muted-foreground"
                     }
-                    disabled={
+                    /* disabled={
                       form.formState.isSubmitting || !form.formState.isValid
-                    }
+                    } */
                   >
                     <Icons.checkMark className={"h-4 w-4"} />
                     Завершить
