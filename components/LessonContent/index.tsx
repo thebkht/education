@@ -9,9 +9,11 @@ import Button from "@/components/UI/Button";
 import { axios } from "@/api/interseptors";
 import { getHeaders } from "@/helpers";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
 
 const Index = ({ lessons, token }: { lessons: Lesson[]; token: string }) => {
   const router = useRouter();
+
   const handleStartLesson = async (lessonId: Lesson["id"]) => {
     const promise = async () => {
       try {
@@ -73,16 +75,26 @@ const Index = ({ lessons, token }: { lessons: Lesson[]; token: string }) => {
                 <div className="flex grow gap-2 text-left font-normal text-second-foreground">
                   {index + 1} - dars
                 </div>
-                {!lesson.started_date ||
-                  (index != 0 && lessons[index - 1].completed_date === null && (
-                    <Button
-                      size={"sm"}
-                      onClick={async () => await handleStartLesson(lesson.id)}
-                      role="button"
-                    >
-                      <div>Darsni boshlash</div>
-                    </Button>
-                  ))}
+                {index == 0
+                  ? !lesson.started_date && (
+                      <Button
+                        size={"sm"}
+                        onClick={async () => await handleStartLesson(lesson.id)}
+                        role="button"
+                      >
+                        <div>Darsni boshlash</div>
+                      </Button>
+                    )
+                  : !lesson.started_date &&
+                    !lessons[index - 1].completed_date && (
+                      <Button
+                        size={"sm"}
+                        onClick={async () => await handleStartLesson(lesson.id)}
+                        role="button"
+                      >
+                        <div>Darsni boshlash</div>
+                      </Button>
+                    )}
               </div>
             </AccordionTrigger>
             <AccordionContent className="cursor-pointer border-b bg-background px-4 py-2 hover:bg-accent2">
