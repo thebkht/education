@@ -76,6 +76,11 @@ const LecturePage = ({
           { lesson: lesson.id },
           getHeaders(token),
         );
+        const lessons = await axios.get<any>(
+          "courses/lessons",
+          getHeaders(token, { module: moduleId }),
+        );
+        setLessons(lessons.data);
         return res.data;
       } catch (error: any) {
         throw new Error("Xatolik yuz berdi");
@@ -143,7 +148,7 @@ const LecturePage = ({
                 moduleId={Number(moduleId)}
                 updateLessons={(lessons: Lesson[]) => setLessons(lessons)}
               />
-              {lesson?.started_date !== null && (
+              {lesson?.started_date !== null && !lesson.completed_date && (
                 <Button type="submit" size="sm" className="h-10 w-fit">
                   <div
                     className="flex items-center gap-2 font-medium"
