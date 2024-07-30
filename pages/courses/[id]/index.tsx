@@ -28,7 +28,6 @@ export default function Page({
   token: string;
   studentResults: StudentResult[];
 }) {
-  const router = useRouter();
   const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
@@ -36,13 +35,20 @@ export default function Page({
   }, [modules]);
 
   const [completedTest, setCompletedTest] = useState<boolean>(false);
+  const [completedFinalTest, setCompletedFinalTest] = useState<boolean>(false);
   useEffect(() => {
     if (studentResults.length > 0) {
       const result = studentResults.find(
         (result) => result.course.id === course.id && result.type == "1",
       );
+      const finalResult = studentResults.find(
+        (result) => result.course.id === course.id && result.type == "2",
+      );
       if (result) {
         setCompletedTest(result.finished);
+      }
+      if (finalResult) {
+        setCompletedFinalTest(finalResult.finished);
       }
     }
   }, [studentResults, course]);
@@ -78,7 +84,10 @@ export default function Page({
                   course={course}
                   completedTest={completedTest}
                 />
-                <Button className="w-full" disabled={!completed}>
+                <Button
+                  className="w-full"
+                  disabled={!completed || completedFinalTest}
+                >
                   Yakuniy testni boshlash
                 </Button>
               </TabsContent>
