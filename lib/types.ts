@@ -5,6 +5,8 @@ const image = z.object({
   base64: z.string().optional(),
 });
 
+export type Image = z.infer<typeof image>;
+
 const courseDetail = z.object({
   id: z.number(),
   name: z.string(),
