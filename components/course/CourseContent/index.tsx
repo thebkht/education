@@ -42,7 +42,10 @@ const Index = ({
         />
       </div>
       <span className="text-sm text-muted-foreground">
-        {modules.filter((module) => module.completed).length}/{modules.length}
+        {completedTest
+          ? modules.filter((module) => module.completed).length
+          : 0}
+        /{modules.length}
       </span>
     </div>
     {modules.map((module, index) => (
@@ -135,7 +138,7 @@ const ModuleCard = ({
           ) : (
             <Icons.unchecked className="h-8 w-8 text-muted-foreground" />
           )}
-          {module.completed ? (
+          {module.completed && completed ? (
             <Link href={`/modules/${module.id}`}>
               <p className="max-w-[800px] text-second-foreground">
                 {module.name}
