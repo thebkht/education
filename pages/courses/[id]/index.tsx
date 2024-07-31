@@ -108,15 +108,16 @@ export default function Page({
                   course={course}
                   completedTest={initialTestResult.finished}
                 />
-                {!completedFinalTest && (
-                  <Button
-                    className="w-full"
-                    disabled={!completed}
-                    onClick={handleFinalTest}
-                  >
-                    Yakuniy testni boshlash
-                  </Button>
-                )}
+                {!completedFinalTest ||
+                  (initialTestResult.finished && (
+                    <Button
+                      className="w-full"
+                      disabled={!completed}
+                      onClick={handleFinalTest}
+                    >
+                      Yakuniy testni boshlash
+                    </Button>
+                  ))}
               </TabsContent>
               <TabsContent
                 value="overview"
