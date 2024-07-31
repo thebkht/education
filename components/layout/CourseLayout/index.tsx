@@ -68,13 +68,13 @@ export default function Index({
                     priority={true}
                     fill={true}
                     objectFit="contain"
-                    className={`h-auto transition-all duration-300 ease-in-out`}
+                    className={`h-auto transition-all ease-in-out`}
                     sizes="(max-width: 1920px) 100vw"
                   />
                 </div>
                 <div
                   className={cn(
-                    "text-center text-[10px] font-bold text-primary transition-all duration-300 ease-in-out",
+                    "text-center text-[10px] font-bold text-primary transition-all ease-in-out",
                     collapsed && "hidden opacity-0",
                   )}
                 >

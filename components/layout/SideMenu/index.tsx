@@ -17,7 +17,7 @@ export default function Index({ collapsed }: { collapsed: boolean }) {
               <Icons.home className="h-[18] w-[18px] text-primary" />
             </div>
             <span
-              className={`text-sm font-medium text-primary transition-all duration-300 ease-in-out ${collapsed && "hidden"}`}
+              className={`text-sm font-medium text-primary transition-all duration-75 ease-in-out ${collapsed && "hidden"}`}
             >
               Mening kurslarim
             </span>
