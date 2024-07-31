@@ -44,7 +44,7 @@ export default function TestPage({ test, user, token }: Props) {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues ?? {
+    defaultValues: {
       test_enrolment: test.id,
     },
   });
@@ -63,8 +63,6 @@ export default function TestPage({ test, user, token }: Props) {
     setLoading(false);
   }, [test, form]);
 
-  console.log(form.getValues());
-
   const [answeredQuestions, setAnsweredQuestions] = React.useState<number>(0);
   if (!test) {
     return notFound();
@@ -76,7 +74,6 @@ export default function TestPage({ test, user, token }: Props) {
   }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     const promise = async () => {
       try {
         const res = await axios.post(
@@ -157,7 +154,6 @@ export default function TestPage({ test, user, token }: Props) {
                                     )?.option
                                   }`}
                                   onValueChange={(value) => {
-                                    console.log(field);
                                     const answerIndex = field.value?.findIndex(
                                       (answer) =>
                                         answer.question === question.id,
@@ -177,7 +173,6 @@ export default function TestPage({ test, user, token }: Props) {
                                       };
                                       field.onChange(newAnswers);
                                     }
-                                    console.log(field.value);
                                     setSessionStorage(
                                       form.getValues(),
                                       `test-${test.id}`,
