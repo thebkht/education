@@ -20,42 +20,39 @@ import AuthMiddleware from "@/middlewares/auth";
 import { GetServerSidePropsContext } from "next";
 import { parseCookies } from "nookies";
 import { getHeaders } from "@/helpers";
-import { Test } from "@/lib/types";
+import { formSchema, Test } from "@/lib/types";
 import { IUser } from "@/interfaces/auth";
 import { axios } from "@/api/interseptors";
 import notFound from "@/pages/404";
 import { toast } from "sonner";
-
-const formSchema = z.object({
-  test_enrolment: z.number(),
-  answers: z.array(
-    z.object({
-      question: z.number(),
-      option: z.number(),
-    }),
-  ),
-});
+import Image from "next/image";
+import { setLocalStorage } from "@/helpers/localStorage";
+import { getSessionStorage, setSessionStorage } from "@/helpers/sessionStorage";
 
 type Props = {
   test: Test;
   user: IUser;
   token: string;
+  defaultValues: z.infer<typeof formSchema>;
 };
 
-export default function TestPage({ test, user, token }: Props) {
+export default function TestPage({ test, user, token, defaultValues }: Props) {
   const router = useRouter();
   console.log(test);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       test_enrolment: test.id,
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { append } = useFieldArray({
     name: "answers",
     control: form.control,
   });
+
+  console.log(form.getValues());
 
   const [answeredQuestions, setAnsweredQuestions] = React.useState<number>(0);
   if (!test) {
@@ -69,14 +66,13 @@ export default function TestPage({ test, user, token }: Props) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    const promise = async () => {
+    /* const promise = async () => {
       try {
         const res = await axios.post(
           `/tests/submit`,
           values,
           getHeaders(token),
         );
-        /* router.push(`/tests/${test.id}/result`); */
         console.log(res);
       } catch (error: any) {
         console.log(error);
@@ -88,7 +84,7 @@ export default function TestPage({ test, user, token }: Props) {
       loading: "Yuklanmoqda...",
       success: "Test muvaffaqiyatli bajarildi",
       error: (error) => error.message,
-    });
+    }); */
   }
 
   return (
@@ -122,27 +118,52 @@ export default function TestPage({ test, user, token }: Props) {
                             >
                               {index + 1}. {question.title}
                             </FormLabel>
+                            <div className="relative h-auto max-w-xl">
+                              {question.image && (
+                                <Image
+                                  src={question.image.src}
+                                  alt={question.title}
+                                  fill
+                                  placeholder="blur"
+                                  blurDataURL={question.image.base64}
+                                  className="!relative h-full w-full rounded-lg"
+                                  sizes="(max-width: 1920px) 100vw"
+                                />
+                              )}
+                            </div>
                             <FormControl>
                               <RadioGroup
                                 className={"flex flex-col gap-2"}
+                                defaultValue={`${
+                                  field.value?.find(
+                                    (answer) => answer.question === question.id,
+                                  )?.option
+                                }`}
                                 onValueChange={(value) => {
+                                  console.log(field);
                                   const answerIndex = field.value?.findIndex(
                                     (answer) => answer.question === question.id,
                                   );
+                                  console.log(answerIndex);
                                   if (answerIndex === -1) {
                                     append({
                                       question: question.id,
                                       option: parseInt(value),
                                     });
-                                    setAnsweredQuestions(answeredQuestions + 1);
+                                    setAnsweredQuestions((prev) => prev + 1);
                                   } else {
-                                    console.log("updating");
-                                    append({
+                                    const newAnswers = [...field?.value];
+                                    newAnswers[answerIndex] = {
                                       question: question.id,
                                       option: parseInt(value),
-                                    });
-                                    remove(answerIndex);
+                                    };
+                                    field.onChange(newAnswers);
                                   }
+                                  console.log(field.value);
+                                  setSessionStorage(
+                                    form.getValues(),
+                                    `test-${test.id}`,
+                                  );
                                 }}
                               >
                                 {question.options.map((option) => (
@@ -153,10 +174,7 @@ export default function TestPage({ test, user, token }: Props) {
                                     }
                                   >
                                     <FormControl>
-                                      <RadioGroupItem
-                                        value={option.id.toString()}
-                                        className={""}
-                                      />
+                                      <RadioGroupItem value={`${option.id}`} />
                                     </FormControl>
                                     <FormLabel
                                       className={"text-base text-second"}
@@ -214,10 +232,13 @@ const getServerSidePropsFunction = async (
       };
     }
 
+    const sessionData = getSessionStorage(`test-${test.data.id}`);
+
     return {
       props: {
         test: test.data,
         token,
+        defaultValues: sessionData,
       },
     };
   } catch (error) {

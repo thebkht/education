@@ -107,3 +107,13 @@ const initialTestResult = z.object({
 });
 
 export type InitialTestResult = z.infer<typeof initialTestResult>;
+
+export const formSchema = z.object({
+  test_enrolment: z.number(),
+  answers: z.array(
+    z.object({
+      question: z.number(),
+      option: z.number(),
+    }),
+  ),
+});
