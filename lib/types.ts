@@ -1,14 +1,16 @@
 import { z } from "zod";
 
+const image = z.object({
+  src: z.string(),
+  base64: z.string().optional(),
+});
+
 const courseDetail = z.object({
   id: z.number(),
   name: z.string(),
   short_description: z.string(),
   description: z.string().optional(),
-  image: z.object({
-    src: z.string(),
-    base64: z.string().optional(),
-  }),
+  image: image,
 });
 
 export type CourseDetail = z.infer<typeof courseDetail>;
@@ -18,10 +20,7 @@ const course = z.object({
   name: z.string(),
   short_description: z.string(),
   has_access: z.boolean(),
-  image: z.object({
-    src: z.string(),
-    base64: z.string().optional(),
-  }),
+  image: image,
   file: z.string().optional(),
 });
 
@@ -30,10 +29,7 @@ export type Course = z.infer<typeof course>;
 const teacher = z.object({
   fullname: z.string(),
   speciality: z.string(),
-  picture: z.object({
-    src: z.string(),
-    base64: z.string().optional(),
-  }),
+  picture: image,
 });
 
 export type Teacher = z.infer<typeof teacher>;
@@ -72,6 +68,7 @@ const question = z.object({
   title: z.string(),
   type: z.enum(["1", "2"]),
   options: z.array(option),
+  image: image.optional(),
 });
 
 const test = z.object({
