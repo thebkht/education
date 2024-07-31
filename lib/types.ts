@@ -102,3 +102,11 @@ const studetResult = z.object({
 });
 
 export type StudentResult = z.infer<typeof studetResult>;
+
+const initialTestResult = z.object({
+  total_questions: z.number(),
+  correct_answers: z.number(),
+  finished: z.boolean(),
+});
+
+export type InitialTestResult = z.infer<typeof initialTestResult>;

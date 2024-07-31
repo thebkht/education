@@ -41,7 +41,9 @@ const Index = ({
           count={10}
         />
       </div>
-      <span className="text-sm text-muted-foreground">0/1</span>
+      <span className="text-sm text-muted-foreground">
+        {modules.filter((module) => module.completed).length}/{modules.length}
+      </span>
     </div>
     {modules.map((module, index) => (
       <ModuleCard
@@ -126,7 +128,7 @@ const ModuleCard = ({
     <div className="cursor-pointer overflow-hidden p-4 pl-6 transition-all">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          {index !== 0 && !modules[index - 1].completed ? (
+          {(index !== 0 && !modules[index - 1].completed) || !completed ? (
             <Icons.lock className="h-8 w-8 text-muted-foreground" />
           ) : module.completed ? (
             <Icons.checked className="h-8 w-8 text-muted-foreground" />
@@ -145,20 +147,37 @@ const ModuleCard = ({
             </p>
           )}
         </div>
-        {!(index !== 0 && !modules[index - 1].completed) &&
+        {!completed && index == 0 ? (
+          <Button
+            size="sm"
+            className="py-1.5 font-medium"
+            onClick={() => handleGenerateQuestions(token, 1)}
+          >
+            Testni boshlash
+          </Button>
+        ) : index == 0 ? (
           !module.completed && (
             <Button
               size="sm"
               className="py-1.5 font-medium"
-              onClick={() => {
-                index === 0 && !completed
-                  ? handleGenerateQuestions(token, 1)
-                  : router.push(`/modules/${module.id}`);
-              }}
+              onClick={() => router.push(`/modules/${module.id}`)}
             >
-              {index === 0 && !completed ? "Testni boshlash" : "Davom etish"}
+              Davom etish
             </Button>
-          )}
+          )
+        ) : (
+          !module.completed &&
+          modules[index - 1].completed &&
+          completed && (
+            <Button
+              size="sm"
+              className="py-1.5 font-medium"
+              onClick={() => router.push(`/modules/${module.id}`)}
+            >
+              Davom etish
+            </Button>
+          )
+        )}
       </div>
     </div>
   );

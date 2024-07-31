@@ -4,7 +4,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/UI/Tabs";
 import Button from "@/components/UI/Button";
 import Metadata from "@/components/Metadata";
 import { notFound } from "next/navigation";
-import { CourseDetail, Module, StudentResult } from "@/lib/types";
+import {
+  CourseDetail,
+  InitialTestResult,
+  Module,
+  StudentResult,
+} from "@/lib/types";
 import { IUser } from "@/interfaces/auth";
 import { GetServerSidePropsContext } from "next";
 import AuthMiddleware from "@/middlewares/auth";
@@ -21,12 +26,14 @@ export default function Page({
   modules,
   token,
   studentResults,
+  initialTestResult,
 }: {
   course: CourseDetail;
   user: IUser;
   modules: Module[];
   token: string;
   studentResults: StudentResult[];
+  initialTestResult: InitialTestResult;
 }) {
   const router = useRouter();
   const [completed, setCompleted] = useState(false);
@@ -36,19 +43,12 @@ export default function Page({
     setCompleted(modules.every((module) => module.completed));
   }, [modules]);
 
-  const [completedTest, setCompletedTest] = useState<boolean>(false);
   const [completedFinalTest, setCompletedFinalTest] = useState<boolean>(false);
   useEffect(() => {
     if (studentResults.length > 0) {
-      const result = studentResults.find(
-        (result) => result.course.id === course.id && result.type == "1",
-      );
       const finalResult = studentResults.find(
         (result) => result.course.id === course.id && result.type == "2",
       );
-      if (result) {
-        setCompletedTest(result.finished);
-      }
       if (finalResult) {
         setCompletedFinalTest(finalResult.finished);
       }
@@ -106,15 +106,17 @@ export default function Page({
                   modules={modules}
                   token={token}
                   course={course}
-                  completedTest={completedTest}
+                  completedTest={initialTestResult.finished}
                 />
-                <Button
-                  className="w-full"
-                  disabled={!completed || completedFinalTest}
-                  onClick={handleFinalTest}
-                >
-                  Yakuniy testni boshlash
-                </Button>
+                {!completedFinalTest && (
+                  <Button
+                    className="w-full"
+                    disabled={!completed}
+                    onClick={handleFinalTest}
+                  >
+                    Yakuniy testni boshlash
+                  </Button>
+                )}
               </TabsContent>
               <TabsContent
                 value="overview"
@@ -148,12 +150,17 @@ const getServerSidePropsFunction = async (
     "/tests/student-results",
     getHeaders(token),
   );
+  const initialTestResult = await axios.get(
+    "tests/initial-test-result",
+    getHeaders(token, { course: context.params?.id }),
+  );
   return {
     props: {
       course: course.data,
       modules: modules.data,
       token,
       studentResults: studentResults.data,
+      initialTestResult: initialTestResult.data,
     },
   };
 };
