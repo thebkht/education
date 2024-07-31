@@ -25,15 +25,15 @@ import { axios } from "@/api/interseptors";
 
 type Props = {
   user: IUser;
-  test: StudentResult;
+  results: StudentResult;
   token: string;
 };
 
-export default function ResultPage({ user, test, token }: Props) {
+export default function ResultPage({ user, results, token }: Props) {
   const router = useRouter();
 
   const scorePercentage = Math.round(
-    (test.correct_answers / test.total_questions) * 100,
+    (results.correct_answers / results.total_questions) * 100,
   );
   const isPassed = scorePercentage >= 85;
   const Icon = isPassed ? Icons.approved : Icons.rejected;
@@ -41,8 +41,8 @@ export default function ResultPage({ user, test, token }: Props) {
   return (
     <>
       <Metadata
-        title={`Test natijasi - ${test.course.name}`}
-        description={test.course.short_description}
+        title={`Test natijasi - ${results.course.name}`}
+        description={results.course.short_description}
       />
       <Layout className={"mx-auto flex-none"} user={user}>
         <div className="flex max-h-[976px] w-full max-w-[1622px] flex-[1_0_auto] flex-col items-center justify-center gap-24 rounded-2xl bg-background p-6">
@@ -68,14 +68,14 @@ export default function ResultPage({ user, test, token }: Props) {
             </div>
           </div>
           <div className="flex items-center gap-6">
-            <ResultCard value={test.total_questions} />
+            <ResultCard value={results.total_questions} />
             <ResultCard
-              value={test.correct_answers}
+              value={results.correct_answers}
               title={"To‘g‘ri javoblar soni"}
               valueClass={"text-success"}
             />
             <ResultCard
-              value={test.total_questions - test.correct_answers}
+              value={results.total_questions - results.correct_answers}
               title={"Noto‘g‘ri javoblar soni"}
               valueClass={"text-destructive"}
             />
@@ -101,22 +101,13 @@ const getServerSidePropsFunction = async (
   const cookies = parseCookies(context);
   const token = cookies.token;
   const results = await axios.get<any>(
-    "/tests/student-results",
+    `/tests/student-results/${context.params?.id}`,
     getHeaders(token),
   );
-  const test = results.data.find(
-    (r: StudentResult) =>
-      r.id === parseInt(context.params?.id?.toString() ?? ""),
-  );
-  if (!test) {
-    return {
-      notFound: true,
-    };
-  }
 
   return {
     props: {
-      test,
+      results: results.data,
     },
   };
 };
