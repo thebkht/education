@@ -14,7 +14,6 @@ import Button from "@/components/UI/Button";
 import React, { useEffect, useState } from "react";
 import { Icons } from "@/components/icons";
 import Metadata from "@/components/Metadata";
-import { getCourseBySlug } from "@/lib/courses";
 import AuthMiddleware from "@/middlewares/auth";
 import { GetServerSidePropsContext } from "next";
 import { parseCookies } from "nookies";
@@ -55,12 +54,21 @@ export default function TestPage({ test, user, token }: Props) {
   });
 
   useEffect(() => {
+    if (test.finished) {
+      router.push(`/tests/${test.id}/results`);
+    }
+    setLoading(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [test]);
+
+  useEffect(() => {
     const sessionData = getSessionStorage(`test-${test.id}`);
     if (sessionData) {
       form.reset(sessionData);
       setDefaultValues(sessionData);
     }
     setLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [test, form]);
 
   const [answeredQuestions, setAnsweredQuestions] = React.useState<number>(0);
@@ -68,10 +76,6 @@ export default function TestPage({ test, user, token }: Props) {
     return notFound();
   }
   const { questions } = test;
-
-  if (test.finished) {
-    return notFound();
-  }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const promise = async () => {

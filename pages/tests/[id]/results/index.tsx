@@ -44,8 +44,8 @@ export default function ResultPage({ user, results, token }: Props) {
         title={`Test natijasi - ${results.course.name}`}
         description={results.course.short_description}
       />
-      <Layout className={"mx-auto flex-none"} user={user}>
-        <div className="flex max-h-[976px] w-full max-w-[1622px] flex-[1_0_auto] flex-col items-center justify-center gap-24 rounded-2xl bg-background p-6">
+      <Layout className={"mx-auto"} user={user}>
+        <div className="flex max-h-[976px] w-full flex-[1_0_auto] flex-col items-center justify-center gap-24 rounded-2xl bg-background p-6">
           <div className="flex items-center gap-4">
             <Icon
               className={cn(
@@ -88,7 +88,7 @@ export default function ResultPage({ user, results, token }: Props) {
             >
               Bosh sahifaga qaytish
             </Button>
-            {results.type == "2" && isPassed && (
+            {results.type == 2 && isPassed && (
               <Button
                 size={"sm"}
                 className={"h-10 font-medium"}
