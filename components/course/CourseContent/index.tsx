@@ -34,7 +34,7 @@ const Index = ({
   const [testType, setTestType] = useState<number>(1);
 
   const handleGenerateQuestions = async (type: number) => {
-    if (initialTestResult.finished) {
+    if (initialTestResult.finished && type === 1) {
       return;
     }
 
@@ -167,8 +167,9 @@ const Index = ({
             Siz testni boshlashga ishonchingiz komilmi?
           </AlertDialogDescription>
           <AlertDialogFooter>
-            <AlertDialogCancel>Yo&apos;q</AlertDialogCancel>
+            <AlertDialogCancel className="flex-1">Yo&apos;q</AlertDialogCancel>
             <AlertDialogAction
+              className="flex-1"
               onClick={() => handleGenerateQuestions(testType)}
             >
               Ha
