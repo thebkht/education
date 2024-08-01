@@ -70,6 +70,13 @@ const Index = ({
     });
   };
 
+  const correctAnswers = initialTestResult.correct_answers ?? 0;
+  const totalQuestions = initialTestResult.total_questions ?? 0;
+
+  const percentage = ((correctAnswers / (totalQuestions || 1)) * 100).toFixed(
+    1,
+  );
+
   return (
     <>
       <div className="rounded border border-popover bg-background">
@@ -108,12 +115,7 @@ const Index = ({
           {initialTestResult.finished ? (
             <div className={"text-second-foreground"}>
               {initialTestResult.correct_answers ?? 0}/
-              {initialTestResult.total_questions ?? 0} (
-              {Math.floor(
-                initialTestResult.correct_answers /
-                  initialTestResult.total_questions,
-              ) * 100 || 0}
-              %)
+              {initialTestResult.total_questions ?? 0} ({percentage}%)
             </div>
           ) : (
             <Button
