@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import { CourseDetail, InitialTestResult, Module } from "@/lib/types";
+import { CourseDetail, Module, TestResult } from "@/lib/types";
 import Button from "@/components/UI/Button";
 import { useRouter } from "next/router";
 import { axios } from "@/api/interseptors";
@@ -23,11 +23,13 @@ const Index = ({
   token,
   course,
   initialTestResult,
+  finalTestResult,
 }: {
   modules: Module[];
   token: string;
   course: CourseDetail;
-  initialTestResult: InitialTestResult;
+  initialTestResult: TestResult;
+  finalTestResult: TestResult | undefined;
 }) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -35,6 +37,10 @@ const Index = ({
 
   const handleGenerateQuestions = async (type: number) => {
     if (initialTestResult.finished && type === 1) {
+      return;
+    }
+
+    if (type === 2 && finalTestResult?.finished) {
       return;
     }
 
@@ -141,13 +147,13 @@ const Index = ({
         ))}
         <ModuleCard
           status={
-            initialTestResult.finished && getModuleIsCompleted(modules)
+            !finalTestResult?.finished && getModuleIsCompleted(modules)
               ? "in-process"
               : "lock"
           }
           title="Yakuniy test"
         >
-          {initialTestResult.finished && getModuleIsCompleted(modules) && (
+          {!finalTestResult?.finished && getModuleIsCompleted(modules) && (
             <Button
               size="sm"
               onClick={() => {

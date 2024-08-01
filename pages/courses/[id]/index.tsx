@@ -4,12 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/UI/Tabs";
 import Button from "@/components/UI/Button";
 import Metadata from "@/components/Metadata";
 import { notFound } from "next/navigation";
-import {
-  CourseDetail,
-  InitialTestResult,
-  Module,
-  StudentResult,
-} from "@/lib/types";
+import { CourseDetail, Module, StudentResult, TestResult } from "@/lib/types";
 import { IUser } from "@/interfaces/auth";
 import { GetServerSidePropsContext } from "next";
 import AuthMiddleware from "@/middlewares/auth";
@@ -25,36 +20,16 @@ export default function Page({
   user,
   modules,
   token,
-  studentResults,
+  finalTestResult,
   initialTestResult,
 }: {
   course: CourseDetail;
   user: IUser;
   modules: Module[];
   token: string;
-  studentResults: StudentResult[];
-  initialTestResult: InitialTestResult;
+  finalTestResult: TestResult | undefined;
+  initialTestResult: TestResult;
 }) {
-  const router = useRouter();
-  const [completed, setCompleted] = useState(false);
-  console.log(modules);
-
-  useEffect(() => {
-    setCompleted(modules.every((module) => module.completed));
-  }, [modules]);
-
-  const [completedFinalTest, setCompletedFinalTest] = useState<boolean>(false);
-  useEffect(() => {
-    if (studentResults.length > 0) {
-      const finalResult = studentResults.find(
-        (result) => result.course.id === course.id && result.type == "2",
-      );
-      if (finalResult) {
-        setCompletedFinalTest(finalResult.finished);
-      }
-    }
-  }, [studentResults, course]);
-
   if (!course) {
     return notFound();
   }
@@ -85,6 +60,7 @@ export default function Page({
                   token={token}
                   course={course}
                   initialTestResult={initialTestResult}
+                  finalTestResult={finalTestResult}
                 />
               </TabsContent>
               <TabsContent
@@ -115,21 +91,22 @@ const getServerSidePropsFunction = async (
     `courses/modules?course=${context.params?.id}`,
     getHeaders(token),
   );
-  const studentResults = await axios.get(
-    "/tests/student-results",
-    getHeaders(token),
-  );
+
   const initialTestResult = await axios.get(
     "tests/initial-test-result",
-    getHeaders(token, { course: context.params?.id }),
+    getHeaders(token, { course: context.params?.id, type: 1 }),
+  );
+  const filanTestResult = await axios.get(
+    "tests/initial-test-result",
+    getHeaders(token, { course: context.params?.id, type: 2 }),
   );
   return {
     props: {
       course: course.data,
       modules: modules.data,
       token,
-      studentResults: studentResults.data,
       initialTestResult: initialTestResult.data,
+      filanTestResult: filanTestResult.data,
     },
   };
 };

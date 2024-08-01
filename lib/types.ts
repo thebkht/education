@@ -108,7 +108,7 @@ const initialTestResult = z.object({
   finished: z.boolean(),
 });
 
-export type InitialTestResult = z.infer<typeof initialTestResult>;
+export type TestResult = z.infer<typeof initialTestResult>;
 
 export const formSchema = z.object({
   test_enrolment: z.number(),
