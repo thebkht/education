@@ -20,8 +20,7 @@ export default function SiteHeader({ user }: { user?: IUser | null }) {
             // blurDataURL={getImageBase64()}
             priority={true}
             fill={true}
-            objectFit="contain"
-            className={`h-auto transition-all duration-300 ease-in-out`}
+            className={`h-auto object-contain transition-all duration-300 ease-in-out`}
             sizes="(max-width: 1920px) 100vw"
           />
         </div>

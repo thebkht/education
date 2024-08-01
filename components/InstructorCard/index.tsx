@@ -23,13 +23,11 @@ export default function Index({ instructor, ...props }: IndexProps) {
       <div className="relative aspect-[28/40] h-full w-full flex-1">
         <Image
           src={instructor.picture.src}
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
+          fill
           placeholder="blur"
           blurDataURL={instructor.picture.base64}
           alt={instructor.fullname}
-          className="rounded-lg"
+          className="rounded-lg object-cover object-center"
         />
       </div>
     </div>

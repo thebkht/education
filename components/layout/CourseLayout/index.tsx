@@ -67,8 +67,7 @@ export default function Index({
                     // blurDataURL={getImageBase64()}
                     priority={true}
                     fill={true}
-                    objectFit="contain"
-                    className={`h-auto transition-all ease-in-out`}
+                    className={`h-auto object-contain transition-all ease-in-out`}
                     sizes="(max-width: 1920px) 100vw"
                   />
                 </div>

@@ -72,9 +72,6 @@ type HomeProps = {
 };
 
 export default function Home({ courses, teachers, user }: HomeProps) {
-  console.log(user, "user");
-  console.log(courses, "courses");
-
   return (
     <>
       <Metadata />
