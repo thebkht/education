@@ -95,8 +95,8 @@ export default function Page({
           <div>
             <Tabs defaultValue="content" className="space-y-4">
               <TabsList className="gap-4">
-                <TabsTrigger value="content">Содержание курса</TabsTrigger>
-                <TabsTrigger value="overview">Обзор</TabsTrigger>
+                <TabsTrigger value="content">Kursi tarkibi</TabsTrigger>
+                <TabsTrigger value="overview">Kurs haqida</TabsTrigger>
               </TabsList>
               <TabsContent
                 value="content"
@@ -106,18 +106,8 @@ export default function Page({
                   modules={modules}
                   token={token}
                   course={course}
-                  completedTest={initialTestResult.finished}
+                  initialTestResult={initialTestResult}
                 />
-                {!completedFinalTest ||
-                  (initialTestResult.finished && (
-                    <Button
-                      className="w-full"
-                      disabled={!completed}
-                      onClick={handleFinalTest}
-                    >
-                      Yakuniy testni boshlash
-                    </Button>
-                  ))}
               </TabsContent>
               <TabsContent
                 value="overview"
