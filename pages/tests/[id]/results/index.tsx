@@ -88,6 +88,15 @@ export default function ResultPage({ user, results, token }: Props) {
             >
               Bosh sahifaga qaytish
             </Button>
+            {results.type == "2" && isPassed && (
+              <Button
+                size={"sm"}
+                className={"h-10 font-medium"}
+                onClick={() => router.push(results.certificate_file)}
+              >
+                Sertifikatni yuklab olish
+              </Button>
+            )}
           </div>
         </div>
       </Layout>
