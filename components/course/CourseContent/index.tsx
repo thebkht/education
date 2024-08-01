@@ -52,6 +52,28 @@ const Index = ({
       error: (error) => error.message,
     });
   };
+
+  const handleFinalTest = async () => {
+    try {
+      try {
+        const res = await axios.get<any>(
+          `/tests/generate-questions`,
+          getHeaders(token, { course: course.id, type: 2 }),
+        );
+        router.push(`/tests/${res.data.test_enrollment}`);
+      } catch (e: any) {
+        if (
+          e.response.status === 400 ||
+          e.response.data.message ===
+            "Siz boshlang'ich testni topshirib bo'lgansiz"
+        ) {
+          throw new Error(e.response.data.message);
+        }
+        throw new Error("Xatolik yuz berdi");
+      }
+    } catch (error) {}
+  };
+
   return (
     <div className="rounded border border-popover bg-background">
       <div className="flex justify-between overflow-hidden rounded border-b p-4 pl-6 transition-all">
@@ -63,7 +85,7 @@ const Index = ({
               />
             }
             label="Video"
-            count={14}
+            count={modules.length || 0}
           />
           <CourseStats
             icon={
@@ -72,7 +94,7 @@ const Index = ({
               />
             }
             label="Test"
-            count={10}
+            count={2}
           />
         </div>
         <span className="text-sm text-muted-foreground">
@@ -97,7 +119,7 @@ const Index = ({
             %)
           </div>
         ) : (
-          <Button onClick={() => handleGenerateQuestions(1)}>
+          <Button size="sm" onClick={() => handleGenerateQuestions(1)}>
             Testni yechish
           </Button>
         )}
@@ -111,7 +133,14 @@ const Index = ({
               ? "lock"
               : getModuleStatus(modules, index)
           }
-        />
+        >
+          {getModuleStatus(modules, index, !initialTestResult.finished) ===
+          "in-process" ? (
+            <Button onClick={() => router.push(`/modules/${module.id}`)}>
+              Davom etish
+            </Button>
+          ) : null}
+        </ModuleCard>
       ))}
       <ModuleCard
         status={
@@ -122,7 +151,9 @@ const Index = ({
         title="Yakuniy test"
       >
         {initialTestResult.finished && getModuleIsCompleted(modules) && (
-          <Button>Testni yechish</Button>
+          <Button size="sm" onClick={handleFinalTest}>
+            Testni yechish
+          </Button>
         )}
       </ModuleCard>
     </div>

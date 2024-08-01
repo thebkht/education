@@ -59,28 +59,6 @@ export default function Page({
     return notFound();
   }
 
-  const handleFinalTest = async () => {
-    try {
-      try {
-        const res = await axios.get<any>(
-          `/tests/generate-questions`,
-          getHeaders(token, { course: course.id, type: 2 }),
-        );
-        router.push(`/tests/${res.data.test_enrollment}`);
-      } catch (e: any) {
-        if (
-          e.response.status === 400 ||
-          e.response.data.message ===
-            "Siz boshlang'ich testni topshirib bo'lgansiz"
-        ) {
-          setCompleted(true);
-          throw new Error(e.response.data.message);
-        }
-        throw new Error("Xatolik yuz berdi");
-      }
-    } catch (error) {}
-  };
-
   return (
     <>
       <Metadata
