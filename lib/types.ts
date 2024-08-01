@@ -95,7 +95,7 @@ const studetResult = z.object({
   total_questions: z.number(),
   correct_answers: z.number(),
   finished: z.boolean(),
-  type: z.enum(["1", "2"]),
+  type: z.literal(1).or(z.literal(2)),
   course: courseShort,
   certificate_file: z.string(),
 });
