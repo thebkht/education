@@ -8,6 +8,15 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getModuleIsCompleted, getModuleStatus } from "@/lib/modules";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogTitle,
+} from "@/components/UI/AlertDialog";
 
 const Index = ({
   modules,
@@ -21,6 +30,8 @@ const Index = ({
   initialTestResult: InitialTestResult;
 }) => {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [testType, setTestType] = useState<number>(1);
 
   const handleGenerateQuestions = async (type: number) => {
     if (initialTestResult.finished) {
@@ -53,110 +64,119 @@ const Index = ({
     });
   };
 
-  const handleFinalTest = async () => {
-    try {
-      try {
-        const res = await axios.get<any>(
-          `/tests/generate-questions`,
-          getHeaders(token, { course: course.id, type: 2 }),
-        );
-        router.push(`/tests/${res.data.test_enrollment}`);
-      } catch (e: any) {
-        if (
-          e.response.status === 400 ||
-          e.response.data.message ===
-            "Siz boshlang'ich testni topshirib bo'lgansiz"
-        ) {
-          throw new Error(e.response.data.message);
-        }
-        throw new Error("Xatolik yuz berdi");
-      }
-    } catch (error) {}
-  };
-
   return (
-    <div className="rounded border border-popover bg-background">
-      <div className="flex justify-between overflow-hidden rounded border-b p-4 pl-6 transition-all">
-        <div className="flex items-center gap-6">
-          <CourseStats
-            icon={
-              <Icons.play
-                className={"h-[18px] w-[18px] text-second-foreground"}
-              />
-            }
-            label="Video"
-            count={modules.length || 0}
-          />
-          <CourseStats
-            icon={
-              <Icons.list
-                className={"h-[18px] w-[18px] text-second-foreground"}
-              />
-            }
-            label="Test"
-            count={2}
-          />
-        </div>
-        <span className="text-sm text-muted-foreground">
-          {initialTestResult.finished
-            ? modules.filter((module) => module.completed).length
-            : 0}
-          /{modules.length}
-        </span>
-      </div>
-      <ModuleCard
-        title="Boshlang'ich test"
-        status={initialTestResult.finished ? "completed" : "in-process"}
-      >
-        {initialTestResult.finished ? (
-          <div className={"text-second-foreground"}>
-            {initialTestResult.correct_answers ?? 0}/
-            {initialTestResult.total_questions ?? 0} (
-            {Math.floor(
-              initialTestResult.correct_answers /
-                initialTestResult.total_questions,
-            ) * 100 || 0}
-            %)
+    <>
+      <div className="rounded border border-popover bg-background">
+        <div className="flex justify-between overflow-hidden rounded border-b p-4 pl-6 transition-all">
+          <div className="flex items-center gap-6">
+            <CourseStats
+              icon={
+                <Icons.play
+                  className={"h-[18px] w-[18px] text-second-foreground"}
+                />
+              }
+              label="Video"
+              count={modules.length || 0}
+            />
+            <CourseStats
+              icon={
+                <Icons.list
+                  className={"h-[18px] w-[18px] text-second-foreground"}
+                />
+              }
+              label="Test"
+              count={2}
+            />
           </div>
-        ) : (
-          <Button size="sm" onClick={() => handleGenerateQuestions(1)}>
-            Testni yechish
-          </Button>
-        )}
-      </ModuleCard>
-      {modules.map((module, index) => (
+          <span className="text-sm text-muted-foreground">
+            {initialTestResult.finished
+              ? modules.filter((module) => module.completed).length
+              : 0}
+            /{modules.length}
+          </span>
+        </div>
         <ModuleCard
-          key={index}
-          title={module.name}
-          status={
-            !initialTestResult.finished
-              ? "lock"
-              : getModuleStatus(modules, index)
-          }
+          title="Boshlang'ich test"
+          status={initialTestResult.finished ? "completed" : "in-process"}
         >
-          {getModuleStatus(modules, index, !initialTestResult.finished) ===
-          "in-process" ? (
-            <Button onClick={() => router.push(`/modules/${module.id}`)}>
-              Davom etish
+          {initialTestResult.finished ? (
+            <div className={"text-second-foreground"}>
+              {initialTestResult.correct_answers ?? 0}/
+              {initialTestResult.total_questions ?? 0} (
+              {Math.floor(
+                initialTestResult.correct_answers /
+                  initialTestResult.total_questions,
+              ) * 100 || 0}
+              %)
+            </div>
+          ) : (
+            <Button
+              size="sm"
+              onClick={() => {
+                setTestType(1);
+                setOpen(true);
+              }}
+            >
+              Testni yechish
             </Button>
-          ) : null}
+          )}
         </ModuleCard>
-      ))}
-      <ModuleCard
-        status={
-          initialTestResult.finished && getModuleIsCompleted(modules)
-            ? "in-process"
-            : "lock"
-        }
-        title="Yakuniy test"
-      >
-        {initialTestResult.finished && getModuleIsCompleted(modules) && (
-          <Button size="sm" onClick={handleFinalTest}>
-            Testni yechish
-          </Button>
-        )}
-      </ModuleCard>
-    </div>
+        {modules.map((module, index) => (
+          <ModuleCard
+            key={index}
+            title={module.name}
+            status={
+              !initialTestResult.finished
+                ? "lock"
+                : getModuleStatus(modules, index)
+            }
+          >
+            {getModuleStatus(modules, index, !initialTestResult.finished) ===
+            "in-process" ? (
+              <Button onClick={() => router.push(`/modules/${module.id}`)}>
+                Davom etish
+              </Button>
+            ) : null}
+          </ModuleCard>
+        ))}
+        <ModuleCard
+          status={
+            initialTestResult.finished && getModuleIsCompleted(modules)
+              ? "in-process"
+              : "lock"
+          }
+          title="Yakuniy test"
+        >
+          {initialTestResult.finished && getModuleIsCompleted(modules) && (
+            <Button
+              size="sm"
+              onClick={() => {
+                setTestType(2);
+                setOpen(true);
+              }}
+            >
+              Testni yechish
+            </Button>
+          )}
+        </ModuleCard>
+      </div>
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogContent>
+          <AlertDialogTitle>Testni boshlash</AlertDialogTitle>
+          <AlertDialogDescription>
+            Siz testni boshlashga ishonchingiz komilmi?
+          </AlertDialogDescription>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Yo&apos;q</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => handleGenerateQuestions(testType)}
+            >
+              Ha
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 };
 
