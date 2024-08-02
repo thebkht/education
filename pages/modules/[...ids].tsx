@@ -8,7 +8,7 @@ import { axios } from "@/api/interseptors";
 import { GetServerSidePropsContext } from "next";
 import { parseCookies } from "nookies";
 import AuthMiddleware from "@/middlewares/auth";
-import { CourseDetail, Lesson } from "@/lib/types";
+import { Lesson, Module } from "@/lib/types";
 import { IUser } from "@/interfaces/auth";
 import notFound from "@/pages/404";
 import LessonContent from "@/components/LessonContent";
@@ -21,6 +21,7 @@ type Props = {
   lesson: Lesson;
   user: IUser;
   token: string;
+  mod: any;
 };
 
 const getVideoID = (url: string): string | null => {
@@ -45,11 +46,13 @@ const LecturePage = ({
   user,
   lesson,
   token,
+  mod,
 }: Props) => {
   const router = useRouter();
-  console.log(lesson);
   const [loading, setLoading] = useState(true);
   const [lessons, setLessons] = useState<Lesson[]>(initialLessons);
+
+  console.log(mod);
 
   useEffect(() => {
     setLessons(initialLessons);
@@ -98,7 +101,7 @@ const LecturePage = ({
   return (
     <>
       <Metadata
-        title={`${lesson.name}`}
+        title={`${mod.name}`}
         description={lesson.description}
         noFollow
       />
@@ -176,6 +179,11 @@ const getServerSidePropsFunction = async (
   const moduleId = context.params?.ids?.[0];
   const lessonId = context.params?.ids?.[1];
 
+  const mod = await axios.get<any>(
+    `courses/modules/${moduleId}`,
+    getHeaders(token),
+  );
+
   const lessons = await axios.get<any>(
     `courses/lessons?module=${moduleId}`,
     getHeaders(token),
@@ -201,6 +209,7 @@ const getServerSidePropsFunction = async (
       lessons: lessons.data,
       lesson,
       token,
+      mod: mod.data,
     },
   };
 };
