@@ -22,6 +22,7 @@ import { GetServerSidePropsContext } from "next";
 import { parseCookies } from "nookies";
 import { getHeaders } from "@/helpers";
 import { axios } from "@/api/interseptors";
+import notFound from "@/pages/404";
 
 type Props = {
   user: IUser;
@@ -31,6 +32,10 @@ type Props = {
 
 export default function ResultPage({ user, results, token }: Props) {
   const router = useRouter();
+
+  if (!results) {
+    return notFound();
+  }
 
   const scorePercentage = Math.round(
     (results.correct_answers / results.total_questions) * 100,
@@ -107,18 +112,24 @@ export default function ResultPage({ user, results, token }: Props) {
 const getServerSidePropsFunction = async (
   context: GetServerSidePropsContext,
 ) => {
-  const cookies = parseCookies(context);
-  const token = cookies.token;
-  const results = await axios.get<any>(
-    `/tests/student-results/${context.params?.id}`,
-    getHeaders(token),
-  );
+  try {
+    const cookies = parseCookies(context);
+    const token = cookies.token;
+    const results = await axios.get<any>(
+      `/tests/student-results/${context.params?.id}`,
+      getHeaders(token),
+    );
 
-  return {
-    props: {
-      results: results.data,
-    },
-  };
+    return {
+      props: {
+        results: results.data,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
 };
 
 export const getServerSideProps = AuthMiddleware(getServerSidePropsFunction);
