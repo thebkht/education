@@ -119,3 +119,11 @@ export const formSchema = z.object({
     }),
   ),
 });
+
+const stats = z.object({
+  course: z.number(),
+  finished_courses: z.number(),
+  teachers: z.number(),
+});
+
+export type Stats = z.infer<typeof stats>;

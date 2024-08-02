@@ -1,7 +1,8 @@
 import Balancer from "react-wrap-balancer";
 import CountUp from "react-countup";
+import { Stats } from "@/lib/types";
 
-export function Facts() {
+export function Facts({ stats }: { stats: Stats }) {
   return (
     <>
       <div className="container mx-auto flex flex-wrap justify-between gap-y-4 px-4 xl:p-0">
@@ -13,8 +14,8 @@ export function Facts() {
         <div className="flex w-44 flex-col justify-between">
           <p className="text-3xl font-bold text-primary">
             <CountUp
-              end={Math.floor(Math.random() * (1000 - 100) + 100)}
-              suffix="+"
+              end={stats.finished_courses ?? 0}
+              suffix={stats.finished_courses > 50 ? "+" : ""}
             />
           </p>
           <span className="text-muted-foreground">
@@ -24,8 +25,8 @@ export function Facts() {
         <div className="flex w-44 flex-col justify-between">
           <p className="text-3xl font-bold text-primary">
             <CountUp
-              end={Math.floor(Math.random() * (1000 - 100) + 100)}
-              suffix="+"
+              end={stats.course ?? 0}
+              suffix={stats.course > 50 ? "+" : ""}
             />
           </p>
           <span className="text-muted-foreground">
@@ -35,8 +36,8 @@ export function Facts() {
         <div className="flex w-44 flex-col justify-between">
           <p className="text-3xl font-bold text-primary">
             <CountUp
-              end={Math.floor(Math.random() * (1000 - 100) + 100)}
-              suffix="+"
+              end={stats.teachers ?? 0}
+              suffix={stats.teachers > 50 ? "+" : ""}
             />
           </p>
           <span className="text-muted-foreground">
