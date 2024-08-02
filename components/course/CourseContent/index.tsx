@@ -132,6 +132,7 @@ const Index = ({
         {modules.map((module, index) => (
           <ModuleCard
             key={index}
+            id={module.id}
             title={module.name}
             status={
               !initialTestResult.finished
@@ -206,11 +207,13 @@ const CourseStats = ({
   </div>
 );
 const ModuleCard = ({
+  id,
   title,
   status,
   children,
 }: {
   title: string;
+  id?: number;
   status: "lock" | "in-process" | "completed";
   children?: React.ReactNode | null;
 }) => (
@@ -225,7 +228,7 @@ const ModuleCard = ({
           <Icons.unchecked className="h-8 w-8 text-muted-foreground" />
         )}
         {status == "completed" ? (
-          <Link href={`/modules/${module.id}`}>
+          <Link href={`/modules/${id}`}>
             <p className="max-w-[800px] text-second-foreground">{title}</p>
           </Link>
         ) : (
