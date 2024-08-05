@@ -155,6 +155,11 @@ const Index = ({
               : "lock"
           }
           title="Yakuniy test"
+          url={
+            finalTestResult?.finished
+              ? `/tests/results/${finalTestResult.id}`
+              : undefined
+          }
         >
           {!finalTestResult?.finished && getModuleIsCompleted(modules) && (
             <Button
@@ -211,10 +216,12 @@ const ModuleCard = ({
   title,
   status,
   children,
+  url,
 }: {
   title: string;
   id?: number;
   status: "lock" | "in-process" | "completed";
+  url?: string;
   children?: React.ReactNode | null;
 }) => (
   <div className="cursor-pointer overflow-hidden p-4 pl-6 transition-all">
@@ -228,7 +235,7 @@ const ModuleCard = ({
           <Icons.unchecked className="h-8 w-8 text-muted-foreground" />
         )}
         {status == "completed" ? (
-          <Link href={`/modules/${id}`}>
+          <Link href={url ? url : `/modules/${id}`}>
             <p className="max-w-[800px] text-second-foreground">{title}</p>
           </Link>
         ) : (
