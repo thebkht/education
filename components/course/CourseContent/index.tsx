@@ -159,7 +159,7 @@ const Index = ({
           title="Yakuniy test"
           url={
             finalTestResult?.finished
-              ? `/tests/results/${finalTestResult.id}`
+              ? `/tests/${finalTestResult.id}/results/`
               : undefined
           }
         >
