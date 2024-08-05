@@ -29,7 +29,7 @@ const Index = ({
   token: string;
   course: CourseDetail;
   initialTestResult: TestResult;
-  finalTestResult: TestResult | undefined;
+  finalTestResult: TestResult;
 }) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -150,9 +150,11 @@ const Index = ({
         ))}
         <ModuleCard
           status={
-            !finalTestResult?.finished && getModuleIsCompleted(modules)
-              ? "in-process"
-              : "lock"
+            finalTestResult.finished
+              ? "completed"
+              : initialTestResult.finished && getModuleIsCompleted(modules)
+                ? "in-process"
+                : "lock"
           }
           title="Yakuniy test"
           url={
@@ -161,17 +163,19 @@ const Index = ({
               : undefined
           }
         >
-          {!finalTestResult?.finished && getModuleIsCompleted(modules) && (
-            <Button
-              size="sm"
-              onClick={() => {
-                setTestType(2);
-                setOpen(true);
-              }}
-            >
-              Testni yechish
-            </Button>
-          )}
+          {initialTestResult.finished &&
+            getModuleIsCompleted(modules) &&
+            !finalTestResult.finished && (
+              <Button
+                size="sm"
+                onClick={() => {
+                  setTestType(2);
+                  setOpen(true);
+                }}
+              >
+                Testni yechish
+              </Button>
+            )}
         </ModuleCard>
       </div>
       <AlertDialog open={open} onOpenChange={setOpen}>

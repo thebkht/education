@@ -27,12 +27,14 @@ export default function Page({
   user: IUser;
   modules: Module[];
   token: string;
-  finalTestResult: TestResult | undefined;
+  finalTestResult: TestResult;
   initialTestResult: TestResult;
 }) {
   if (!course) {
     return notFound();
   }
+
+  console.log(finalTestResult);
 
   return (
     <>
@@ -96,17 +98,21 @@ const getServerSidePropsFunction = async (
     "tests/initial-test-result",
     getHeaders(token, { course: context.params?.id, type: 1 }),
   );
-  const filanTestResult = await axios.get(
-    "tests/initial-test-result",
-    getHeaders(token, { course: context.params?.id, type: 2 }),
+  let finalTestResult = await axios.get<TestResult[]>(
+    `tests/initial-test-result`,
+    getHeaders(token, {
+      course: context.params?.id,
+      type: 2,
+    }),
   );
+
   return {
     props: {
       course: course.data,
       modules: modules.data,
       token,
       initialTestResult: initialTestResult.data,
-      filanTestResult: filanTestResult.data,
+      finalTestResult: finalTestResult.data,
     },
   };
 };
