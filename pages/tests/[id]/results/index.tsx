@@ -38,7 +38,7 @@ export default function ResultPage({ user, results, token }: Props) {
   }
 
   const scorePercentage = Math.round(
-    (results.correct_answers / results.total_questions) * 100,
+    (results.correct_answers / (results.total_questions || 1)) * 100,
   );
   const isPassed = scorePercentage >= 85;
   const Icon = isPassed ? Icons.approved : Icons.rejected;
