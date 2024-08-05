@@ -110,6 +110,11 @@ const Index = ({
         </div>
         <ModuleCard
           title="Boshlang'ich test"
+          url={
+            initialTestResult.finished
+              ? `/tests/${initialTestResult.id}/results/`
+              : undefined
+          }
           status={initialTestResult.finished ? "completed" : "in-process"}
         >
           {initialTestResult.finished ? (
