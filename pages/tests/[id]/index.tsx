@@ -36,15 +36,12 @@ type Props = {
 
 export default function TestPage({ test, user, token }: Props) {
   const router = useRouter();
-  console.log(test);
-
-  const [defaultValues, setDefaultValues] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      test_enrolment: test.id,
+      test_enrolment: test?.id,
     },
   });
 
@@ -62,10 +59,9 @@ export default function TestPage({ test, user, token }: Props) {
   }, [test]);
 
   useEffect(() => {
-    const sessionData = getSessionStorage(`test-${test.id}`);
+    const sessionData = getSessionStorage(`test-${test?.id}`);
     if (sessionData) {
       form.reset(sessionData);
-      setDefaultValues(sessionData);
     }
     setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
