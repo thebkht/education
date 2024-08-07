@@ -51,7 +51,7 @@ export default function TestPage({ test, user, token }: Props) {
   });
 
   useEffect(() => {
-    if (test.finished) {
+    if (test?.finished) {
       router.push(`/tests/${test.id}/results`);
     }
     setLoading(true);
