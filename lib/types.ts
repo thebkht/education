@@ -128,3 +128,26 @@ const stats = z.object({
 });
 
 export type Stats = z.infer<typeof stats>;
+
+const feedback = z.object({
+  fullname: z.string(),
+  text: z.string(),
+  rate: z.number(),
+});
+
+export type Feedback = z.infer<typeof feedback>;
+
+const feedbackList = z.object({
+  links: z.object({
+    next: z.string().nullable(),
+    previous: z.string().nullable(),
+  }),
+  count: z.number(),
+  page_size: z.number(),
+  num_pages: z.number(),
+  current_page: z.number(),
+  countItemsOnPage: z.number(),
+  results: z.array(feedback),
+});
+
+export type FeedbackList = z.infer<typeof feedbackList>;

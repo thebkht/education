@@ -8,7 +8,7 @@ import { InstructorSection } from "@/components/home/instructors-section";
 import { TestimonialSection } from "@/components/home/testimonials-section";
 import Footer from "@/components/layout/Footer";
 import Metadata from "@/components/Metadata";
-import { CourseDetail, Stats, Teacher } from "@/lib/types";
+import { CourseDetail, FeedbackList, Stats, Teacher } from "@/lib/types";
 import { axios } from "@/api/interseptors";
 import { GetServerSidePropsContext } from "next";
 import { parseCookies } from "nookies";
@@ -21,9 +21,10 @@ const inter = Inter({ subsets: ["latin"] });
 const getServerSidePropsFunction = async (
   context: GetServerSidePropsContext,
 ) => {
-  let courses = await axios.get<any>(`courses/all`);
-  let teachers = await axios.get<any>(`accounts/teachers`);
-  const stats = await axios.get<any>(`courses/stats`);
+  let courses = await axios.get<CourseDetail>(`courses/all`);
+  let teachers = await axios.get<Teacher>(`accounts/teachers`);
+  const stats = await axios.get<Stats>(`courses/stats`);
+  const feedback = await axios.get<FeedbackList>(`/tests/feedbacks`);
   const cookies = parseCookies(context);
   const token = cookies.token;
   let user;
@@ -64,6 +65,7 @@ const getServerSidePropsFunction = async (
       teachers: teachers.data,
       user: user ?? null,
       stats: stats.data,
+      feedback: feedback.data,
     },
   };
 };
@@ -73,9 +75,16 @@ type HomeProps = {
   teachers: Teacher[];
   user: IUser | null;
   stats: Stats;
+  feedback: FeedbackList;
 };
 
-export default function Home({ courses, teachers, user, stats }: HomeProps) {
+export default function Home({
+  courses,
+  teachers,
+  user,
+  stats,
+  feedback,
+}: HomeProps) {
   return (
     <>
       <Metadata />
@@ -86,7 +95,7 @@ export default function Home({ courses, teachers, user, stats }: HomeProps) {
         <div className="mx-auto flex flex-col justify-center gap-[120px]">
           <CoursesSection courses={courses} user={user} />
           <InstructorSection teachers={teachers} />
-          <TestimonialSection />
+          {feedback.count > 0 && <TestimonialSection data={feedback} />}
         </div>
         <Footer />
       </div>
