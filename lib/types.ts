@@ -122,17 +122,17 @@ export const formSchema = z.object({
 });
 
 const stats = z.object({
-  course: z.number(),
-  finished_courses: z.number(),
-  teachers: z.number(),
+  courses_count: z.number(),
+  teachers_count: z.number(),
+  students_count: z.number(),
 });
 
 export type Stats = z.infer<typeof stats>;
 
 const feedback = z.object({
-  fullname: z.string(),
-  text: z.string(),
-  rate: z.number(),
+  full_name: z.string(),
+  feedback_text: z.string(),
+  rating: z.number(),
 });
 
 export type Feedback = z.infer<typeof feedback>;

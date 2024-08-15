@@ -14,8 +14,8 @@ export function Facts({ stats }: { stats: Stats }) {
         <div className="flex w-44 flex-col justify-between">
           <p className="text-3xl font-bold text-primary">
             <CountUp
-              end={stats.finished_courses ?? 0}
-              suffix={stats.finished_courses > 50 ? "+" : ""}
+              end={stats.students_count ?? 0}
+              suffix={stats.students_count > 50 ? "+" : ""}
             />
           </p>
           <span className="text-muted-foreground">
@@ -25,8 +25,8 @@ export function Facts({ stats }: { stats: Stats }) {
         <div className="flex w-44 flex-col justify-between">
           <p className="text-3xl font-bold text-primary">
             <CountUp
-              end={stats.course ?? 0}
-              suffix={stats.course > 50 ? "+" : ""}
+              end={stats.courses_count ?? 0}
+              suffix={stats.courses_count > 50 ? "+" : ""}
             />
           </p>
           <span className="text-muted-foreground">
@@ -36,8 +36,8 @@ export function Facts({ stats }: { stats: Stats }) {
         <div className="flex w-44 flex-col justify-between">
           <p className="text-3xl font-bold text-primary">
             <CountUp
-              end={stats.teachers ?? 0}
-              suffix={stats.teachers > 50 ? "+" : ""}
+              end={stats.teachers_count ?? 0}
+              suffix={stats.teachers_count > 50 ? "+" : ""}
             />
           </p>
           <span className="text-muted-foreground">

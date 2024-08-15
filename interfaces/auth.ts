@@ -1,14 +1,16 @@
 interface IUser {
-  fullName: string;
+  username: string;
 }
 
 interface ILogin {
-  fullname: string;
+  username: string;
+  password: string;
   access_token: string;
 }
 
 interface ISignup {
-  fullName: string;
+  username: string;
+  password: string;
   token: string;
 }
 

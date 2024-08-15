@@ -8,7 +8,13 @@ import { InstructorSection } from "@/components/home/instructors-section";
 import { TestimonialSection } from "@/components/home/testimonials-section";
 import Footer from "@/components/layout/Footer";
 import Metadata from "@/components/Metadata";
-import { CourseDetail, FeedbackList, Stats, Teacher } from "@/lib/types";
+import {
+  CourseDetail,
+  Feedback,
+  FeedbackList,
+  Stats,
+  Teacher,
+} from "@/lib/types";
 import { axios } from "@/api/interseptors";
 import { GetServerSidePropsContext } from "next";
 import { parseCookies } from "nookies";
@@ -21,10 +27,10 @@ const inter = Inter({ subsets: ["latin"] });
 const getServerSidePropsFunction = async (
   context: GetServerSidePropsContext,
 ) => {
-  let courses = await axios.get<CourseDetail>(`courses/all`);
-  let teachers = await axios.get<Teacher>(`accounts/teachers`);
+  let courses = await axios.get<CourseDetail[]>(`courses/courses-all`);
+  let teachers = await axios.get<Teacher[]>(`accounts/teachers`);
   const stats = await axios.get<Stats>(`courses/stats`);
-  const feedback = await axios.get<FeedbackList>(`/tests/feedbacks`);
+  const feedback = await axios.get<Feedback[]>(`/tests/feedback`);
   const cookies = parseCookies(context);
   const token = cookies.token;
   let user;
