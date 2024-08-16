@@ -27,7 +27,7 @@ const inter = Inter({ subsets: ["latin"] });
 const getServerSidePropsFunction = async (
   context: GetServerSidePropsContext,
 ) => {
-  let courses = await axios.get<CourseDetail[]>(`courses/courses-all`);
+  let courses = await axios.get<CourseDetail[]>(`courses/all`);
   let teachers = await axios.get<Teacher[]>(`accounts/teachers`);
   const stats = await axios.get<Stats>(`courses/stats`);
   const feedback = await axios.get<Feedback[]>(`/tests/feedback`);
@@ -81,7 +81,7 @@ type HomeProps = {
   teachers: Teacher[];
   user: IUser | null;
   stats: Stats;
-  feedback: FeedbackList;
+  feedback: Feedback[];
 };
 
 export default function Home({
@@ -91,6 +91,7 @@ export default function Home({
   stats,
   feedback,
 }: HomeProps) {
+  console.log(feedback);
   return (
     <>
       <Metadata />
@@ -101,7 +102,7 @@ export default function Home({
         <div className="mx-auto flex flex-col justify-center gap-[120px]">
           <CoursesSection courses={courses} user={user} />
           <InstructorSection teachers={teachers} />
-          {feedback.count > 0 && <TestimonialSection data={feedback} />}
+          {feedback.length > 0 && <TestimonialSection data={feedback} />}
         </div>
         <Footer />
       </div>

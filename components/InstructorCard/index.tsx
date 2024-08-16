@@ -10,8 +10,8 @@ export default function Index({ instructor, ...props }: IndexProps) {
     <div className="relative flex flex-col-reverse rounded-lg" {...props}>
       <div className="absolute inset-0 z-20 rounded-lg bg-gradient-to-b from-slate-50/0 to-black/5"></div>
       <div className="absolute inset-0 z-10 rounded-lg bg-gradient-to-b from-neutral-50/0 to-black/25"></div>
-      <div className="absolute z-30 flex flex-1 items-end justify-center pb-3">
-        <div className="text-center">
+      <div className="absolute z-30 flex w-full flex-1 items-end justify-center pb-3">
+        <div className="w-full text-center">
           <p className="font-bold text-primary-foreground md:text-xl xl:text-2xl">
             {instructor.fullname}
           </p>

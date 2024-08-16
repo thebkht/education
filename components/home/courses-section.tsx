@@ -21,7 +21,7 @@ export function CoursesSection({
 
   return (
     <>
-      <div className="container mx-auto flex flex-col gap-6 px-4 xl:p-0">
+      <div className="container mx-auto space-y-6 px-4 xl:p-0">
         <div className="flex flex-1 gap-1">
           <h3 className="text-2xl font-bold">Kurslar</h3>
         </div>

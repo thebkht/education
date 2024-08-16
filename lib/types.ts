@@ -9,7 +9,7 @@ export type Image = z.infer<typeof image>;
 
 const courseDetail = z.object({
   id: z.number(),
-  name: z.string(),
+  title: z.string(),
   short_description: z.string(),
   description: z.string().optional(),
   image: image,
@@ -19,7 +19,7 @@ export type CourseDetail = z.infer<typeof courseDetail>;
 
 const course = z.object({
   id: z.number(),
-  name: z.string(),
+  title: z.string(),
   short_description: z.string(),
   has_access: z.boolean(),
   image: image,

@@ -16,11 +16,11 @@ export default function Index({
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
             <p className="text-xl font-bold text-primary">
-              {testimonial.fullname}
+              {testimonial.full_name}
             </p>
             <div className="flex gap-1">
               {Array.from({ length: 5 }).map((_, index) =>
-                index < testimonial.rate ? (
+                index < testimonial.rating ? (
                   <Icons.starFilled
                     className="h-5 w-5"
                     key={`filled_${index}`}
@@ -31,7 +31,7 @@ export default function Index({
               )}
             </div>
             <p>
-              <Balancer>{testimonial.text}</Balancer>
+              <Balancer>{testimonial.feedback_text}</Balancer>
             </p>
           </div>
         </div>

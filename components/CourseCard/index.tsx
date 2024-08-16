@@ -15,7 +15,7 @@ export default function Index({
         <div className="relative h-40 w-full rounded-lg">
           <Image
             src={course.image.src}
-            alt={course.name}
+            alt={course.title}
             fill
             placeholder="blur"
             blurDataURL={course.image.base64}
@@ -25,7 +25,7 @@ export default function Index({
         </div>
         <div className="flex flex-col gap-1">
           <h1 className="line-clamp-2 font-semibold text-second">
-            {course.name}
+            {course.title}
           </h1>
           <p className="line-clamp-2 text-sm text-muted-foreground">
             {course.short_description}
