@@ -36,17 +36,9 @@ export default function SiteHeader({ user }: { user?: IUser | null }) {
         <Link href="tel:+998711234567" className="font-medium text-primary">
           +998 71 123 45 67
         </Link>
-        {user ? (
-          <Button
-            variant="outline"
-            onClick={() => router.push("/courses")}
-            className="text-primary"
-          >
-            Shaxsiy kabinet
-          </Button>
-        ) : (
-          <Button onClick={() => router.push("/login")}>Kirish</Button>
-        )}
+        <Button size={"sm"} onClick={() => router.push("/login")}>
+          {user ? "Shaxsiy kabinet" : "Kirish"}
+        </Button>
       </div>
     </nav>
   );

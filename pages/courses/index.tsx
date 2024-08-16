@@ -54,7 +54,7 @@ export default function Courses({
         });
     }
     axios
-      .get<any>(`courses/`, getHeaders(token, { name: query }))
+      .get<any>(`courses/`, getHeaders(token, { title: query }))
       .then((res) => {
         setCourses(res?.data ?? []);
       });
@@ -93,12 +93,9 @@ const getServerSidePropsFunction = async (
   context: GetServerSidePropsContext,
 ) => {
   const cookies = parseCookies(context);
-  const token = cookies.token;
+  const token = cookies["access_token"];
   const searchQuery = context.query.search || "";
-  let courses = await axios.get<any>(
-    `courses/`,
-    getHeaders(token, { name: searchQuery }),
-  );
+  let courses = await axios.get<any>(`courses/`, getHeaders(token));
 
   return {
     props: {
