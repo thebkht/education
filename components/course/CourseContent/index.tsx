@@ -48,9 +48,9 @@ const Index = ({
       try {
         const res = await axios.get<any>(
           `/tests/generate-questions`,
-          getHeaders(token, { course: course.id, type }),
+          getHeaders(token, { course_id: course.id, type }),
         );
-        router.push(`/tests/${res.data.test_enrollment}`);
+        router.push(`/tests/${res.data.test_id}`);
       } catch (e: any) {
         if (
           e.response.status === 400 ||
@@ -138,7 +138,7 @@ const Index = ({
           <ModuleCard
             key={index}
             id={module.id}
-            title={module.name}
+            title={module.title}
             status={
               !initialTestResult.finished
                 ? "lock"

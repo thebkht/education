@@ -48,14 +48,14 @@ export default function Index({
     const registerCoursePromise = async () => {
       try {
         const res = await axios.get(
-          `courses/register-course?course=${course.id}`,
+          `courses/register/${course.id}`,
           getHeaders(token),
         );
         if (res.status === 400) {
           throw new Error(res.data.message);
         }
         setIsRegistered(true);
-        setContractFile(res.data.file);
+        setContractFile(res.data.contract_url);
         return res.data;
       } catch (error: any) {
         if (error.response?.status === 400) {
@@ -113,7 +113,7 @@ export default function Index({
           >
             <Image
               src={course.image.src}
-              alt={course.name}
+              alt={course.title}
               fill
               sizes="(max-width: 1920px) 100vw"
               placeholder="blur"
@@ -133,7 +133,7 @@ export default function Index({
               }}
             >
               <h1 className="line-clamp-2 text-sm font-semibold text-second">
-                {course.name}
+                {course.title}
               </h1>
             </div>
           </div>
@@ -152,8 +152,8 @@ export default function Index({
             <Button
               className={"w-fit rounded"}
               onClick={() => {
-                if (isRegistered && course.file) {
-                  router.push(course.file ?? contractFile);
+                if (contractFile) {
+                  router.push(contractFile);
                 } else {
                   handleRegisterCourse();
                 }

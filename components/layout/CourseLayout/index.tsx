@@ -73,7 +73,7 @@ export default function Index({
                 </div>
                 <div
                   className={cn(
-                    "text-center text-[10px] font-bold text-primary transition-all ease-in-out",
+                    "text-center text-[10px] font-bold text-[#099D9D] transition-all ease-in-out",
                     collapsed && "hidden opacity-0",
                   )}
                 >
@@ -107,7 +107,6 @@ export default function Index({
                   <div className={cn("flex flex-1 justify-center", className)}>
                     <div className="flex w-full flex-col px-6 py-4">
                       {children}
-                      <Toaster position="bottom-center" richColors />
                     </div>
                   </div>
                 </div>

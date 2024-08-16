@@ -38,10 +38,12 @@ export default function TestPage({ test, user, token }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
+  console.log(test);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      test_enrolment: test?.id,
+      test_enrollment_id: test?.id,
     },
   });
 
@@ -77,7 +79,7 @@ export default function TestPage({ test, user, token }: Props) {
     const promise = async () => {
       try {
         const res = await axios.post(
-          `/tests/submit`,
+          `/tests/submit/`,
           values,
           getHeaders(token),
         );
@@ -126,14 +128,14 @@ export default function TestPage({ test, user, token }: Props) {
                               <FormLabel
                                 className={"text-base font-bold text-second"}
                               >
-                                {index + 1}. {question.title}
+                                {index + 1}. {question.question_text}
                               </FormLabel>
                               <div className="relative h-auto max-w-xl">
                                 {question.image && (
                                   <ImageModal image={question.image}>
                                     <Image
                                       src={question.image.src}
-                                      alt={question.title}
+                                      alt={question.question_text}
                                       fill
                                       placeholder="blur"
                                       blurDataURL={question.image.base64}
@@ -179,7 +181,7 @@ export default function TestPage({ test, user, token }: Props) {
                                     );
                                   }}
                                 >
-                                  {question.options.map((option) => (
+                                  {question.answers.map((option) => (
                                     <FormItem
                                       key={option.id}
                                       className={
@@ -194,7 +196,7 @@ export default function TestPage({ test, user, token }: Props) {
                                       <FormLabel
                                         className={"text-base text-second"}
                                       >
-                                        {option.title}
+                                        {option.answer}
                                       </FormLabel>
                                     </FormItem>
                                   ))}
@@ -208,6 +210,9 @@ export default function TestPage({ test, user, token }: Props) {
                     <Button
                       type="submit"
                       size="sm"
+                      onClick={() => {
+                        onSubmit(form.getValues());
+                      }}
                       className={
                         "h-10 w-fit items-center gap-2 font-medium disabled:border-muted-foreground disabled:bg-muted-foreground"
                       }
@@ -216,7 +221,7 @@ export default function TestPage({ test, user, token }: Props) {
                     } */
                     >
                       <Icons.checkMark className={"h-4 w-4"} />
-                      Завершить
+                      Tugatish
                     </Button>
                   </form>
                 </Form>
@@ -240,11 +245,11 @@ const getServerSidePropsFunction = async (
 ) => {
   try {
     const cookies = parseCookies(context);
-    const token = cookies.token;
+    const token = cookies["access_token"];
 
     const test = await axios.get<any>(
-      `/tests/start-test-enrolment/${context.params?.id}`,
-      getHeaders(token),
+      `/tests/start-enrollment/`,
+      getHeaders(token, { test_id: context.params?.id }),
     );
 
     if (!test.data) {

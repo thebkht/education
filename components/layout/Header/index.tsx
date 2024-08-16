@@ -100,7 +100,7 @@ export default function Index({
             >
               <div className="flex items-center gap-2 rounded px-2 py-2.5">
                 <span className="text-sm font-medium text-second">
-                  {session?.fullName ?? "jz015yv4"}
+                  {session?.username ?? "jz015yv4"}
                 </span>
                 <Icons.chevronDown className={cn("w-3", styles.select)} />
               </div>

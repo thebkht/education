@@ -34,12 +34,10 @@ export default function Page({
     return notFound();
   }
 
-  console.log(finalTestResult);
-
   return (
     <>
       <Metadata
-        title={course.name}
+        title={course.title}
         description={course.short_description}
         image={course.image.src}
         noFollow
@@ -70,7 +68,10 @@ export default function Page({
                 className="space-y-4 p-4 text-second"
               >
                 <h4 className="text-lg font-semibold">Описание курса</h4>
-                <p className="text-sm">{course.description}</p>
+                <div
+                  className="text-sm"
+                  dangerouslySetInnerHTML={{ __html: course.description || "" }}
+                ></div>
               </TabsContent>
             </Tabs>
           </div>
@@ -84,24 +85,24 @@ const getServerSidePropsFunction = async (
   context: GetServerSidePropsContext,
 ) => {
   const cookies = parseCookies(context);
-  const token = cookies.token;
+  const token = cookies["access_token"];
   const course = await axios.get(
     `courses/${context.params?.id}`,
     getHeaders(token),
   );
   const modules = await axios.get(
-    `courses/modules?course=${context.params?.id}`,
-    getHeaders(token),
+    "courses/modules-all",
+    getHeaders(token, { course_id: context.params?.id }),
   );
 
   const initialTestResult = await axios.get(
-    "tests/initial-test-result",
-    getHeaders(token, { course: context.params?.id, type: 1 }),
+    "tests/initial-result/",
+    getHeaders(token, { course_id: context.params?.id, type: 1 }),
   );
   let finalTestResult = await axios.get<TestResult[]>(
-    `tests/initial-test-result`,
+    `tests/initial-result/`,
     getHeaders(token, {
-      course: context.params?.id,
+      course_id: context.params?.id,
       type: 2,
     }),
   );

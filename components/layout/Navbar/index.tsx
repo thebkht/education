@@ -26,7 +26,7 @@ export default function SiteHeader({ user }: { user?: IUser | null }) {
         </div>
         <div
           className={
-            "text-center text-[10px] font-bold text-primary transition-all duration-300 ease-in-out"
+            "text-center text-[10px] font-bold text-[#099D9D] transition-all duration-300 ease-in-out"
           }
         >
           AVTOMOBIL YO‘LLARI <br /> ILMIY-TADQIQOT <br /> INSTITUTI
@@ -36,9 +36,13 @@ export default function SiteHeader({ user }: { user?: IUser | null }) {
         <Link href="tel:+998711234567" className="font-medium text-primary">
           +998 71 123 45 67
         </Link>
-        <Button size={"sm"} onClick={() => router.push("/login")}>
-          {user ? "Shaxsiy kabinet" : "Kirish"}
-        </Button>
+        {user ? (
+          <Button onClick={() => router.push("/courses")}>
+            Shaxsiy kabinet
+          </Button>
+        ) : (
+          <Button onClick={() => router.push("/login")}>Kirish</Button>
+        )}
       </div>
     </nav>
   );

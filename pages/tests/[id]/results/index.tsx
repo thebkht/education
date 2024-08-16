@@ -32,6 +32,7 @@ type Props = {
 
 export default function ResultPage({ user, results, token }: Props) {
   const router = useRouter();
+  console.log(results);
 
   if (!results) {
     return notFound();
@@ -46,7 +47,7 @@ export default function ResultPage({ user, results, token }: Props) {
   return (
     <>
       <Metadata
-        title={`Test natijasi - ${results.course.name}`}
+        title={`Test natijasi - ${results.course.title}`}
         description={results.course.short_description}
       />
       <Layout className={"mx-auto"} user={user}>
@@ -114,11 +115,13 @@ const getServerSidePropsFunction = async (
 ) => {
   try {
     const cookies = parseCookies(context);
-    const token = cookies.token;
+    const token = cookies["access_token"];
     const results = await axios.get<any>(
       `/tests/student-results/${context.params?.id}`,
       getHeaders(token),
     );
+
+    console.log(results);
 
     return {
       props: {

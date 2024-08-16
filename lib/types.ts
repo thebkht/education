@@ -52,7 +52,7 @@ export type Lesson = z.infer<typeof lesson>;
 
 const modules = z.object({
   id: z.number(),
-  name: z.string(),
+  title: z.string(),
   description: z.string(),
   has_access: z.boolean(),
   completed: z.boolean().optional(),
@@ -62,14 +62,14 @@ export type Module = z.infer<typeof modules>;
 
 const option = z.object({
   id: z.number(),
-  title: z.string(),
+  answer: z.string(),
 });
 
 const question = z.object({
   id: z.number(),
-  title: z.string(),
-  type: z.enum(["1", "2"]),
-  options: z.array(option),
+  question_text: z.string(),
+  question_type: z.enum(["1", "2"]),
+  answers: z.array(option),
   image: image.optional(),
 });
 
@@ -86,7 +86,7 @@ export type Test = z.infer<typeof test>;
 
 const courseShort = z.object({
   id: z.number(),
-  name: z.string(),
+  title: z.string(),
   short_description: z.string(),
 });
 
@@ -112,7 +112,7 @@ const initialTestResult = z.object({
 export type TestResult = z.infer<typeof initialTestResult>;
 
 export const formSchema = z.object({
-  test_enrolment: z.number(),
+  test_enrollment_id: z.number(),
   answers: z.array(
     z.object({
       question: z.number(),
