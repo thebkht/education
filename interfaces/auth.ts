@@ -4,8 +4,8 @@ interface IUser {
 
 interface ILogin {
   username: string;
-  password: string;
-  access_token: string;
+  access: string;
+  refresh: string;
 }
 
 interface ISignup {
@@ -14,4 +14,13 @@ interface ISignup {
   token: string;
 }
 
-export type { IUser, ILogin, ISignup };
+interface IRegister {
+  username: string;
+  password: string;
+}
+
+interface IRefresh {
+  access: string;
+}
+
+export type { IUser, ILogin, ISignup, IRegister, IRefresh };

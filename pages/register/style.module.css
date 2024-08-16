@@ -1,0 +1,31 @@
+.root {
+     @apply container relative min-h-screen h-full items-center justify-center flex lg:max-w-none lg:px-0
+}
+
+.image-wrapper {
+     @apply relative hidden min-h-lvh h-full lg:flex w-full self-stretch
+}
+
+.image {
+     @apply object-cover object-center w-full h-full
+}
+
+.form-wrapper {
+     @apply lg:px-[35px] max-w-[480px] w-full mx-auto
+}
+
+.form {
+     @apply flex flex-col justify-center space-y-6
+}
+
+.form-header {
+     @apply flex flex-col space-y-2 text-center
+}
+
+.form-header h1 {
+     @apply text-xl font-bold leading-[30px]
+}
+
+.form-header p {
+     @apply text-sm text-muted-foreground
+}

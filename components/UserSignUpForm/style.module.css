@@ -1,0 +1,11 @@
+.form {
+     @apply space-y-[23px]
+}
+
+.label {
+     @apply text-base leading-6 font-normal
+}
+
+.input {
+     @apply bg-accent h-[50px] rounded-lg px-4
+}

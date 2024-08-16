@@ -6,10 +6,23 @@ export const AuthMiddleware =
   (getServerSidePropsFunction: Function, isAuthNotRequired?: boolean) =>
   async (context: GetServerSidePropsContext) => {
     const cookies = parseCookies(context);
-    const token = cookies.token;
+    const accessToken = cookies["access_token"];
 
     try {
-      const user = await AuthService.me(token);
+      let user = null;
+
+      try {
+        if (accessToken) {
+          user = await AuthService.me(accessToken);
+        } else if (cookies["refresh_token"]) {
+          const newTokens = await AuthService.refreshToken(
+            cookies["refresh_token"],
+          );
+          user = await AuthService.me(newTokens.access);
+        }
+      } catch (error) {
+        console.error("Error during authentication:", error);
+      }
       const props = await getServerSidePropsFunction(context);
 
       if (isAuthNotRequired) {
@@ -25,7 +38,8 @@ export const AuthMiddleware =
     } catch (error: any) {
       if (error?.response?.status === 401 && !isAuthNotRequired) {
         context.res.setHeader("Set-Cookie", [
-          "token=; Max-Age=0; Path=/; HttpOnly; SameSite=Strict",
+          "refresh_token=; Max-Age=0; Path=/; HttpOnly; SameSite=Strict",
+          "access_token=; Max-Age=0; Path=/; HttpOnly; SameSite=Strict",
         ]);
         return {
           redirect: {

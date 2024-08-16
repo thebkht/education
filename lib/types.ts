@@ -151,3 +151,27 @@ const feedbackList = z.object({
 });
 
 export type FeedbackList = z.infer<typeof feedbackList>;
+
+const login = z.object({
+  username: z
+    .string({
+      message: "Loginni kiritish shart.",
+    })
+    .max(30),
+  password: z
+    .string({
+      message: "Parolni kiritish shart.",
+    })
+
+    .max(128),
+});
+
+export { login as loginSchema };
+
+export type Login = z.infer<typeof login>;
+
+const category = z.object({
+  id: z.number(),
+  name: z.string(),
+  extension: z.string(),
+});
