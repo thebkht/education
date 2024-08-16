@@ -19,12 +19,9 @@ export const AuthService = {
     }
   },
 
-  async login(token: string): Promise<ILogin> {
+  async login(data: Login): Promise<ILogin> {
     try {
-      const response = await axios.get<ILogin>(
-        "accounts/temp-login",
-        getHeaders(token),
-      );
+      const response = await axios.post<ILogin>("accounts/login/", data);
       return {
         username: response.data.username,
         access: response.data.access,

@@ -17,14 +17,14 @@ type Props = {
   searchParams: string;
 };
 
-export default function Register() {
+export default function Register({ user }: Props) {
   const router = useRouter();
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (user) {
-      router.push("/");
+      router.push("/courses");
     }
-  }, [user, router]); */
+  }, [user, router]);
   return (
     <>
       <Metadata title="Тизимга кириш" />
@@ -70,3 +70,9 @@ export default function Register() {
     </>
   );
 }
+
+const getServerSidePropsFunction = async (ctx: GetServerSidePropsContext) => {
+  return {};
+};
+
+export const getServerSideProps = AuthMiddleware(getServerSidePropsFunction);

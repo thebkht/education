@@ -24,52 +24,16 @@ import AuthMiddleware from "@/middlewares/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const getServerSidePropsFunction = async (
-  context: GetServerSidePropsContext,
-) => {
+const getServerSidePropsFunction = async () => {
   let courses = await axios.get<CourseDetail[]>(`courses/all`);
   let teachers = await axios.get<Teacher[]>(`accounts/teachers`);
   const stats = await axios.get<Stats>(`courses/stats`);
   const feedback = await axios.get<Feedback[]>(`/tests/feedback`);
-  const cookies = parseCookies(context);
-  const token = cookies.token;
-  let user;
-
-  try {
-    user = await AuthService.me(token);
-  } catch (error) {
-    user = null;
-  }
-
-  if (!!context?.query?.code) {
-    try {
-      const user = await AuthService.login(token);
-      context.res.setHeader("Set-Cookie", [
-        `token=${user?.token}; Max-Age=${24 * 60 * 60}; Path=/; HttpOnly; SameSite=Strict`,
-      ]);
-      return {
-        redirect: {
-          destination: "/courses",
-          permanent: false,
-        },
-      };
-    } catch (error) {
-      return {
-        props: {
-          courses: courses.data,
-          teachers: teachers.data,
-          user: null,
-          stats: stats.data,
-        },
-      };
-    }
-  }
 
   return {
     props: {
       courses: courses.data,
       teachers: teachers.data,
-      user: user ?? null,
       stats: stats.data,
       feedback: feedback.data,
     },
@@ -91,7 +55,7 @@ export default function Home({
   stats,
   feedback,
 }: HomeProps) {
-  console.log(feedback);
+  console.log(user);
   return (
     <>
       <Metadata />
@@ -110,7 +74,4 @@ export default function Home({
   );
 }
 
-export const getServerSideProps = AuthMiddleware(
-  getServerSidePropsFunction,
-  true,
-);
+export const getServerSideProps = AuthMiddleware(getServerSidePropsFunction);
