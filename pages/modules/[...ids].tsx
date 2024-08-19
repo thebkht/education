@@ -52,7 +52,7 @@ const LecturePage = ({
   const [loading, setLoading] = useState(true);
   const [lessons, setLessons] = useState<Lesson[]>(initialLessons);
 
-  console.log(mod);
+  console.log(lessons);
 
   useEffect(() => {
     setLessons(initialLessons);
@@ -101,7 +101,7 @@ const LecturePage = ({
   return (
     <>
       <Metadata
-        title={`${mod.name}`}
+        title={`${mod.title}`}
         description={lesson.description}
         noFollow
       />
@@ -109,7 +109,7 @@ const LecturePage = ({
         <div className="box-border space-y-6">
           <div className="mr-auto flex max-w-[1064px] items-center">
             <h3 className="text-base font-semibold text-second">
-              {lesson.name}
+              {lesson.title}
             </h3>
           </div>
           <div className="grid grid-cols-12 gap-6">
@@ -138,9 +138,10 @@ const LecturePage = ({
               <div className="flex max-w-[1064px] flex-col rounded bg-background p-4 shadow">
                 <div className="flex w-full justify-between text-sm">
                   <p className="text-muted-foreground">Kurs tavsifi</p>
-                  <p className="line-clamp-[10] max-w-[68%] text-second">
-                    {lesson.description}
-                  </p>
+                  <div
+                    className="line-clamp-[10] max-w-[68%] text-second"
+                    dangerouslySetInnerHTML={{ __html: lesson.description }}
+                  ></div>
                 </div>
               </div>
             </div>
@@ -174,7 +175,7 @@ const getServerSidePropsFunction = async (
   context: GetServerSidePropsContext,
 ) => {
   const cookies = parseCookies(context);
-  const token = cookies.token;
+  const token = cookies["access_token"];
 
   const moduleId = context.params?.ids?.[0];
   const lessonId = context.params?.ids?.[1];
@@ -185,7 +186,7 @@ const getServerSidePropsFunction = async (
   );
 
   const lessons = await axios.get<any>(
-    `courses/lessons?module=${moduleId}`,
+    `courses/lessons?module_id=${moduleId}`,
     getHeaders(token),
   );
   if (lessonId && !lessons.data) {

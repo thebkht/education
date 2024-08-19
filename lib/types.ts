@@ -38,7 +38,7 @@ export type Teacher = z.infer<typeof teacher>;
 
 const lesson = z.object({
   id: z.number(),
-  name: z.string(),
+  title: z.string(),
   description: z.string(),
   pdf_file: z.string().optional(),
   presentation_file: z.string().optional(),

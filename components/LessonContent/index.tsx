@@ -5,7 +5,7 @@ import Accordion, {
   AccordionTrigger,
 } from "@/components/UI/Accordion";
 import { useRouter } from "next/router";
-import Button from "@/components/UI/Button";
+import Button, { buttonVariants } from "@/components/UI/Button";
 import { axios } from "@/api/interseptors";
 import { getHeaders } from "@/helpers";
 import { toast } from "sonner";
@@ -32,11 +32,8 @@ const Index = ({
   const handleStartLesson = async (lessonId: Lesson["id"]) => {
     const promise = async () => {
       try {
-        const formData = new FormData();
-        formData.append("lesson", lessonId.toString());
         const res = await axios.post<any>(
-          "courses/start-lesson",
-          formData,
+          `courses/lessons/start/${lessonId}/`,
           getHeaders(token),
         );
         const lessons = await axios.get<any>(
@@ -101,22 +98,28 @@ const Index = ({
                 </div>
                 {index == 0
                   ? !lesson.started_date && (
-                      <Button size={"sm"} role="button">
+                      <div
+                        className={buttonVariants({ size: "sm" })}
+                        role="button"
+                      >
                         <div>Darsni boshlash</div>
-                      </Button>
+                      </div>
                     )
                   : !lesson.started_date &&
                     !lessons[index - 1].completed_date && (
-                      <Button size={"sm"} role="button">
+                      <div
+                        className={buttonVariants({ size: "sm" })}
+                        role="button"
+                      >
                         <div>Darsni boshlash</div>
-                      </Button>
+                      </div>
                     )}
               </div>
             </AccordionTrigger>
             <AccordionContent
               className={`cursor-pointer border-b bg-background px-4 py-2 hover:bg-accent2`}
             >
-              {lesson.name}
+              {lesson.title}
             </AccordionContent>
             {lesson.pdf_file && (
               <AccordionContent
